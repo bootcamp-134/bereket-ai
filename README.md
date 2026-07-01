@@ -6,7 +6,7 @@ Takım 134
 
 ## Takım Elemanları
 
-- John Doe: Product Owner
+- Sıla KARATAŞ: Product Owner
 - Jane Doe: Scrum Master
 - Ceren KARABAĞ: Team Member/Developer
 
