@@ -7,10 +7,10 @@ Takım 134
 ## Takım Elemanları
 
 - Sıla KARATAŞ: Product Owner
-- Samet DÖNMEZ: Scrum Master
+- Burak BAŞODA: Scrum Master
 - Ceren KARABAĞ: Team Member/Developer
 - Anıl DİNÇ: Team Member/Developer
-- Burak BAŞODA: Team Member/Developer
+- Samet DÖNMEZ: Team Member/Developer
 
 
 ## Ürün İsmi
