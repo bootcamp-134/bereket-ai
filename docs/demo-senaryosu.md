@@ -37,7 +37,7 @@ Bozulabilecek ürünler önce kullanılsın.
 ## Amaç
 Bu senaryo, Bereket AI'nın kullanıcı onboarding sürecinden başlayarak profil oluşturma, kişisel tercihlere göre tarif önerme, yapay zekâ destekli tarif yardımı sunma ve sosyal paylaşım özelliklerini Sprint 2 MVP'si üzerinden göstermesi amacıyla hazırlanmıştır.
 ________________________________________
-Örnek Senaryo
+## Örnek Senaryo
 -	Kullanıcı uygulamayı ilk kez açar. 
 -	Onboarding ekranında profil bilgilerini oluşturur. 
 -	Hane kişi sayısını 5 olarak girer. 
