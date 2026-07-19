@@ -1,5 +1,6 @@
-Sprint 2 Review
-Tamamlananlar
+# Sprint 2 Review
+
+## Tamamlananlar
 •	Sprint 1 sonunda belirlenen geliştirme planı doğrultusunda görev dağılımı yapıldı ve Sprint 2 çalışmaları başlatıldı. 
 •	Kullanıcı onboarding akışı geliştirildi. 
 •	Kullanıcı profil oluşturma, hane bilgileri ile bütçe ve tercih giriş ekranları tamamlandı. 
@@ -14,7 +15,7 @@ Tamamlananlar
 •	Tarif veri seti, fiyat veri seti ve malzeme normalizasyon çalışmaları tamamlandı. 
 •	Sprint backlog'u, Jira Board, kullanıcı akışları, demo senaryosu ve Sprint dokümantasyonları güncellendi. 
 ________________________________________
-Demo Gözlemleri
+## Demo Gözlemleri
 •	Kullanıcı uygulamaya kayıt olarak onboarding sürecini tamamlayabilmektedir. 
 •	Profil bilgileri, hane bilgileri ve bütçe tercihleri başarıyla sisteme kaydedilmektedir. 
 •	Kullanıcı "Ne Yesem?" ekranında girdiği bilgilere göre uygun tarif önerileri alabilmektedir. 
@@ -22,7 +23,7 @@ Demo Gözlemleri
 •	Profil ve akış ekranları üzerinden temel sosyal etkileşim senaryoları başarıyla gösterilmiştir. 
 •	Frontend ve backend arasında veri alışverişinin sorunsuz şekilde çalıştığı doğrulanmıştır. 
 ________________________________________
-Kapsam Dışı Kalanlar
+## Kapsam Dışı Kalanlar
 •	Gerçek market sistemleriyle canlı fiyat entegrasyonu 
 •	Barkod veya fiş okuma desteği 
 •	Gelişmiş yapay zekâ tabanlı kişiselleştirilmiş öneri sistemi 
