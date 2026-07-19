@@ -113,6 +113,37 @@ mock veriyle doğrulanmıştır.
 
 # Sprint 2
 
+- **Sprint board update:** Sprint 2 boyunca görev takibi Jira Board üzerinden sürdürüldü ve sprint başlangıcında oluşturulan backlog güncellendi. Geliştirme sürecinde tamamlanan görevler düzenli olarak Yapılacaklar / Devam Ediyor / Tamamlandı sütunları arasında taşındı. Frontend, Backend, AI, Data Science ve dokümantasyon görevleri ayrı iş kalemleri olarak takip edildi. Sprint 2 sonunda güncel Jira Board ve GitHub repo ekran görüntüleri dokümantasyona eklendi.
+
+- **Backlog düzeni ve Story seçimleri:** Sprint 2 backlog'u, Sprint 1'de geliştirilen prototipi çalışan bir MVP'ye dönüştürme hedefi doğrultusunda oluşturuldu. Öncelik; kullanıcı onboarding süreci, profil yönetimi, tarif öneri sistemi, Recipe Chat Agent, backend servisleri ve Supabase entegrasyonuna verildi. Story'ler geliştirici sorumluluklarına göre task'lere ayrıldı ve Jira üzerinde sprint etiketiyle takip edildi.
+
+- **Daily Scrum:** Sprint 2 boyunca Daily Scrum toplantıları takım üyelerinin uygunluk durumuna göre Google Meet üzerinden gerçekleştirildi; gün içerisindeki ilerleme takibi ve engeller ise WhatsApp grubu üzerinden paylaşıldı. Daily Scrum notları Sprint 2 Daily Scrum Notları dokümanında kayıt altına alındı.
+
+- **Ürün Durumu:** Sprint 2 sonunda uygulama, Sprint 1'deki statik prototipten çalışan bir MVP'ye dönüştürüldü. Kullanıcılar onboarding sürecini tamamlayarak hesap oluşturabilmekte, profil bilgilerini, hane bilgilerini ve bütçe tercihlerini kaydedebilmektedir. "Ne Yesem?" ekranı üzerinden girilen malzemelere göre Recipe Match algoritması ile tarif önerileri sunulmakta, tarif detay ekranı görüntülenebilmekte ve "Bana Yardım Et" özelliği ile Recipe Chat Agent üzerinden tarif odaklı destek alınabilmektedir. Ayrıca profil ekranı, sosyal akış (Feed), gönderi paylaşımı, yorum ve beğeni altyapısı, Authentication sistemi, Supabase veritabanı, backend API'leri ve frontend-backend entegrasyonu tamamlanmıştır. Sprint 2 boyunca geliştirilen kullanıcı akışı ve sistem mimarisi ilgili dokümantasyonlarda ayrıntılı olarak açıklanmıştır.
+
+  -**Ekran Görüntüleri**:
+
+
+- **Sprint Review**: Sprint review notları
+[Sprint 2 Review](docs/sprint-2-review.md) dosyasında yer almaktadır. Sprint 2 kapsamında kullanıcı onboarding süreci, profil yönetimi, tarif öneri sistemi, Recipe Chat Agent, backend API'leri, Supabase veritabanı ve frontend–backend entegrasyonu tamamlanarak uygulamanın çalışan MVP sürümü oluşturulmuştur.
+
+- **Sprint Retrospective**: Sprint retrospective notları
+[Sprint 2 Retrospective](docs/sprint-2-retrospective.md) dosyasında yer almaktadır.
+
+- **Sprint Panosu Güncellemesi**: Sprint panosu ekran görüntüleri:
+
+
+  ## Sprint 2 Çıktıları
+
+* [Sprint Planı](docs/sprint-2-plani.md)
+* [Product Requirements](docs/product-requirements.md)
+* [Daily Scrum Notları](docs/daily-scrum-notlari.md)
+* [Sprint Review](docs/sprint-2-review.md)
+* [Sprint Retrospective](docs/sprint-2-retrospective.md)
+* [Demo Senaryosu](docs/demo-senaryosu.md)
+* [Planlama Algoritması](docs/planlama-algoritmasi.md)
+
+---
 
 ---
 
