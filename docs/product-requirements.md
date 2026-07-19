@@ -25,3 +25,27 @@ Sprint 1 prototipi, ChatGPT tarzı bir sohbet arayüzü üzerinden kullanıcıda
 - Ürün fikri 1 dakikalık demo içinde anlaşılır.
 - Kullanıcı mevcut malzeme, bütçe, israf ve alışveriş maliyeti ilişkisini aynı ekranda görebilir.
 - Sprint 1 prototipinin gerçek veri veya AI entegrasyonu olmadığı arayüzde açıkça belirtilir.
+
+# Sprint 2 Çözümü
+Sprint 2 ile birlikte prototip çalışan bir MVP'ye dönüştürülmüştür. Kullanıcı uygulamayı ilk açtığında onboarding sürecini tamamlayarak profilini oluşturur; hane bilgileri, bütçe ve yemek tercihlerini sisteme kaydeder. Kullanıcı, "Ne Yesem?" ekranında mevcut malzemelerini girerek Recipe Match algoritması sayesinde kendisine en uygun tarif önerilerini alabilir. Seçilen tarifin detayları görüntülenebilir ve "Bana Yardım Et" butonu ile yalnızca o tarife odaklanan Recipe Chat Agent üzerinden pişirme süreci hakkında destek alınabilir.
+Ayrıca kullanıcılar profil ekranından bilgilerini yönetebilir, akış (Feed) ekranında hazırladıkları yemekleri fotoğraf ve yorum ile paylaşabilir, diğer kullanıcıların paylaşımlarını görüntüleyebilir ve sosyal etkileşimde bulunabilir. Bu sprintte Authentication sistemi, Supabase veritabanı, backend API'leri ve frontend-backend entegrasyonu tamamlanarak uygulamanın temel iş akışı çalışır hale getirilmiştir.
+________________________________________
+## Temel Kullanıcı Akışı
+1.	Kullanıcı uygulamayı açar. 
+2.	Onboarding sürecini tamamlayarak hesabını oluşturur. 
+3.	Profil, hane bilgileri, bütçe ve yemek tercihlerini sisteme kaydeder. 
+4.	"Ne Yesem?" ekranında evindeki malzemeleri girer. 
+5.	Sistem Recipe Match algoritması ile en uygun yemek tariflerini önerir. 
+6.	Kullanıcı tarif detaylarını görüntüler. 
+7.	"Bana Yardım Et" butonu ile Recipe Chat Agent üzerinden tarif hakkında destek alır. 
+8.	Kullanıcı hazırladığı yemeği akış ekranında paylaşabilir, diğer kullanıcıların gönderilerini görüntüleyebilir ve etkileşimde bulunabilir. 
+________________________________________
+## Başarı Ölçütleri
+•	Kullanıcı onboarding sürecini başarıyla tamamlayabilir. 
+•	Kullanıcı bilgileri ve tercihleri veritabanına kaydedilebilir. 
+•	Kullanıcı mevcut malzemelerine göre uygun tarif önerileri alabilir. 
+•	Tarif detayları görüntülenebilir ve Recipe Chat Agent kullanılabilir. 
+•	Profil ve akış ekranları üzerinden temel sosyal özellikler kullanılabilir. 
+•	Frontend ile backend arasında veri alışverişi sorunsuz şekilde gerçekleşir. 
+•	Uygulamanın temel kullanıcı akışı (Kayıt → Onboarding → Ne Yesem? → Tarif Detayı → Recipe Chat → Feed) kesintisiz olarak çalışır.
+
