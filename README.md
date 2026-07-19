@@ -122,6 +122,8 @@ mock veriyle doğrulanmıştır.
 - **Ürün Durumu:** Sprint 2 sonunda uygulama, Sprint 1'deki statik prototipten çalışan bir MVP'ye dönüştürüldü. Kullanıcılar onboarding sürecini tamamlayarak hesap oluşturabilmekte, profil bilgilerini, hane bilgilerini ve bütçe tercihlerini kaydedebilmektedir. "Ne Yesem?" ekranı üzerinden girilen malzemelere göre Recipe Match algoritması ile tarif önerileri sunulmakta, tarif detay ekranı görüntülenebilmekte ve "Bana Yardım Et" özelliği ile Recipe Chat Agent üzerinden tarif odaklı destek alınabilmektedir. Ayrıca profil ekranı, sosyal akış (Feed), gönderi paylaşımı, yorum ve beğeni altyapısı, Authentication sistemi, Supabase veritabanı, backend API'leri ve frontend-backend entegrasyonu tamamlanmıştır. Sprint 2 boyunca geliştirilen kullanıcı akışı ve sistem mimarisi ilgili dokümantasyonlarda ayrıntılı olarak açıklanmıştır.
 
   -**Ekran Görüntüleri**:
+  ![Sprint 2 Jira 1](https://github.com/YZTA-134/134/blob/main/docs/2SprintJira.png)
+
 
 
 - **Sprint Review**: Sprint review notları
