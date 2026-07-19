@@ -46,3 +46,54 @@ Tüm takımın katıldığı toplantıda projenin Sprint 1'de sunması gerekenle
 
 - Gerçek AI, backend ve market fiyatı entegrasyonları Sprint 1 dışında bırakıldı.
 - Demo verisinin gerçek veriyle karıştırılmaması için arayüzde prototip uyarıları korundu.
+
+
+# Sprint 2 Daily Scrum Notları
+
+## Daily Scrum Formatı
+
+Sprint 2 boyunca toplantılar takım üyelerinin uygunluk durumuna göre Zoom üzerinden gerçekleştirildi; gün içerisindeki gelişmeler ve görev takipleri ise Slack grubu üzerinden sürdürüldü.
+
+Her takım üyesi günlük olarak aşağıdaki üç soruya cevap verdi:
+
+- Dün ne yaptım?
+- Bugün ne yapacağım?
+- Önümde engel var mı?
+
+Aşağıda Sprint 2 planlama toplantısı ile sprint boyunca gerçekleştirilen geliştirme süreci özetlenmiştir.
+
+---
+
+# 4 Temmuz 2026 — Sprint 2 Planlama Toplantısı
+
+Sprint 2'nin başlangıcında takım bir araya gelerek Sprint 1 çıktıları değerlendirildi ve geliştirilecek yeni özellikler belirlendi. Prototipin çalışan bir MVP'ye dönüştürülmesi amacıyla görev dağılımı yapıldı.
+
+| İsim | Rol | Katkı |
+|------|-----|-------|
+| **Sıla KARATAŞ** | Product Owner | Sprint Backlog'unu güncelledi, kullanıcı akışlarını yeniden düzenledi, Sprint 2 hedeflerini belirledi ve görev dağılımını oluşturdu. |
+| **Burak BAŞODA** | Data Scientist | Tarif öneri algoritması, veri setleri, skorlama sistemi ve bütçe optimizasyonu üzerine yapılacak çalışmaları planladı. |
+| **Ceren KARABAĞ** | AI Engineer | Recipe Match Agent ve Recipe Chat Agent'ın görevleri ile çalışma senaryolarını belirledi. |
+| **Anıl DİNÇ** | Mobile Developer | Onboarding, profil, **"Ne Yesem?"**, tarif detay ve akış ekranlarının kullanıcı deneyimi tasarımlarını planladı. |
+| **Samet DÖNMEZ** | Backend Developer | Authentication sistemi, API mimarisi, Supabase veritabanı ve frontend-backend entegrasyonu için teknik planlamayı gerçekleştirdi. |
+
+> **Not:** Sprint 2 planlama toplantısında Sprint 1 çıktıları değerlendirilmiş ve tüm takım üyeleri kendi geliştirme alanlarına göre görevlerini üstlenmiştir.
+
+# 5–19 Temmuz 2026 — Sprint 2 Geliştirme Süreci
+
+Sprint boyunca ekip kendi sorumluluk alanlarında geliştirmelerini tamamladı ve düzenli olarak ilerleme durumlarını paylaştı.
+
+| İsim | Rol | Katkı |
+|------|-----|-------|
+| **Sıla KARATAŞ** | Product Owner | Sprint Backlog'unu ve Jira Board'u güncelledi, Daily Scrum notlarını hazırladı, Sprint Review ve Sprint Retrospective dokümanlarını oluşturdu, demo senaryosu ile kullanıcı akışlarını güncelledi ve Sprint 2 test senaryolarını hazırladı. |
+| **Burak BAŞODA** | Data Scientist | Tarif veri setini hazırladı, malzeme isimlerini normalize etti, fiyat veri setini oluşturdu, Recipe Match algoritmasını, Budget Optimizer algoritmasını ve tarif skorlama formülünü geliştirdi, benchmark çalışmasını hazırladı. |
+| **Ceren KARABAĞ** | AI Engineer | Recipe Match Agent ve Recipe Chat Agent'ı geliştirdi. **"Bana Yardım Et"** özelliğinin tarif odaklı çalışmasını tasarladı ve yapay zekâ akışını oluşturdu. |
+| **Anıl DİNÇ** | Mobile Developer | Onboarding ekranları, kullanıcı profil oluşturma akışı, hane bilgileri, bütçe ve tercih ekranları, **"Ne Yesem?"** ekranı, tarif detay ekranı, **"Bana Yardım Et"** butonu, profil ekranı ve akış ekranını geliştirdi. |
+| **Samet DÖNMEZ** | Backend Developer | Authentication API'leri, kullanıcı API'leri, onboarding API'si, tarif API'leri, tarif öneri API'si, Recipe Chat API'si, Feed API'si ve Achievement API'sini geliştirdi. Supabase veritabanını yapılandırdı ve frontend-backend entegrasyonunu tamamladı. |
+
+> **Not:** Sprint boyunca görev ilerlemeleri Daily Scrum toplantıları ve Slack üzerinden düzenli olarak takip edilmiştir.
+
+# Engel Notları
+
+- Backend ve frontend entegrasyonu sırasında veri modeli uyumluluğu için küçük düzenlemeler yapıldı.
+- Recipe Match algoritmasının doğruluğunu artırmak amacıyla tarif veri setinde normalizasyon çalışmaları gerçekleştirildi.
+- Sprint hedeflerini etkileyen kritik bir teknik engel yaşanmadı; ekip planlanan görevleri koordineli şekilde tamamladı.
