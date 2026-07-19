@@ -41,11 +41,11 @@ ________________________________________
 8.	Kullanıcı hazırladığı yemeği akış ekranında paylaşabilir, diğer kullanıcıların gönderilerini görüntüleyebilir ve etkileşimde bulunabilir. 
 ________________________________________
 ## Başarı Ölçütleri
-•	Kullanıcı onboarding sürecini başarıyla tamamlayabilir. 
-•	Kullanıcı bilgileri ve tercihleri veritabanına kaydedilebilir. 
-•	Kullanıcı mevcut malzemelerine göre uygun tarif önerileri alabilir. 
-•	Tarif detayları görüntülenebilir ve Recipe Chat Agent kullanılabilir. 
-•	Profil ve akış ekranları üzerinden temel sosyal özellikler kullanılabilir. 
-•	Frontend ile backend arasında veri alışverişi sorunsuz şekilde gerçekleşir. 
+-	Kullanıcı onboarding sürecini başarıyla tamamlayabilir. 
+-	Kullanıcı bilgileri ve tercihleri veritabanına kaydedilebilir. 
+-	Kullanıcı mevcut malzemelerine göre uygun tarif önerileri alabilir. 
+-	Tarif detayları görüntülenebilir ve Recipe Chat Agent kullanılabilir. 
+-	Profil ve akış ekranları üzerinden temel sosyal özellikler kullanılabilir. 
+-	Frontend ile backend arasında veri alışverişi sorunsuz şekilde gerçekleşir. 
 •	Uygulamanın temel kullanıcı akışı (Kayıt → Onboarding → Ne Yesem? → Tarif Detayı → Recipe Chat → Feed) kesintisiz olarak çalışır.
 
