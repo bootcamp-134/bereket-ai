@@ -80,20 +80,21 @@ Sprint 2'nin başlangıcında takım bir araya gelerek Sprint 1 çıktıları de
 
 # 5–19 Temmuz 2026 — Sprint 2 Geliştirme Süreci
 
-Sprint boyunca ekip kendi sorumluluk alanlarında geliştirmelerini tamamladı ve düzenli olarak ilerleme durumlarını paylaştı.
+Sprint boyunca ekip üyeleri kendi sorumluluk alanlarında geliştirme çalışmalarını yürüttü ve ilerleme durumlarını düzenli olarak paylaştı.
 
 | İsim | Rol | Katkı |
 |------|-----|-------|
 | **Sıla KARATAŞ** | Product Owner | Sprint Backlog'unu ve Jira Board'u güncelledi, Daily Scrum notlarını hazırladı, Sprint Review ve Sprint Retrospective dokümanlarını oluşturdu, demo senaryosu ile kullanıcı akışlarını güncelledi ve Sprint 2 test senaryolarını hazırladı. |
-| **Burak BAŞODA** | Data Scientist | Tarif veri setini hazırladı, malzeme isimlerini normalize etti, fiyat veri setini oluşturdu, Recipe Match algoritmasını, Budget Optimizer algoritmasını ve tarif skorlama formülünü geliştirdi, benchmark çalışmasını hazırladı. |
-| **Ceren KARABAĞ** | AI Engineer | Recipe Match Agent ve Recipe Chat Agent'ı geliştirdi. **"Bana Yardım Et"** özelliğinin tarif odaklı çalışmasını tasarladı ve yapay zekâ akışını oluşturdu. |
-| **Anıl DİNÇ** | Mobile Developer | Onboarding ekranları, kullanıcı profil oluşturma akışı, hane bilgileri, bütçe ve tercih ekranları, **"Ne Yesem?"** ekranı, tarif detay ekranı, **"Bana Yardım Et"** butonu, profil ekranı ve akış ekranını geliştirdi. |
-| **Samet DÖNMEZ** | Backend Developer | Authentication API'leri, kullanıcı API'leri, onboarding API'si, tarif API'leri, tarif öneri API'si, Recipe Chat API'si, Feed API'si ve Achievement API'sini geliştirdi. Supabase veritabanını yapılandırdı ve frontend-backend entegrasyonunu tamamladı. |
+| **Burak BAŞODA** | Data Scientist | Tarif veri setini hazırladı, malzeme isimlerini normalize etti, fiyat veri setini oluşturdu, Recipe Match algoritmasının temel skor mantığını geliştirdi ve benchmark çalışmalarını hazırladı. |
+| **Ceren KARABAĞ** | AI Engineer | Pantry Parser Agent, Recipe Match Agent ve Recipe Chat Agent geliştirme çalışmalarını başlattı. Agent mimarisini ve yapay zekâ akışını tasarladı, temel altyapıları oluşturdu. |
+| **Anıl DİNÇ** | Mobile Developer | Onboarding ekranları, kullanıcı profil oluşturma akışı, hane bilgileri, bütçe ve tercih ekranları, **"Ne Yesem?"** ekranı, tarif öneri ekranı, tarif detay ekranı ve profil ekranını geliştirdi. Mobil uygulamanın temel kullanıcı akışını mock verilerle çalışır hale getirdi. |
+| **Samet DÖNMEZ** | Backend Developer | Authentication API'leri, kullanıcı API'leri, onboarding API'si, tarif API'leri, tarif öneri API'si, Recipe Chat API'si, Feed API'si ve Achievement API'lerini geliştirdi. Supabase veritabanını yapılandırdı ve frontend–backend entegrasyonu için gerekli altyapıyı hazırladı. |
 
-> **Not:** Sprint boyunca görev ilerlemeleri Daily Scrum toplantıları ve Slack üzerinden düzenli olarak takip edilmiştir.
+> **Not:** Sprint boyunca görev ilerlemeleri Daily Scrum toplantıları ve **WhatsApp** üzerinden düzenli olarak takip edildi.
 
 # Engel Notları
 
-- Backend ve frontend entegrasyonu sırasında veri modeli uyumluluğu için küçük düzenlemeler yapıldı.
-- Recipe Match algoritmasının doğruluğunu artırmak amacıyla tarif veri setinde normalizasyon çalışmaları gerçekleştirildi.
-- Sprint hedeflerini etkileyen kritik bir teknik engel yaşanmadı; ekip planlanan görevleri koordineli şekilde tamamladı.
+- Backend ve mobil uygulama için ortak veri modeli oluşturulurken bazı alanlarda düzenlemeler yapıldı.
+- Recipe Match algoritmasının doğruluğunu artırmak amacıyla tarif veri setinde malzeme normalizasyonu gerçekleştirildi.
+- AI Agent geliştirme sürecinde veri yapıları ve servis mimarisi oluşturularak sonraki sprintte tamamlanacak entegrasyon için gerekli hazırlıklar yapıldı.
+- Sprint hedeflerini etkileyen kritik bir teknik engel yaşanmadı; ekip planlanan görevleri koordineli şekilde yürüttü.
