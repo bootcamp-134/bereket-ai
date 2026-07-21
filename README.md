@@ -135,7 +135,7 @@ mock veriyle doğrulanmıştır.
 
 - **Sprint Panosu Güncellemesi**: Sprint panosu ekran görüntüleri:
   ![Screenshot 10](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2/docs/2SprintJira.png)
-
+ ![Screenshot 11](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2/docs/2SprintJira2.png)
 
   ## Sprint 2 Çıktıları
 
