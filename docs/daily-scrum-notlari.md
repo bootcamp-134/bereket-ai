@@ -90,7 +90,7 @@ Sprint boyunca ekip üyeleri kendi sorumluluk alanlarında geliştirme çalışm
 | **Anıl DİNÇ** | Mobile Developer | Onboarding ekranları, kullanıcı profil oluşturma akışı, hane bilgileri, bütçe ve tercih ekranları, **"Ne Yesem?"** ekranı, tarif öneri ekranı, tarif detay ekranı ve profil ekranını geliştirdi. Mobil uygulamanın temel kullanıcı akışını mock verilerle çalışır hale getirdi. |
 | **Samet DÖNMEZ** | Backend Developer | Authentication API'leri, kullanıcı API'leri, onboarding API'si, tarif API'leri, tarif öneri API'si, Recipe Chat API'si, Feed API'si ve Achievement API'lerini geliştirdi. Supabase veritabanını yapılandırdı ve frontend–backend entegrasyonu için gerekli altyapıyı hazırladı. |
 
-> **Not:** Sprint boyunca görev ilerlemeleri Daily Scrum toplantıları ve **WhatsApp** üzerinden düzenli olarak takip edildi.
+> **Not:** Sprint boyunca görev ilerlemeleri Daily Scrum toplantıları ve **Slack** üzerinden düzenli olarak takip edildi.
 
 # Engel Notları
 
