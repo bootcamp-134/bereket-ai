@@ -133,7 +133,7 @@ mock veriyle doğrulanmıştır.
 [Sprint 2 Retrospective](docs/sprint-2-retrospective.md) dosyasında yer almaktadır.
 
 - **Sprint Panosu Güncellemesi**: Sprint panosu ekran görüntüleri:
-  ![Screenshot 8](https://github.com/YZTA-134/134/blob/main/docs/2SprintJira.png)
+  ![Screenshot 8](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2/docs/2SprintJira.png)
 
 
   ## Sprint 2 Çıktıları
