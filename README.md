@@ -130,7 +130,7 @@ Bereket AI Backend, Bereket AI mobil uygulamasının NestJS tabanlı backend ser
 
 
 - **Sprint Review**: Sprint review notları
-[Sprint 2 Review](docs/sprint-2-review.md) dosyasında yer almaktadır. Sprint 2 kapsamında kullanıcı onboarding süreci, profil yönetimi, tarif öneri sistemi, Recipe Chat Agent, backend API'leri, Supabase veritabanı ve frontend–backend entegrasyonu tamamlanarak uygulamanın çalışan MVP sürümü oluşturulmuştur.
+[Sprint 2 Review](docs/sprint-2-review.md) dosyasında yer almaktadır. Sprint 2 kapsamında kullanıcı onboarding süreci, profil yönetimi, tarif öneri ekranları, backend API'leri ve Supabase veritabanı tamamlanarak uygulamanın temel işlevlerini içeren çalışan bir MVP oluşturulmuştur. Ayrıca Recipe Match Agent ve Recipe Chat Agent geliştirme çalışmaları başlatılmış, frontend–backend entegrasyonu için gerekli altyapı hazırlanmıştır.
 
 - **Sprint Retrospective**: Sprint retrospective notları
 [Sprint 2 Retrospective](docs/sprint-2-retrospective.md) dosyasında yer almaktadır.
