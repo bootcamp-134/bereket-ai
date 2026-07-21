@@ -27,25 +27,32 @@ Sprint 1 prototipi, ChatGPT tarzı bir sohbet arayüzü üzerinden kullanıcıda
 - Sprint 1 prototipinin gerçek veri veya AI entegrasyonu olmadığı arayüzde açıkça belirtilir.
 
 # Sprint 2 Çözümü
-Sprint 2 ile birlikte prototip çalışan bir MVP'ye dönüştürülmüştür. Kullanıcı uygulamayı ilk açtığında onboarding sürecini tamamlayarak profilini oluşturur; hane bilgileri, bütçe ve yemek tercihlerini sisteme kaydeder. Kullanıcı, "Ne Yesem?" ekranında mevcut malzemelerini girerek Recipe Match algoritması sayesinde kendisine en uygun tarif önerilerini alabilir. Seçilen tarifin detayları görüntülenebilir ve "Bana Yardım Et" butonu ile yalnızca o tarife odaklanan Recipe Chat Agent üzerinden pişirme süreci hakkında destek alınabilir.
-Ayrıca kullanıcılar profil ekranından bilgilerini yönetebilir, akış (Feed) ekranında hazırladıkları yemekleri fotoğraf ve yorum ile paylaşabilir, diğer kullanıcıların paylaşımlarını görüntüleyebilir ve sosyal etkileşimde bulunabilir. Bu sprintte Authentication sistemi, Supabase veritabanı, backend API'leri ve frontend-backend entegrasyonu tamamlanarak uygulamanın temel iş akışı çalışır hale getirilmiştir.
-________________________________________
-## Temel Kullanıcı Akışı
-1.	Kullanıcı uygulamayı açar. 
-2.	Onboarding sürecini tamamlayarak hesabını oluşturur. 
-3.	Profil, hane bilgileri, bütçe ve yemek tercihlerini sisteme kaydeder. 
-4.	"Ne Yesem?" ekranında evindeki malzemeleri girer. 
-5.	Sistem Recipe Match algoritması ile en uygun yemek tariflerini önerir. 
-6.	Kullanıcı tarif detaylarını görüntüler. 
-7.	"Bana Yardım Et" butonu ile Recipe Chat Agent üzerinden tarif hakkında destek alır. 
-8.	Kullanıcı hazırladığı yemeği akış ekranında paylaşabilir, diğer kullanıcıların gönderilerini görüntüleyebilir ve etkileşimde bulunabilir. 
-________________________________________
-## Başarı Ölçütleri
--	Kullanıcı onboarding sürecini başarıyla tamamlayabilir. 
--	Kullanıcı bilgileri ve tercihleri veritabanına kaydedilebilir. 
--	Kullanıcı mevcut malzemelerine göre uygun tarif önerileri alabilir. 
--	Tarif detayları görüntülenebilir ve Recipe Chat Agent kullanılabilir. 
--	Profil ve akış ekranları üzerinden temel sosyal özellikler kullanılabilir. 
--	Frontend ile backend arasında veri alışverişi sorunsuz şekilde gerçekleşir. 
-•	Uygulamanın temel kullanıcı akışı (Kayıt → Onboarding → Ne Yesem? → Tarif Detayı → Recipe Chat → Feed) kesintisiz olarak çalışır.
 
+Sprint 2 ile birlikte uygulamanın temel mobil arayüzleri, backend servisleri ve veri altyapısı önemli ölçüde geliştirilmiştir. Kullanıcı uygulamayı ilk açtığında onboarding sürecini tamamlayarak profilini oluşturabilir; hane bilgileri, bütçe ve yemek tercihlerini girebilir. Kullanıcı, "Ne Yesem?" ekranında mevcut malzemelerini girerek tarif önerilerini görüntüleyebilir ve seçilen tarifin detaylarını inceleyebilir.
+
+Bu sprintte Authentication sistemi, Supabase veritabanı ve backend API'leri tamamlanmış; Recipe Match Agent ve Recipe Chat Agent geliştirme çalışmaları başlatılarak temel altyapıları oluşturulmuştur. Mobil uygulama şu anda temel kullanıcı akışını mock veriler üzerinden desteklemekte olup frontend–backend ve AI agent entegrasyonlarının tamamlanması sonraki sprintlerde hedeflenmektedir.
+
+---
+
+## Temel Kullanıcı Akışı
+
+1. Kullanıcı uygulamayı açar.
+2. Onboarding sürecini tamamlayarak hesabını oluşturur.
+3. Profil, hane bilgileri, bütçe ve yemek tercihlerini girer.
+4. "Ne Yesem?" ekranında evindeki malzemeleri girer.
+5. Sistem tarif önerilerini kullanıcıya listeler.
+6. Kullanıcı tarif detaylarını görüntüler.
+7. Backend ve AI servisleri için gerekli altyapı hazırlanmış olup tam entegrasyon sonraki sprintte tamamlanacaktır.
+
+---
+
+## Başarı Ölçütleri
+
+- Kullanıcı onboarding sürecini başarıyla tamamlayabilir.
+- Kullanıcı profil, hane bilgileri ve bütçe tercihlerini girebilir.
+- "Ne Yesem?" ekranı üzerinden tarif önerileri görüntülenebilir.
+- Tarif detay ekranı görüntülenebilir.
+- Authentication sistemi, backend API'leri ve Supabase veritabanı başarıyla geliştirilmiştir.
+- Recipe Match Agent ve Recipe Chat Agent geliştirme çalışmaları başlatılmıştır.
+- Mobil uygulamanın temel kullanıcı akışı mock veriler kullanılarak başarıyla çalışmaktadır.
+- Frontend, backend ve AI bileşenlerinin tam entegrasyonu için gerekli altyapı oluşturulmuştur.
