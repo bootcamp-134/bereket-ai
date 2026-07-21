@@ -146,6 +146,10 @@ mock veriyle doğrulanmıştır.
 * [Sprint Retrospective](docs/sprint-2-retrospective.md)
 * [Demo Senaryosu](docs/demo-senaryosu.md)
 * [Planlama Algoritması](docs/planlama-algoritmasi.md)
+* [mobile Branch](https://github.com/bootcamp-134/bereket-ai/tree/mobile)
+* [backend Branch](https://github.com/bootcamp-134/bereket-ai/tree/backend)
+* [agent Branch](https://github.com/bootcamp-134/bereket-ai/tree/agent)
+
 
 ---
 
