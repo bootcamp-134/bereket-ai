@@ -122,7 +122,8 @@ mock veriyle doğrulanmıştır.
 - **Ürün Durumu:** Sprint 2 sonunda uygulama, Sprint 1'deki statik prototipten çalışan bir MVP'ye dönüştürüldü. Kullanıcılar onboarding sürecini tamamlayarak hesap oluşturabilmekte, profil bilgilerini, hane bilgilerini ve bütçe tercihlerini kaydedebilmektedir. "Ne Yesem?" ekranı üzerinden girilen malzemelere göre Recipe Match algoritması ile tarif önerileri sunulmakta, tarif detay ekranı görüntülenebilmekte ve "Bana Yardım Et" özelliği ile Recipe Chat Agent üzerinden tarif odaklı destek alınabilmektedir. Ayrıca profil ekranı, sosyal akış (Feed), gönderi paylaşımı, yorum ve beğeni altyapısı, Authentication sistemi, Supabase veritabanı, backend API'leri ve frontend-backend entegrasyonu tamamlanmıştır. Sprint 2 boyunca geliştirilen kullanıcı akışı ve sistem mimarisi ilgili dokümantasyonlarda ayrıntılı olarak açıklanmıştır.
 
   -**Ekran Görüntüleri**:
-  ![Screenshot 8](https://github.com/bootcamp-134/bereket-ai/blob/mobile/docs/screenshots/01-welcome.png)
+  - ![Screenshot 8](https://github.com/bootcamp-134/bereket-ai/blob/mobile/docs/screenshots/01-welcome.png)
+  - ![Screenshot 9](https://github.com/bootcamp-134/bereket-ai/blob/mobile/docs/screenshots/09-recipe-detail.png)
 
 
 
@@ -133,7 +134,7 @@ mock veriyle doğrulanmıştır.
 [Sprint 2 Retrospective](docs/sprint-2-retrospective.md) dosyasında yer almaktadır.
 
 - **Sprint Panosu Güncellemesi**: Sprint panosu ekran görüntüleri:
-  ![Screenshot 9](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2/docs/2SprintJira.png)
+  ![Screenshot 10](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2/docs/2SprintJira.png)
 
 
   ## Sprint 2 Çıktıları
