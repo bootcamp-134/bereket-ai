@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/primary_button.dart';
@@ -81,25 +82,31 @@ class WelcomeScreen extends StatelessWidget {
                         const Spacer(flex: 3),
                         PrimaryButton(
                           key: const Key('welcome-login-button'),
+                          semanticIdentifier: AppSemantics.welcomeLogin,
                           label: 'Giriş Yap',
                           icon: Icons.arrow_forward_rounded,
                           onPressed: () => _openLogin(context),
                         ),
                         const SizedBox(height: 12),
-                        SizedBox(
-                          height: 56,
-                          child: OutlinedButton(
-                            onPressed: () => _openRegistration(context),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: AppColors.forest,
-                              side: const BorderSide(color: AppColors.outline),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppRadii.control,
+                        Semantics(
+                          identifier: AppSemantics.welcomeRegister,
+                          child: SizedBox(
+                            height: 56,
+                            child: OutlinedButton(
+                              onPressed: () => _openRegistration(context),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: AppColors.forest,
+                                side: const BorderSide(
+                                  color: AppColors.outline,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadii.control,
+                                  ),
                                 ),
                               ),
+                              child: const Text('Kayıt Ol'),
                             ),
-                            child: const Text('Kayıt Ol'),
                           ),
                         ),
                         const SizedBox(height: 12),

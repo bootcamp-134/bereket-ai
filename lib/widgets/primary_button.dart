@@ -7,6 +7,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isLoading;
   final IconData? icon;
+  final String? semanticIdentifier;
 
   const PrimaryButton({
     super.key,
@@ -14,11 +15,12 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.icon,
+    this.semanticIdentifier,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    final button = SizedBox(
       width: double.infinity,
       height: 58,
       child: FilledButton(
@@ -65,5 +67,11 @@ class PrimaryButton extends StatelessWidget {
         ),
       ),
     );
+
+    if (semanticIdentifier == null) {
+      return button;
+    }
+
+    return Semantics(identifier: semanticIdentifier, child: button);
   }
 }

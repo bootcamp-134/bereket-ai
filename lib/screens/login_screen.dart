@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../models/login_credentials.dart';
 import '../services/auth_service.dart';
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/brand_mark.dart';
@@ -140,6 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 34),
                       AppTextField(
+                        semanticIdentifier: AppSemantics.loginIdentifier,
                         controller: _identifierController,
                         label: 'E-posta veya kullanıcı adı',
                         hint: 'ornek@eposta.com',
@@ -155,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
                       AppTextField(
+                        semanticIdentifier: AppSemantics.loginPassword,
                         controller: _passwordController,
                         label: 'Şifre',
                         hint: 'Şifreni gir',
@@ -199,15 +202,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const Spacer(),
-                          TextButton(
-                            onPressed: _openForgotPassword,
-                            child: const Text('Şifremi unuttum'),
+                          Semantics(
+                            identifier: AppSemantics.forgotPassword,
+                            child: TextButton(
+                              onPressed: _openForgotPassword,
+                              child: const Text('Şifremi unuttum'),
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 18),
                       PrimaryButton(
                         key: const Key('login-submit-button'),
+                        semanticIdentifier: AppSemantics.loginSubmit,
                         label: 'Giriş Yap',
                         icon: Icons.arrow_forward_rounded,
                         isLoading: _isLoading,
