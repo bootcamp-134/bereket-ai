@@ -1,0 +1,73 @@
+appId: com.example.bereket_ai_mobile
+name: BereketAI mock recipe recommendation journey
+tags:
+  - recommendation
+  - regression
+---
+- launchApp:
+    clearState: true
+
+- runFlow: ../subflows/login.yaml
+- runFlow: ../subflows/complete_profile.yaml
+
+- tapOn:
+    id: "profile-continue"
+- assertVisible: "Evde neler var?"
+
+- tapOn:
+    id: "recommendation-ingredient-input"
+- inputText: "Patates"
+- tapOn:
+    id: "recommendation-ingredient-add"
+
+- tapOn:
+    id: "recommendation-ingredient-input"
+- inputText: "Domates"
+- tapOn:
+    id: "recommendation-ingredient-add"
+
+- tapOn:
+    id: "recommendation-ingredient-input"
+- inputText: "Makarna"
+- tapOn:
+    id: "recommendation-ingredient-add"
+
+- assertVisible: "Patates"
+- assertVisible: "Domates"
+- assertVisible: "Makarna"
+
+- scrollUntilVisible:
+    element:
+      id: "recommendation-shopping-enabled"
+    direction: DOWN
+- tapOn:
+    id: "recommendation-shopping-enabled"
+- tapOn:
+    id: "recommendation-shopping-budget"
+- inputText: "250"
+- hideKeyboard
+
+- scrollUntilVisible:
+    element:
+      id: "recommendation-find-recipes"
+    direction: DOWN
+- tapOn:
+    id: "recommendation-find-recipes"
+
+- assertVisible: "Tarif Önerileri"
+- assertVisible:
+    id: "recommendation-list"
+
+- scrollUntilVisible:
+    element:
+      id: "recipe-open-tomato-pasta"
+    direction: DOWN
+- tapOn: "Tarifi Gör"
+- waitForAnimationToEnd
+- assertVisible: ".*Domatesli Makarna.*"
+- assertVisible: ".*Malzemeler.*"
+- scrollUntilVisible:
+    element:
+      text: "Hazırlanışı"
+    direction: DOWN
+- assertVisible: ".*Hazırlanışı.*"

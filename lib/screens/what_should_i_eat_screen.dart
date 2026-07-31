@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../models/recommendation.dart';
 import '../services/mock_recommendation_service.dart';
 import '../services/recommendation_service.dart';
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/primary_button.dart';
 import 'recommendation_results_screen.dart';
@@ -237,43 +238,53 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: TextField(
-                            key: const Key('ingredient-input'),
-                            controller: _ingredientController,
-                            textCapitalization: TextCapitalization.sentences,
-                            textInputAction: TextInputAction.done,
-                            maxLength: 40,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-ZçÇğĞıİöÖşŞüÜ\s-]'),
+                          child: Semantics(
+                            identifier: AppSemantics.ingredientInput,
+                            textField: true,
+                            child: TextField(
+                              key: const Key('ingredient-input'),
+                              controller: _ingredientController,
+                              textCapitalization: TextCapitalization.sentences,
+                              textInputAction: TextInputAction.done,
+                              maxLength: 40,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r'[a-zA-ZçÇğĞıİöÖşŞüÜ\s-]'),
+                                ),
+                              ],
+                              onSubmitted: (_) => _addIngredient(),
+                              decoration: const InputDecoration(
+                                labelText: 'Malzeme',
+                                hintText: 'Örn. domates',
+                                prefixIcon: Icon(
+                                  Icons.add_shopping_cart_rounded,
+                                ),
+                                counterText: '',
                               ),
-                            ],
-                            onSubmitted: (_) => _addIngredient(),
-                            decoration: const InputDecoration(
-                              labelText: 'Malzeme',
-                              hintText: 'Örn. domates',
-                              prefixIcon: Icon(Icons.add_shopping_cart_rounded),
-                              counterText: '',
                             ),
                           ),
                         ),
                         const SizedBox(width: 10),
                         SizedBox(
                           height: 60,
-                          child: FilledButton(
-                            key: const Key('add-ingredient-button'),
-                            onPressed: _addIngredient,
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppColors.forest,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppRadii.control,
+                          child: Semantics(
+                            identifier: AppSemantics.ingredientAdd,
+                            button: true,
+                            child: FilledButton(
+                              key: const Key('add-ingredient-button'),
+                              onPressed: _addIngredient,
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.forest,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadii.control,
+                                  ),
                                 ),
                               ),
-                            ),
-                            child: const Text(
-                              'Ekle',
-                              style: TextStyle(fontWeight: FontWeight.w700),
+                              child: const Text(
+                                'Ekle',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ),
                             ),
                           ),
                         ),
@@ -348,6 +359,7 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                     const SizedBox(height: 12),
                     _ShoppingChoice(
                       key: const Key('shopping-no'),
+                      semanticIdentifier: AppSemantics.shoppingDisabled,
                       title: 'Hayır, evdekileri kullan',
                       subtitle: 'Yalnızca eksiksiz hazırlayabileceğin tarifler',
                       icon: Icons.inventory_2_outlined,
@@ -357,6 +369,7 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                     const SizedBox(height: 10),
                     _ShoppingChoice(
                       key: const Key('shopping-yes'),
+                      semanticIdentifier: AppSemantics.shoppingEnabled,
                       title: 'Evet, alışveriş yapabilirim',
                       subtitle: 'Bütçene uyan eksik malzemeler eklenebilir',
                       icon: Icons.shopping_bag_outlined,
@@ -374,23 +387,27 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                     ],
                     if (_wantsToShop == true) ...[
                       const SizedBox(height: 16),
-                      TextFormField(
-                        key: const Key('budget-input'),
-                        controller: _budgetController,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        maxLength: 6,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        validator: _validateBudget,
-                        onFieldSubmitted: (_) => _findRecipes(),
-                        decoration: const InputDecoration(
-                          labelText: 'Alışveriş bütçesi',
-                          hintText: '250',
-                          prefixIcon: Icon(Icons.payments_outlined),
-                          prefixText: '₺ ',
-                          counterText: '',
+                      Semantics(
+                        identifier: AppSemantics.shoppingBudget,
+                        textField: true,
+                        child: TextFormField(
+                          key: const Key('budget-input'),
+                          controller: _budgetController,
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.done,
+                          maxLength: 6,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          validator: _validateBudget,
+                          onFieldSubmitted: (_) => _findRecipes(),
+                          decoration: const InputDecoration(
+                            labelText: 'Alışveriş bütçesi',
+                            hintText: '250',
+                            prefixIcon: Icon(Icons.payments_outlined),
+                            prefixText: '₺ ',
+                            counterText: '',
+                          ),
                         ),
                       ),
                     ],
@@ -400,6 +417,7 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                       label: 'Tarifleri Bul',
                       icon: Icons.search_rounded,
                       isLoading: _isLoading,
+                      semanticIdentifier: AppSemantics.findRecipes,
                       onPressed: _findRecipes,
                     ),
                   ],
@@ -472,6 +490,7 @@ class _SectionTitle extends StatelessWidget {
 }
 
 class _ShoppingChoice extends StatelessWidget {
+  final String semanticIdentifier;
   final String title;
   final String subtitle;
   final IconData icon;
@@ -480,6 +499,7 @@ class _ShoppingChoice extends StatelessWidget {
 
   const _ShoppingChoice({
     super.key,
+    required this.semanticIdentifier,
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -490,6 +510,7 @@ class _ShoppingChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      identifier: semanticIdentifier,
       button: true,
       selected: isSelected,
       child: InkWell(

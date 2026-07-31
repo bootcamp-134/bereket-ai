@@ -37,6 +37,8 @@ abstract final class AppSemantics {
   static const String recommendationList = 'recommendation-list';
   static const String recipeAssistantOpen = 'recipe-assistant-open';
 
+  static String recipeOpen(String recipeId) => 'recipe-open-$recipeId';
+
   // Recipe assistant
   static const String assistantInput = 'recipe-assistant-input';
   static const String assistantSend = 'recipe-assistant-send';
