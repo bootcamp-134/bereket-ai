@@ -15,6 +15,15 @@ abstract final class AppSemantics {
   static const String profileHousehold = 'profile-household';
   static const String profilePreferences = 'profile-preferences';
   static const String profileContinue = 'profile-continue';
+  static const String profilePersonalName = 'profile-personal-name';
+  static const String profilePersonalAge = 'profile-personal-age';
+  static const String profileHouseholdSize = 'profile-household-size';
+  static const String profileMealsPerDay = 'profile-meals-per-day';
+  static const String profileIncomeStatus = 'profile-income-status';
+  static const String profileWeeklyBudget = 'profile-weekly-budget';
+  static const String profileDietaryPreference = 'profile-dietary-preference';
+  static const String profileAllergies = 'profile-allergies';
+  static const String profileSectionSave = 'profile-section-save';
 
   // Recommendation input
   static const String ingredientInput = 'recommendation-ingredient-input';

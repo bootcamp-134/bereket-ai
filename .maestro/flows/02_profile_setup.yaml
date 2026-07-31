@@ -1,0 +1,66 @@
+appId: com.example.bereket_ai_mobile
+name: BereketAI profile setup journey
+tags:
+  - profile
+  - regression
+---
+- launchApp:
+    clearState: true
+
+- runFlow: ../subflows/login.yaml
+
+- tapOn:
+    id: "profile-personal"
+- assertVisible: "Kişisel bilgiler"
+- tapOn:
+    id: "profile-personal-name"
+- inputText: "Anil Dinc"
+- tapOn:
+    id: "profile-personal-age"
+- inputText: "25"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "profile-section-save"
+    direction: DOWN
+- tapOn:
+    id: "profile-section-save"
+- assertVisible: ".*Anil Dinc, 25 yaş.*"
+
+- tapOn:
+    id: "profile-household"
+- assertVisible: "Hane bilgileri"
+- tapOn:
+    id: "profile-household-size"
+- inputText: "4"
+- tapOn:
+    id: "profile-meals-per-day"
+- inputText: "3"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "profile-section-save"
+    direction: DOWN
+- tapOn:
+    id: "profile-section-save"
+- assertVisible: ".*4 kişi • Günde 3 öğün.*"
+
+- tapOn:
+    id: "profile-preferences"
+- assertVisible: "Bütçe ve tercihler"
+- tapOn:
+    id: "profile-weekly-budget"
+- inputText: "2500"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "profile-section-save"
+    direction: DOWN
+- tapOn:
+    id: "profile-section-save"
+- assertVisible: ".*₺2500/hafta • Standart.*"
+- assertVisible: "Tariflerini Keşfet"
+
+- tapOn:
+    id: "profile-continue"
+- assertVisible: "Evde neler var?"

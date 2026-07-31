@@ -7,26 +7,4 @@ tags:
 - launchApp:
     clearState: true
 
-- assertVisible: "BereketAI"
-- assertVisible: "Giriş Yap"
-- assertVisible: "Kayıt Ol"
-
-- tapOn:
-    id: "welcome-login"
-
-- assertVisible: "Tekrar hoş geldin"
-
-- tapOn:
-    id: "auth-login-identifier"
-- inputText: "demo@bereket.ai"
-
-- tapOn:
-    id: "auth-login-password"
-- inputText: "bereket123"
-
-- hideKeyboard
-
-- tapOn:
-    id: "auth-login-submit"
-
-- assertVisible: "Tariflerini evine göre ayarla"
+- runFlow: ../subflows/login.yaml
