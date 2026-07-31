@@ -52,19 +52,31 @@ class WelcomeScreen extends StatelessWidget {
                           style: theme.textTheme.bodyLarge,
                         ),
                         const SizedBox(height: 34),
-                        const _BenefitRow(
-                          icon: Icons.inventory_2_outlined,
-                          text: 'Kilerindekileri önce değerlendir',
-                        ),
-                        const SizedBox(height: 12),
-                        const _BenefitRow(
-                          icon: Icons.savings_outlined,
-                          text: 'Bütçene uygun tarifler keşfet',
-                        ),
-                        const SizedBox(height: 12),
-                        const _BenefitRow(
-                          icon: Icons.recycling_rounded,
-                          text: 'Gıda israfını birlikte azalt',
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(AppRadii.card),
+                            border: Border.all(color: AppColors.outline),
+                          ),
+                          child: const Column(
+                            children: [
+                              _BenefitRow(
+                                icon: Icons.inventory_2_outlined,
+                                text: 'Önce evdeki malzemeleri kullan',
+                              ),
+                              Divider(height: 1, color: AppColors.outline),
+                              _BenefitRow(
+                                icon: Icons.savings_outlined,
+                                text: 'Bütçene uyan tarifleri karşılaştır',
+                              ),
+                              Divider(height: 1, color: AppColors.outline),
+                              _BenefitRow(
+                                icon: Icons.recycling_rounded,
+                                text:
+                                    'Kalan malzemeleri tariflerde değerlendir',
+                              ),
+                            ],
+                          ),
                         ),
                         const Spacer(flex: 3),
                         PrimaryButton(
@@ -82,11 +94,9 @@ class WelcomeScreen extends StatelessWidget {
                               foregroundColor: AppColors.forest,
                               side: const BorderSide(color: AppColors.outline),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
+                                borderRadius: BorderRadius.circular(
+                                  AppRadii.control,
+                                ),
                               ),
                             ),
                             child: const Text('Kayıt Ol'),
@@ -122,13 +132,8 @@ class _BenefitRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.78),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.outline),
-      ),
       child: Row(
         children: [
           Container(
@@ -147,6 +152,7 @@ class _BenefitRow extends StatelessWidget {
               style: const TextStyle(
                 color: AppColors.ink,
                 fontSize: 14,
+                height: 1.35,
                 fontWeight: FontWeight.w600,
               ),
             ),

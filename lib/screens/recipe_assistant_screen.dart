@@ -125,8 +125,8 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
 
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 280),
-        curve: Curves.easeOut,
+        duration: AppMotion.standard,
+        curve: AppMotion.curve,
       );
     });
   }
@@ -145,7 +145,7 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
               'Tarif Yardımcısı',
               style: TextStyle(
                 color: AppColors.ink,
-                fontSize: 19,
+                fontSize: 18,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -215,7 +215,7 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
                   child: ActionChip(
                     label: Text(question),
                     avatar: const Icon(
-                      Icons.auto_awesome_rounded,
+                      Icons.help_outline_rounded,
                       size: 16,
                       color: AppColors.forest,
                     ),
@@ -308,10 +308,14 @@ class _MessageBubble extends StatelessWidget {
         decoration: BoxDecoration(
           color: message.isUser ? AppColors.forest : Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(18),
-            topRight: const Radius.circular(18),
-            bottomLeft: Radius.circular(message.isUser ? 18 : 4),
-            bottomRight: Radius.circular(message.isUser ? 4 : 18),
+            topLeft: const Radius.circular(AppRadii.card),
+            topRight: const Radius.circular(AppRadii.card),
+            bottomLeft: Radius.circular(
+              message.isUser ? AppRadii.card : AppSpacing.xs,
+            ),
+            bottomRight: Radius.circular(
+              message.isUser ? AppSpacing.xs : AppRadii.card,
+            ),
           ),
           border: message.isUser ? null : Border.all(color: AppColors.outline),
         ),
@@ -339,7 +343,7 @@ class _TypingIndicator extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(AppRadii.card),
           border: Border.all(color: AppColors.outline),
         ),
         child: const SizedBox(

@@ -190,33 +190,41 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Align(
-                      child: Container(
-                        width: 62,
-                        height: 62,
-                        alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                          color: AppColors.sage,
-                          shape: BoxShape.circle,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 54,
+                          height: 54,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: AppColors.sage,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.soup_kitchen_outlined,
+                            color: AppColors.forest,
+                            size: 28,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.soup_kitchen_outlined,
-                          color: AppColors.forest,
-                          size: 32,
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Evde neler var?',
+                                style: theme.textTheme.headlineMedium,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Malzemelerini ve alışveriş bütçeni gir; uygun tarifleri eşleşme oranına göre sıralayalım.',
+                                style: theme.textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    Text(
-                      'Evde neler var?',
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Malzemelerini ekle, alışveriş tercihini belirt; sana uygun tarifleri sıralayalım.',
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyLarge,
+                      ],
                     ),
                     const SizedBox(height: 28),
                     const _SectionTitle(
@@ -258,7 +266,9 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                             style: FilledButton.styleFrom(
                               backgroundColor: AppColors.forest,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadii.control,
+                                ),
                               ),
                             ),
                             child: const Text(
@@ -388,7 +398,7 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
                     PrimaryButton(
                       key: const Key('find-recipes-button'),
                       label: 'Tarifleri Bul',
-                      icon: Icons.auto_awesome_rounded,
+                      icon: Icons.search_rounded,
                       isLoading: _isLoading,
                       onPressed: _findRecipes,
                     ),
@@ -447,7 +457,7 @@ class _SectionTitle extends StatelessWidget {
             title,
             style: const TextStyle(
               color: AppColors.ink,
-              fontSize: 17,
+              fontSize: 18,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -484,13 +494,14 @@ class _ShoppingChoice extends StatelessWidget {
       selected: isSelected,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(AppRadii.card),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
+          duration: AppMotion.standard,
+          curve: AppMotion.curve,
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: isSelected ? AppColors.sage : Colors.white,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(AppRadii.card),
             border: Border.all(
               color: isSelected ? AppColors.forest : AppColors.outline,
               width: isSelected ? 1.4 : 1,

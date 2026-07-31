@@ -21,12 +21,12 @@ class BrandMark extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [AppColors.leaf, AppColors.forestDark],
           ),
-          borderRadius: BorderRadius.circular(size * 0.3),
+          borderRadius: BorderRadius.circular(size * 0.26),
           boxShadow: [
             BoxShadow(
-              color: AppColors.forest.withValues(alpha: 0.24),
-              blurRadius: 24,
-              offset: const Offset(0, 12),
+              color: AppColors.forest.withValues(alpha: 0.18),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
           ],
         ),

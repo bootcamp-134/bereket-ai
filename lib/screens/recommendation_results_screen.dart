@@ -46,7 +46,7 @@ class RecommendationResultsScreen extends StatelessWidget {
                     key: const Key('recommendation-results-list'),
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 32),
                     itemCount: recommendations.length + 1,
-                    separatorBuilder: (_, __) => const SizedBox(height: 14),
+                    separatorBuilder: (_, _) => const SizedBox(height: 14),
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return Column(
@@ -66,13 +66,15 @@ class RecommendationResultsScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(13),
                               decoration: BoxDecoration(
                                 color: AppColors.sage.withValues(alpha: 0.62),
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadii.control,
+                                ),
                               ),
                               child: const Text(
                                 'Eşleşme oranı, evindeki malzemelerin tarife ne kadar uyduğunu gösterir.',
                                 style: TextStyle(
                                   color: AppColors.forestDark,
-                                  fontSize: 13,
+                                  fontSize: 12,
                                   height: 1.4,
                                 ),
                               ),
@@ -113,7 +115,7 @@ class _RecommendationCard extends StatelessWidget {
       elevation: 0,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(AppRadii.card),
         side: const BorderSide(color: AppColors.outline),
       ),
       child: Padding(
@@ -154,7 +156,8 @@ class _RecommendationCard extends StatelessWidget {
                         '${recipe.preparationMinutes} dk  •  ${recipe.difficulty}',
                         style: const TextStyle(
                           color: AppColors.mutedInk,
-                          fontSize: 13,
+                          fontSize: 12,
+                          height: 1.40,
                         ),
                       ),
                     ],
@@ -168,7 +171,7 @@ class _RecommendationCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.forest,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(AppRadii.control),
                   ),
                   child: Text(
                     '%${recommendation.matchPercentage}',
@@ -209,7 +212,8 @@ class _RecommendationCard extends StatelessWidget {
                 'Eksikler: ${recommendation.missingIngredients.map((item) => item.name).join(', ')}',
                 style: const TextStyle(
                   color: AppColors.ink,
-                  fontSize: 13,
+                  fontSize: 12,
+                  height: 1.40,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -222,7 +226,7 @@ class _RecommendationCard extends StatelessWidget {
                 backgroundColor: AppColors.forest,
                 minimumSize: const Size.fromHeight(50),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(AppRadii.control),
                 ),
               ),
               icon: const Icon(Icons.menu_book_outlined),
@@ -250,7 +254,7 @@ class _InfoPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
         color: AppColors.cream,
-        borderRadius: BorderRadius.circular(99),
+        borderRadius: BorderRadius.circular(AppRadii.pill),
         border: Border.all(color: AppColors.outline),
       ),
       child: Row(

@@ -104,7 +104,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
       body: SafeArea(
         top: false,
         child: _loading
-            ? const Center(child: CircularProgressIndicator())
+            ? const _ProfileLoading()
             : SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(24, 12, 24, 30),
                 child: Center(
@@ -116,13 +116,13 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         const Align(child: BrandMark(size: 72)),
                         const SizedBox(height: 26),
                         Text(
-                          'Seni biraz tanıyalım',
+                          'Tariflerini evine göre ayarla',
                           textAlign: TextAlign.center,
                           style: theme.textTheme.headlineMedium,
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'BereketAI önerilerini evine, bütçene ve tercihlerine göre kişiselleştirecek.',
+                          'Kişi sayını, haftalık bütçeni ve beslenme tercihlerini tarif önerilerinde kullanalım.',
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyLarge,
                         ),
@@ -204,14 +204,14 @@ class _SetupStep extends StatelessWidget {
     return Material(
       color: isComplete ? AppColors.sage : Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(AppRadii.card),
         side: BorderSide(
           color: isComplete ? AppColors.leaf : AppColors.outline,
         ),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(AppRadii.card),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -259,7 +259,7 @@ class _SetupStep extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: AppColors.mutedInk,
-                        fontSize: 13,
+                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -270,6 +270,62 @@ class _SetupStep extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ProfileLoading extends StatelessWidget {
+  const _ProfileLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: 'Profil bilgileri yükleniyor',
+      child: ExcludeSemantics(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 30),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 520),
+              child: Column(
+                children: [
+                  const BrandMark(size: 72),
+                  const SizedBox(height: 26),
+                  const _SkeletonBlock(width: 250, height: 28),
+                  const SizedBox(height: 12),
+                  const _SkeletonBlock(width: 310, height: 16),
+                  const SizedBox(height: 30),
+                  for (var index = 0; index < 3; index++) ...[
+                    const _SkeletonBlock(height: 76),
+                    if (index < 2) const SizedBox(height: 12),
+                  ],
+                  const SizedBox(height: 32),
+                  const _SkeletonBlock(height: 58),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SkeletonBlock extends StatelessWidget {
+  final double? width;
+  final double height;
+
+  const _SkeletonBlock({this.width, required this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width ?? double.infinity,
+      height: height,
+      decoration: BoxDecoration(
+        color: AppColors.outline.withValues(alpha: 0.55),
+        borderRadius: BorderRadius.circular(AppRadii.control),
       ),
     );
   }

@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'Kilerin, bütçen ve sana özel tariflerin kaldığın yerden devam ediyor.',
+                        'Evdeki malzemelerinle bütçene uygun tarifleri bul.',
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyLarge,
                       ),
@@ -150,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           AutofillHints.username,
                           AutofillHints.email,
                         ],
+                        maxLength: 254,
                         validator: _validateIdentifier,
                       ),
                       const SizedBox(height: 16),
@@ -161,6 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: _obscurePassword,
                         textInputAction: TextInputAction.done,
                         autofillHints: const [AutofillHints.password],
+                        maxLength: 128,
                         validator: _validatePassword,
                         onFieldSubmitted: (_) => _attemptLogin(),
                         suffixIcon: IconButton(

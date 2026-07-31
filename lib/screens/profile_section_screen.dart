@@ -95,11 +95,11 @@ class _ProfileSectionScreenState extends State<ProfileSectionScreen> {
   String get _description {
     return switch (widget.section) {
       ProfileSection.personal =>
-        'Sana uygun öneriler sunabilmemiz için temel bilgilerini gir.',
+        'Adını ve yaşını tarif önerilerinde kullanalım.',
       ProfileSection.household =>
-        'Tariflerin porsiyonlarını evindeki kişi ve öğün düzenine göre ayarlayalım.',
+        'Porsiyonları kişi sayına ve günlük öğün düzenine göre ayarlayalım.',
       ProfileSection.preferences =>
-        'Önerileri bütçene ve beslenme tercihlerine göre kişiselleştirelim.',
+        'Tarifleri bütçene, beslenme şekline ve alerjilerine göre filtreleyelim.',
     };
   }
 
@@ -184,36 +184,46 @@ class _ProfileSectionScreenState extends State<ProfileSectionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      width: 64,
-                      height: 64,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: AppColors.sage,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        switch (widget.section) {
-                          ProfileSection.personal =>
-                            Icons.person_outline_rounded,
-                          ProfileSection.household => Icons.groups_outlined,
-                          ProfileSection.preferences => Icons.tune_rounded,
-                        },
-                        color: AppColors.forest,
-                        size: 30,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      _title,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      _description,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyLarge,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 54,
+                          height: 54,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: AppColors.sage,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            switch (widget.section) {
+                              ProfileSection.personal =>
+                                Icons.person_outline_rounded,
+                              ProfileSection.household => Icons.groups_outlined,
+                              ProfileSection.preferences => Icons.tune_rounded,
+                            },
+                            color: AppColors.forest,
+                            size: 28,
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _title,
+                                style: theme.textTheme.headlineMedium,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                _description,
+                                style: theme.textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 28),
                     ..._sectionFields(),

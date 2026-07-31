@@ -90,7 +90,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         padding: const EdgeInsets.all(18),
                         decoration: BoxDecoration(
                           color: AppColors.sage,
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: BorderRadius.circular(AppRadii.card),
                           border: Border.all(
                             color: AppColors.leaf.withValues(alpha: 0.35),
                           ),
@@ -107,7 +107,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               'Yenileme bağlantısı gönderildi',
                               style: TextStyle(
                                 color: AppColors.ink,
-                                fontSize: 17,
+                                fontSize: 18,
+                                height: 1.30,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -130,6 +131,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
                       autofillHints: const [AutofillHints.email],
+                      maxLength: 254,
                       validator: _validateEmail,
                       onFieldSubmitted: (_) => _sendResetLink(),
                     ),

@@ -117,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'BereketAI ile bütçene uygun tarifleri keşfetmeye başla.',
+                        'Evdeki malzemelerini ve bütçeni tarif önerilerinde kullan.',
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyLarge,
                       ),
@@ -129,6 +129,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         prefixIcon: Icons.badge_outlined,
                         textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.name],
+                        maxLength: 60,
+                        textCapitalization: TextCapitalization.words,
                         validator: _validateName,
                       ),
                       const SizedBox(height: 14),
@@ -140,6 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.newUsername],
+                        maxLength: 254,
                         validator: _validateEmail,
                       ),
                       const SizedBox(height: 14),
@@ -151,6 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         obscureText: _obscurePassword,
                         textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.newPassword],
+                        maxLength: 128,
                         validator: _validatePassword,
                         suffixIcon: IconButton(
                           tooltip: _obscurePassword
@@ -175,6 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         obscureText: _obscureConfirmation,
                         textInputAction: TextInputAction.done,
                         autofillHints: const [AutofillHints.newPassword],
+                        maxLength: 128,
                         validator: _validateConfirmation,
                         onFieldSubmitted: (_) => _register(),
                         suffixIcon: IconButton(
@@ -202,7 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controlAffinity: ListTileControlAffinity.leading,
                         title: const Text(
                           'Kullanım koşullarını ve gizlilik politikasını kabul ediyorum.',
-                          style: TextStyle(fontSize: 13, height: 1.35),
+                          style: TextStyle(fontSize: 12, height: 1.40),
                         ),
                       ),
                       const SizedBox(height: 12),

@@ -10,18 +10,18 @@ abstract final class MockRecipes {
       preparationMinutes: 45,
       difficulty: 'Kolay',
       ingredients: [
-        RecipeIngredient(name: 'Tavuk', amount: '400 g', estimatedCost: 120),
-        RecipeIngredient(name: 'Patates', amount: '3 adet', estimatedCost: 25),
-        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 12),
+        RecipeIngredient(name: 'Tavuk', amount: '400 g', estimatedCost: 118),
+        RecipeIngredient(name: 'Patates', amount: '3 adet', estimatedCost: 27),
+        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 11),
         RecipeIngredient(
           name: 'Salça',
           amount: '1 yemek kaşığı',
-          estimatedCost: 15,
+          estimatedCost: 14,
         ),
         RecipeIngredient(
           name: 'Zeytinyağı',
           amount: '2 yemek kaşığı',
-          estimatedCost: 15,
+          estimatedCost: 16,
         ),
       ],
       steps: [
@@ -40,14 +40,14 @@ abstract final class MockRecipes {
       preparationMinutes: 25,
       difficulty: 'Çok kolay',
       ingredients: [
-        RecipeIngredient(name: 'Makarna', amount: '1 paket', estimatedCost: 35),
-        RecipeIngredient(name: 'Domates', amount: '3 adet', estimatedCost: 20),
-        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 12),
-        RecipeIngredient(name: 'Sarımsak', amount: '1 diş', estimatedCost: 8),
+        RecipeIngredient(name: 'Makarna', amount: '1 paket', estimatedCost: 37),
+        RecipeIngredient(name: 'Domates', amount: '3 adet', estimatedCost: 23),
+        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 11),
+        RecipeIngredient(name: 'Sarımsak', amount: '1 diş', estimatedCost: 7),
         RecipeIngredient(
           name: 'Zeytinyağı',
           amount: '2 yemek kaşığı',
-          estimatedCost: 15,
+          estimatedCost: 16,
         ),
       ],
       steps: [
@@ -59,7 +59,7 @@ abstract final class MockRecipes {
     ),
     Recipe(
       id: 'lentil-soup',
-      title: 'Mercimek Çorbası',
+      title: 'Kırmızı Mercimekli Sebze Çorbası',
       description:
           'Besleyici kırmızı mercimek, sebzeler ve salçayla hazırlanan sıcak çorba.',
       preparationMinutes: 35,
@@ -68,19 +68,19 @@ abstract final class MockRecipes {
         RecipeIngredient(
           name: 'Kırmızı mercimek',
           amount: '1 su bardağı',
-          estimatedCost: 45,
+          estimatedCost: 43,
         ),
-        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 12),
-        RecipeIngredient(name: 'Havuç', amount: '1 adet', estimatedCost: 15),
+        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 11),
+        RecipeIngredient(name: 'Havuç', amount: '1 adet', estimatedCost: 17),
         RecipeIngredient(
           name: 'Salça',
           amount: '1 yemek kaşığı',
-          estimatedCost: 15,
+          estimatedCost: 14,
         ),
         RecipeIngredient(
           name: 'Zeytinyağı',
           amount: '2 yemek kaşığı',
-          estimatedCost: 15,
+          estimatedCost: 16,
         ),
       ],
       steps: [
@@ -99,13 +99,13 @@ abstract final class MockRecipes {
       preparationMinutes: 30,
       difficulty: 'Çok kolay',
       ingredients: [
-        RecipeIngredient(name: 'Patates', amount: '4 adet', estimatedCost: 30),
-        RecipeIngredient(name: 'Yoğurt', amount: '1 kase', estimatedCost: 30),
-        RecipeIngredient(name: 'Sarımsak', amount: '1 diş', estimatedCost: 8),
+        RecipeIngredient(name: 'Patates', amount: '4 adet', estimatedCost: 34),
+        RecipeIngredient(name: 'Yoğurt', amount: '1 kase', estimatedCost: 29),
+        RecipeIngredient(name: 'Sarımsak', amount: '1 diş', estimatedCost: 7),
         RecipeIngredient(
           name: 'Zeytinyağı',
           amount: '1 yemek kaşığı',
-          estimatedCost: 10,
+          estimatedCost: 9,
         ),
       ],
       steps: [
@@ -117,7 +117,7 @@ abstract final class MockRecipes {
     ),
     Recipe(
       id: 'vegetable-bulgur',
-      title: 'Sebzeli Bulgur Pilavı',
+      title: 'Zeytinyağlı Sebzeli Bulgur Pilavı',
       description:
           'Bulgur ve mevsim sebzeleriyle hazırlanan bütçe dostu ana yemek.',
       preparationMinutes: 35,
@@ -126,20 +126,20 @@ abstract final class MockRecipes {
         RecipeIngredient(
           name: 'Bulgur',
           amount: '1,5 su bardağı',
-          estimatedCost: 35,
+          estimatedCost: 33,
         ),
-        RecipeIngredient(name: 'Domates', amount: '2 adet', estimatedCost: 18),
-        RecipeIngredient(name: 'Biber', amount: '2 adet', estimatedCost: 18),
-        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 12),
+        RecipeIngredient(name: 'Domates', amount: '2 adet', estimatedCost: 19),
+        RecipeIngredient(name: 'Biber', amount: '2 adet', estimatedCost: 21),
+        RecipeIngredient(name: 'Soğan', amount: '1 adet', estimatedCost: 11),
         RecipeIngredient(
           name: 'Salça',
           amount: '1 yemek kaşığı',
-          estimatedCost: 15,
+          estimatedCost: 14,
         ),
         RecipeIngredient(
           name: 'Zeytinyağı',
           amount: '2 yemek kaşığı',
-          estimatedCost: 15,
+          estimatedCost: 16,
         ),
       ],
       steps: [

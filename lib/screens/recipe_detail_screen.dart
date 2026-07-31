@@ -43,12 +43,8 @@ class RecipeDetailScreen extends StatelessWidget {
                   Container(
                     height: 190,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [AppColors.leaf, AppColors.forestDark],
-                      ),
-                      borderRadius: BorderRadius.circular(26),
+                      color: AppColors.forestDark,
+                      borderRadius: BorderRadius.circular(AppRadii.card),
                     ),
                     child: Stack(
                       children: [
@@ -69,7 +65,9 @@ class RecipeDetailScreen extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(
+                                AppRadii.control,
+                              ),
                             ),
                             child: Text(
                               '%${recommendation.matchPercentage} eşleşme',
@@ -132,7 +130,7 @@ class RecipeDetailScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(AppRadii.card),
                         border: Border.all(color: AppColors.outline),
                       ),
                       child: Row(
@@ -160,7 +158,7 @@ class RecipeDetailScreen extends StatelessWidget {
                             ingredient.amount,
                             style: const TextStyle(
                               color: AppColors.mutedInk,
-                              fontSize: 13,
+                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -215,7 +213,7 @@ class RecipeDetailScreen extends StatelessWidget {
                   const SizedBox(height: 18),
                   PrimaryButton(
                     label: 'Bana Yardım Et',
-                    icon: Icons.auto_awesome_rounded,
+                    icon: Icons.chat_bubble_outline_rounded,
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
@@ -250,7 +248,8 @@ class _DetailHeading extends StatelessWidget {
           title,
           style: const TextStyle(
             color: AppColors.ink,
-            fontSize: 20,
+            fontSize: 18,
+            height: 1.30,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -271,7 +270,7 @@ class _DetailPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 9),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(99),
+        borderRadius: BorderRadius.circular(AppRadii.pill),
         border: Border.all(color: AppColors.outline),
       ),
       child: Row(

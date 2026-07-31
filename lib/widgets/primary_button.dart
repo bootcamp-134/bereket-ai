@@ -28,12 +28,18 @@ class PrimaryButton extends StatelessWidget {
           disabledBackgroundColor: AppColors.forest.withValues(alpha: 0.55),
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(AppRadii.control),
           ),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            height: 1.25,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 180),
+          duration: AppMotion.standard,
+          switchInCurve: AppMotion.curve,
+          switchOutCurve: AppMotion.curve,
           child: isLoading
               ? const SizedBox(
                   key: ValueKey('loading'),
