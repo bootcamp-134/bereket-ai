@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../models/recommendation.dart';
 import '../services/mock_recommendation_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/primary_button.dart';
+import 'recipe_assistant_screen.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
   final RecipeRecommendation recommendation;
@@ -209,6 +211,18 @@ class RecipeDetailScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 18),
+                  PrimaryButton(
+                    label: 'Bana Yardım Et',
+                    icon: Icons.auto_awesome_rounded,
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => RecipeAssistantScreen(recipe: recipe),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
