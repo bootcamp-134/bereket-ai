@@ -104,3 +104,64 @@ Bu agentlar için temel mimari oluşturulmuş ve backend ile entegrasyon hazırl
 - Budget Optimizer Agent geliştirmelerine başlanması.
 - Tarif önerilerinin doğruluğunu artıracak yeni veri setlerinin eklenmesi.
 - Performans ve kullanıcı deneyiminin iyileştirilmesi.
+
+
+# Sprint 3 Yaklaşımı
+
+Sprint 3 kapsamında mobil uygulama ile backend arasındaki entegrasyon tamamlanmış; kullanıcı kayıt ve giriş işlemleri, profil yönetimi, tarif öneri sistemi ve Agent uçtan uca çalışır hâle getirilmiştir. 
+
+Kullanıcının girdiği bilgiler backend üzerinden işlenmekte, tarif önerileri JSON formatındaki tarif veri seti kullanılarak oluşturulmaktadır.**Recipe Chat Agent** uygulamaya entegre edilmiş; kullanıcıya kişiselleştirilmiş tarif önerileri ve tarif hakkında yapay zekâ desteği sunulmuştur.
+
+---
+
+##  Planlama Mantığı
+
+1. **Kullanıcı Kaydı & Giriş:** Kullanıcı sisteme kayıt olur ve giriş yapar.
+2. **Profil Oluşturma:** Kullanıcının profil bilgileri, hane kişi sayısı, haftalık bütçesi ve yemek tercihleri sisteme kaydedilir.
+3. **Malzeme Girişi:** Kullanıcı *"Ne Yesem?"* ekranında evde bulunan malzemeleri sisteme girer.
+4. **Veri Standartlaştırma:** Girilen malzemeler standart formata dönüştürülerek JSON tarif veri seti ile karşılaştırılır.
+5. **Akıllı Eşleştirme:** **Recipe Match Agent**; malzeme eşleşmesi, eksik malzemeler, bütçe ve kullanıcı tercihlerini dikkate alarak uygun tarifleri belirler.
+6. **Öneri Sunumu:** Oluşturulan tarif önerileri backend üzerinden kullanıcıya sunulur.
+7. **AI Destekli Sohbet:** Kullanıcı seçtiği tarif hakkında **Recipe Chat Agent** üzerinden soru sorabilir ve tarife özel yapay zekâ desteği alabilir.
+
+---
+
+##  Tarif Eşleştirme Mantığı
+
+**Recipe Match Agent** aşağıdaki kriterleri dikkate alarak tarifleri puanlar ve kullanıcıya en uygun olanları önerir:
+
+*  **Malzeme Uyum Oranı:** Evde bulunan malzemelerle eşleşme oranı
+*  **Eksik Malzeme Analizi:** Tarif için gereken eksik malzeme sayısı
+*  **Veri Seti Bilgisi:** JSON tarif veri setindeki detaylı tarif bilgileri
+*  **Bütçe Uyumu:** Kullanıcının haftalık bütçesi
+*  **Kişisel Tercihler:** Kullanıcının yemek tercihleri ve kısıtlamaları
+*  **Hane Ölçeği:** Hane kişi sayısı
+
+---
+
+##  AI Agent Geliştirme Süreci
+
+Sprint 3 kapsamında aşağıdaki AI bileşenlerinin geliştirilmesi tamamlanmış ve uygulamaya entegre edilmiştir:
+
+* **Recipe Match Agent:** Standartlaştırılmış malzemeleri ve kullanıcı kısıtlarını alarak en uygun tarifleri belirler.
+* **Recipe Chat Agent:** Seçilen tarif bağlamında kullanıcının sorularını yanıtlar, alternatif malzeme önerileri ve pişirme ipuçları verir.
+
+>  **Birlikte Çalışma Prensibi:** Bu agent senkronize çalışarak kullanıcının girdiği malzemeleri analiz etmekte, uygun tarifleri belirlemekte ve tarif hakkında kullanıcı sorularını yanıtlamaktadır.
+
+---
+
+##  Örnek Değerlendirme
+
+### Kullanıcı Bilgileri & Stok
+* **Hane Bilgisi:** 5 kişilik hane
+* **Haftalık Bütçe:** 900 TL
+* **Evdeki Malzemeler:** 
+  `Patates`, `Soğan`, `Tavuk`, `Yoğurt`, `Domates`, `Makarna`, `Pirinç`, `Yumurta`
+
+### Beklenen İşleyiş
+- Kullanıcının girdiği bilgiler backend tarafından alınır.
+- Malzemeler JSON tarif veri setiyle karşılaştırılır.
+- **Recipe Match Agent** bütçe, hane sayısı ve malzemeleri analiz ederek uygun tarifleri belirler.
+- Kullanıcıya kişiselleştirilmiş tarif önerileri listelenir.
+- Kullanıcı seçtiği tarifin detaylarını görüntüler.
+- **Recipe Chat Agent** üzerinden tarif hakkında soru sorabilir ve yapay zekâ destekli cevap alabilir.
