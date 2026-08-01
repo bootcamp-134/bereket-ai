@@ -8,7 +8,7 @@ Bereket AI, kullanıcının evdeki mevcut malzemelerini, kişi sayısını, haft
 
 Kullanıcılar evde hangi malzemelerin olduğunu, bu malzemelerle ne pişirebileceğini, ne kadar ek alışveriş gerektiğini ve bütçesini aşıp aşmayacağını tek bir yerden planlayamıyor. Bu durum karar yorgunluğu, gıda israfı ve gereksiz harcamaya yol açıyor.
 
-## Sprint 1 Çözümü
+# Sprint 1 Çözümü
 
 Sprint 1 prototipi, ChatGPT tarzı bir sohbet arayüzü üzerinden kullanıcıdan malzeme ve bütçe bilgisini alıyormuş gibi davranır. Kullanıcının yazdığı mesaj veya seçtiği hazır prompt, sabit (mock) bir yemek planı cevabıyla yanıtlanır. Amaç ürün fikrini uçtan uca akan bir prototip üzerinde göstermektir; gerçek AI veya canlı veri kullanılmaz.
 
