@@ -98,3 +98,60 @@ Sprint boyunca ekip üyeleri kendi sorumluluk alanlarında geliştirme çalışm
 - Recipe Match algoritmasının doğruluğunu artırmak amacıyla tarif veri setinde malzeme normalizasyonu gerçekleştirildi.
 - AI Agent geliştirme sürecinde veri yapıları ve servis mimarisi oluşturularak sonraki sprintte tamamlanacak entegrasyon için gerekli hazırlıklar yapıldı.
 - Sprint hedeflerini etkileyen kritik bir teknik engel yaşanmadı; ekip planlanan görevleri koordineli şekilde yürüttü.
+
+
+  # Sprint 3 Daily Scrum Notları
+
+## Daily Scrum Formatı
+
+Sprint 3 boyunca toplantılar takım üyelerinin uygunluk durumuna göre Zoom üzerinden gerçekleştirildi; gün içerisindeki gelişmeler ve görev takipleri ise Slack grubu üzerinden sürdürüldü.
+
+Her takım üyesi günlük olarak aşağıdaki üç soruya cevap verdi:
+
+- Dün ne yaptım?
+- Bugün ne yapacağım?
+- Önümde engel var mı?
+
+Aşağıda Sprint 3 planlama toplantısı ile sprint boyunca gerçekleştirilen geliştirme ve tamamlanma süreci özetlenmiştir.
+
+---
+
+## 20 Temmuz 2026 — Sprint 3 Planlama Toplantısı
+
+Sprint 3'ün başlangıcında takım bir araya gelerek Sprint 2 çıktıları değerlendirildi. Son sprint kapsamında uygulamanın eksik kalan geliştirmelerinin tamamlanması, sistem entegrasyonlarının yapılması, test süreçlerinin yürütülmesi ve proje teslim dokümanlarının hazırlanması planlandı.
+
+| İsim | Rol | Katkı |
+|------|------|--------|
+| **Sıla KARATAŞ** | Product Owner | Sprint Backlog'unu güncelledi, son sprint hedeflerini belirledi, görev dağılımını organize etti ve teslim sürecini planladı. |
+| **Burak BAŞODA** | Data Scientist | Tarif veri setinin son düzenlemelerini, maliyet hesaplama yapısını ve veri doğrulama çalışmalarını planladı. |
+| **Ceren KARABAĞ** | AI Engineer | Agent mimarisinin tamamlanması, agent entegrasyonları ve yapay zekâ akışlarının son hâline getirilmesini planladı. |
+| **Anıl DİNÇ** | Mobile Developer | Mobil uygulamanın son kullanıcı deneyimi düzenlemeleri ve backend entegrasyonlarını planladı. |
+| **Samet DÖNMEZ** | Backend Developer | API entegrasyonlarının tamamlanması, veritabanı düzenlemeleri ve sistem testlerini planladı. |
+
+> **Not:** Sprint 3 planlama toplantısında proje teslimine yönelik son geliştirmeler, entegrasyon çalışmaları ve teslim süreci önceliklendirildi.
+
+---
+
+## 20 Temmuz – 2 Ağustos 2026 — Sprint 3 Geliştirme Süreci
+
+Sprint boyunca ekip üyeleri kendi sorumluluk alanlarındaki son geliştirmeleri tamamladı, sistem entegrasyonlarını gerçekleştirdi ve proje teslimi için gerekli dokümantasyon çalışmalarını yürüttü.
+
+| İsim | Rol | Katkı |
+|------|------|--------|
+| **Sıla KARATAŞ** | Product Owner | Sprint Backlog'u ve Jira Board'u güncelledi, Daily Scrum notlarını hazırladı, Sprint Review ve Sprint Retrospective dokümanlarını oluşturdu, README dosyasını düzenledi, GitHub deposunun son düzenlemelerini gerçekleştirdi, test senaryolarını tamamladı, 3 dakikalık proje tanıtım videosu ile ürün teslim formlarının hazırlanma sürecini koordine etti ve proje teslimini yönetti. |
+| **Burak BAŞODA** | Data Scientist | Tarif veri setini son hâline getirdi, maliyet hesaplama yapısını tamamladı, veri doğrulama ve benchmark çalışmalarını güncelledi. |
+| **Ceren KARABAĞ** | AI Engineer | Agent geliştirmelerini tamamladı, agent entegrasyonlarını gerçekleştirdi ve yapay zekâ akışlarını son hâline getirdi. |
+| **Anıl DİNÇ** | Mobile Developer | Mobil uygulamanın backend entegrasyonlarını tamamladı, kullanıcı arayüzü iyileştirmelerini gerçekleştirdi ve uygulamayı teslim sürümüne hazırladı. |
+| **Samet DÖNMEZ** | Backend Developer | API geliştirmelerini tamamladı, veritabanı yapılandırmasını son hâline getirdi, frontend-backend entegrasyonlarını tamamladı ve sistem testlerini gerçekleştirdi. |
+
+> **Not:** Sprint boyunca tamamlanan geliştirmeler düzenli Daily Scrum toplantıları ve Slack üzerinden takip edilmiş, proje teslimine yönelik son kontroller gerçekleştirilmiştir. Sprint sonunda 3 dakikalık proje tanıtım videosu hazırlanmış, ürün teslim formları tamamlanmış ve proje başarıyla teslim edilmiştir.
+
+---
+
+## Engel Notları
+
+- Backend, mobil uygulama ve AI servisleri arasındaki entegrasyon süreçlerinde ortaya çıkan küçük uyumsuzluklar giderildi.
+- Veri seti ve maliyet hesaplama yapısı son kez doğrulanarak sistemle uyumlu hâle getirildi.
+- Teslim öncesinde kullanıcı senaryoları ve temel fonksiyon testleri tamamlandı.
+- 3 dakikalık tanıtım videosu ve ürün teslim dokümanları ekip koordinasyonu ile zamanında tamamlandı.
+- Sprint sonunda planlanan tüm hedefler tamamlanmış ve proje teslime hazır hâle getirilmiştir.
