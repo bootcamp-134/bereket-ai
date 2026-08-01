@@ -100,7 +100,7 @@ Sprint boyunca ekip üyeleri kendi sorumluluk alanlarında geliştirme çalışm
 - Sprint hedeflerini etkileyen kritik bir teknik engel yaşanmadı; ekip planlanan görevleri koordineli şekilde yürüttü.
 
 
-  # Sprint 3 Daily Scrum Notları
+# Sprint 3 Daily Scrum Notları
 
 ## Daily Scrum Formatı
 
