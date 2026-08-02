@@ -3,43 +3,71 @@ import 'package:dio/dio.dart';
 import '../config/api_config.dart';
 import '../storage/token_storage.dart';
 import 'api_exception.dart';
+import 'api_response.dart';
 
 class ApiClient {
   final Dio _dio;
   final TokenStorage _tokens;
   Future<bool>? _refreshInFlight;
+  final void Function()? _onSessionExpired;
+  bool _sessionExpiryNotified = false;
 
-  ApiClient({Dio? dio, TokenStorage? tokenStorage})
-    : _dio =
-          dio ??
-          Dio(
-            BaseOptions(
-              baseUrl: ApiConfig.baseUrl.endsWith('/')
-                  ? ApiConfig.baseUrl
-                  : '${ApiConfig.baseUrl}/',
-              connectTimeout: const Duration(seconds: 15),
-              receiveTimeout: const Duration(seconds: 45),
-              sendTimeout: const Duration(seconds: 15),
-              headers: const {'Accept': 'application/json'},
-            ),
-          ),
-      _tokens = tokenStorage ?? const SecureTokenStorage();
+  ApiClient({
+    Dio? dio,
+    TokenStorage? tokenStorage,
+    void Function()? onSessionExpired,
+  }) : _dio =
+           dio ??
+           Dio(
+             BaseOptions(
+               baseUrl: ApiConfig.baseUrl.endsWith('/')
+                   ? ApiConfig.baseUrl
+                   : '${ApiConfig.baseUrl}/',
+               connectTimeout: const Duration(seconds: 15),
+               receiveTimeout: const Duration(seconds: 45),
+               sendTimeout: const Duration(seconds: 15),
+               headers: const {'Accept': 'application/json'},
+             ),
+           ),
+       _tokens = tokenStorage ?? const SecureTokenStorage(),
+       _onSessionExpired = onSessionExpired;
 
   TokenStorage get tokenStorage => _tokens;
 
-  Future<dynamic> get(String path, {Map<String, dynamic>? query}) =>
-      _request('GET', path, query: query);
+  Future<void> saveTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    await _tokens.saveTokens(
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    );
+    _sessionExpiryNotified = false;
+  }
+
+  Future<dynamic> get(String path, {Map<String, dynamic>? query}) async =>
+      (await _request('GET', path, query: query)).data;
+
+  Future<ApiResponse<dynamic>> getWithMeta(
+    String path, {
+    Map<String, dynamic>? query,
+  }) => _request('GET', path, query: query);
 
   Future<dynamic> post(
     String path, {
     Object? data,
     bool authenticated = true,
-  }) => _request('POST', path, data: data, authenticated: authenticated);
+  }) async => (await _request(
+    'POST',
+    path,
+    data: data,
+    authenticated: authenticated,
+  )).data;
 
-  Future<dynamic> patch(String path, {Object? data}) =>
-      _request('PATCH', path, data: data);
+  Future<dynamic> patch(String path, {Object? data}) async =>
+      (await _request('PATCH', path, data: data)).data;
 
-  Future<dynamic> _request(
+  Future<ApiResponse<dynamic>> _request(
     String method,
     String path, {
     Object? data,
@@ -63,7 +91,7 @@ class ApiClient {
               : {'Authorization': 'Bearer $accessToken'},
         ),
       );
-      return _unwrap(response.data);
+      return ApiResponse<dynamic>.fromBody(response.data);
     } on DioException catch (error) {
       if (authenticated && allowRefresh && error.response?.statusCode == 401) {
         final refreshed = await _refreshOnce();
@@ -77,6 +105,7 @@ class ApiClient {
             allowRefresh: false,
           );
         }
+        await _expireSession();
       }
       throw _toApiException(error);
     }
@@ -103,7 +132,7 @@ class ApiClient {
       final data = _unwrap(response.data) as Map<String, dynamic>;
       final tokenData =
           (data['tokens'] as Map?)?.cast<String, dynamic>() ?? data;
-      await _tokens.saveTokens(
+      await saveTokens(
         accessToken: tokenData['accessToken'] as String,
         refreshToken: tokenData['refreshToken'] as String,
       );
@@ -112,6 +141,13 @@ class ApiClient {
       await _tokens.clear();
       return false;
     }
+  }
+
+  Future<void> _expireSession() async {
+    await _tokens.clear();
+    if (_sessionExpiryNotified) return;
+    _sessionExpiryNotified = true;
+    _onSessionExpired?.call();
   }
 
   dynamic _unwrap(dynamic body) {
