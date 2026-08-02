@@ -187,21 +187,17 @@ Screenshot 17
 
 ## Sprint 3 Çıktıları
 
-- Sprint Planı
-- Product Requirements
-- Daily Scrum Notları
-- Sprint Review
-- Sprint Retrospective
-- Demo Senaryosu
-- AI Agent Mimarisi
-- Recipe Match Agent
-- Pantry Parser Agent
-- Safety Filter Agent
-- Agent Pipeline
-- Mobile Branch
-- Backend Branch
-- Agent Branch
-- Final MVP Demo
+* [Sprint Planı](docs/sprint-3-plani.md)
+* [Product Requirements](docs/product-requirements.md)
+* [Daily Scrum Notları](docs/daily-scrum-notlari.md)
+* [Sprint Review](docs/sprint-3-review.md)
+* [Sprint Retrospective](docs/sprint-3-retrospective.md)
+* [Demo Senaryosu](docs/demo-senaryosu.md)
+* [Planlama Algoritması](docs/planlama-algoritmasi.md)
+* [mobile Branch](https://github.com/bootcamp-134/bereket-ai/tree/mobile)
+* [backend Branch](https://github.com/bootcamp-134/bereket-ai/tree/backend)
+* [agent Branch](https://github.com/bootcamp-134/bereket-ai/tree/agent)
+* [test/maestro-e2e Branch](https://github.com/bootcamp-134/bereket-ai/tree/test/maestro-e2e)
 ---
 
 
