@@ -38,7 +38,7 @@ Evde ne bulunduğunu, bu malzemelerle ne pişirilebileceğini ve ne kadar ek al�
 
 ## Sprint 3 Çözümü
 
-Üçüncü sprintte mock backend yerine gerçek tarif verisi kullanan production API hazırlandı. Kullanıcı hesabı, profil, tarif önerisi ve tarife özel sohbet aynı backend üzerinden çalışmaktadır. Mobil uygulamanın bu servislere bağlanması için gerekli sözleşme ve canlı ortam hazırdır.
+Üçüncü sprintte mock backend yerine gerçek tarif verisi kullanan production API hazırlandı ve Flutter uygulaması bu servislere bağlandı. Kullanıcı hesabı, profil, tarif kataloğu, öneri ve tarife özel sohbet aynı canlı sözleşme üzerinden uçtan uca çalışmaktadır.
 
 ### Temel Kullanıcı Akışı
 
@@ -58,8 +58,10 @@ Evde ne bulunduğunu, bu malzemelerle ne pişirilebileceğini ve ne kadar ek al�
 - Eksik fiyat bilgisi kesin maliyet gibi gösterilmez.
 - Tarif sohbeti seçilen tarif bağlamında kalır.
 - Dış model servisi kullanılamadığında temel tarif önerisi devam eder.
-- Flutter uygulaması aynı API sözleşmesiyle uçtan uca akışı tamamlayabilir.
+- Flutter uygulaması aynı API sözleşmesiyle uçtan uca akışı tamamlar.
+- Access ve refresh token'lar secure storage içinde tutulur; eşzamanlı `401` yanıtları tek refresh isteğini paylaşır.
+- Tarif sohbeti aynı tarif yeniden açıldığında önceki oturumu ve mesajları geri yükler.
 
 ## Güncel Durum
 
-Backend, tarif verisi ve agent akışları canlıda hazırdır. Ürünün mobil uçtan uca akışının kapanması için Flutter uygulamasının canlı API entegrasyonu ve mağaza hazırlığı mobil ekip tarafından tamamlanacaktır.
+Backend, tarif verisi, agent ve Flutter mobil akışları canlı production sözleşmesiyle hazırdır. Kalan işler fiziksel cihaz doğrulaması, production imzalama, iOS build ve mağaza yayın operasyonlarıdır.

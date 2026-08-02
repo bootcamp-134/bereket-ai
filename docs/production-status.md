@@ -16,6 +16,7 @@ Son doğrulama: 2 Ağustos 2026
 - Agent: OpenAI Responses API, `gpt-5.4-mini-2026-03-17`, structured output ve deterministic fallback
 - Agent bütçesi: PostgreSQL üzerinde atomik aylık 5 USD rezervasyon sınırı
 - Bakım: süresi dolmuş rate-limit/reset/refresh kayıtları için günlük Vercel Cron
+- Mobil: Flutter production istemcisi; canlı API, secure storage, refresh mutex, tarif kataloğu, öneriler ve kalıcı tarif sohbeti
 
 `www.bereket.app`, kalıcı `308` ile `bereket.app` adresine yönlenir. Resend SPF, DKIM ve DMARC kayıtları Vercel DNS'tedir; parola sıfırlama akışı Resend'in kontrollü `delivered+label@resend.dev` adresiyle production üzerinde `202` ve hatasız sağlayıcı çağrısıyla doğrulanmıştır.
 
@@ -27,6 +28,7 @@ Son doğrulama: 2 Ağustos 2026
 - Güvenlik: izinsiz origin `403`, yanlış cron secret `404`, API kökü Swagger'a `308`
 - Web: ana sayfa, status, privacy, reset-password ve Sprint 1 demo; framework overlay veya console hatası yok
 - CI: `backend` ve `sprint-3` workflow'ları yeşil; iki production dependency audit'i temiz
+- Mobil: `flutter analyze` hatasız; 16 otomatik test başarılı; Android release APK derlendi ve emülatörde production API ile doğrulandı
 
 ## Dataset
 
@@ -55,7 +57,7 @@ Feed ve achievements V1 kapsamında değildir.
 ## Branch gerçeği
 
 - `backend`: production backend ve production agent.
-- `mobile`: Flutter istemci geliştirmesi; gerçek API/token entegrasyonu tamamlanmayı bekliyor.
+- `mobile`: Production API'ye bağlı Flutter istemcisi; auth, profil, tarif, öneri, güvenli token yenileme ve kalıcı tarif sohbeti tamamlandı.
 - `archive/agent-gemini-prototype`: Gemini/RecipeNLG tabanlı tarihsel Python prototipinin arşiv etiketi; production runtime değil.
 - `sprint-1`: ilk Next.js mock prototipi.
 - `sprint-2`: Sprint 1 üzerine kurulan mobil fikir ve mock backend kaydı.
@@ -63,9 +65,10 @@ Feed ve achievements V1 kapsamında değildir.
 
 Sprint branch’leri kümülatiftir: `sprint-1` → `sprint-2` → `sprint-3`. `codex/*`, `backend-django` ve eski birleşik sprint branch’i release sonrasında tutulmaz.
 
-## Ekipte kalan işler
+## Yayın öncesi kalan işler
 
-- Anıl: gerçek Flutter HTTP client, secure storage, refresh mutex, nullable modeller ve Maestro staging.
+- Mobil: fiziksel Android cihaz doğrulaması, production application ID/imzalama, mağaza yayını ve iOS signing/build.
+- Demo: üç dakikalık jüri videosunun çekilmesi, liste dışı YouTube bağlantısının teslim formunda doğrulanması.
 - Burak: yeni dataset sürümlerinde checksum, alias, alerjen ve maliyet kapsamı doğrulaması.
 - Ceren: Türkçe agent eval rubric'i ve prompt kalite değerlendirmesi.
 - Samet: Vercel/Neon/Resend operasyonu, log takibi ve backend release yönetimi.

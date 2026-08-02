@@ -27,9 +27,13 @@
 
 ## Mobil kapanış
 
-- [ ] Gerçek API client
-- [ ] Secure token storage ve refresh mutex
-- [ ] Nullable model/error envelope uyumu
+- [x] Gerçek API client
+- [x] Secure token storage ve refresh mutex
+- [x] Nullable model/error envelope uyumu
+- [x] Kayıt/giriş, profil, tarif katalog/detay, öneri ve kalıcı sohbet akışları
+- [x] Flutter analyze, 16 otomatik test ve Android release APK
 - [ ] Staging Maestro E2E
+- [ ] Fiziksel Android cihaz doğrulaması ve production imzalama
+- [ ] iOS signing/build ve mağaza yayın operasyonları
 
-Mobil maddeler tamamlanana kadar release etiketi `v1.0.0-rc.1` olarak kalır.
+Mobil ürün geliştirmesi tamamlandı. Fiziksel cihaz, imzalama ve mağaza yayın adımları kapanana kadar release etiketi `v1.0.0-rc.1` olarak kalır.

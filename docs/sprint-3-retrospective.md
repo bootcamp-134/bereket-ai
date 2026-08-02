@@ -8,6 +8,7 @@
 - Dış servis hatalarında temel akışın devam etmesi sağlandı.
 - Canlı domainler, API dokümanı ve test akışları birlikte doğrulandı.
 - Sprint geçmişi ayrı branch'lerle korunarak projenin gelişimi görünür hâle getirildi.
+- Flutter istemci production API'ye bağlandı; güvenli oturum, gerçek tarif, öneri ve kalıcı sohbet akışları tamamlandı.
 
 ## Geliştirilebilecekler
 
@@ -18,11 +19,12 @@
 
 ## Aksiyonlar
 
-- Mobil ekip canlı API entegrasyonunu ve cihaz testlerini tamamlayacak.
-- Demo öncesinde kayıt → profil → öneri → tarif → sohbet akışı mobil cihazda tekrar çalıştırılacak.
+- Fiziksel cihazda kayıt → profil → öneri → tarif → sohbet akışı son kez doğrulanacak.
+- Production Android kimliği ve imzalama yapılandırması mağaza yayını öncesinde tamamlanacak.
+- Üç dakikalık jüri videosunda canlı mobil akış gösterilecek.
 - Ürün tesliminden sonra veri ve öneri kalitesi için kullanıcı geri bildirimleri toplanacak.
 - Maliyet ve alerjen verileri yeni kaynaklarla düzenli olarak gözden geçirilecek.
 
 ## Sonuç
 
-Sprint 3 sonunda backend, tarif verisi ve agent akışları production ortamında hazırdır. Ürünün son kullanıcıya açılması için kalan temel iş, mobil uygulamanın canlı servislere bağlanması ve mobil yayın sürecidir.
+Sprint 3 sonunda backend, tarif verisi, agent akışları ve Flutter production entegrasyonu hazırdır. Son kullanıcı dağıtımı için kalan işler fiziksel cihaz doğrulaması, imzalama ve mağaza yayın operasyonlarıdır.
