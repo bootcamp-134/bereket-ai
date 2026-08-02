@@ -31,21 +31,22 @@ Flutter uygulamasındaki onboarding, profil, bütçe, tarif önerisi ve tarif de
 
 Bu aşamada mobil akış mock backend verileriyle çalışır.
 
-## Sprint 3 — Canlı Backend ve Agent
+## Sprint 3 — Canlı Mobil Ürün
 
 ### Amaç
 
-Gerçek tarif verisiyle çalışan backend, öneri akışı ve tarif sohbetini göstermek.
+Gerçek tarif verisiyle çalışan Flutter uygulamasını, backend öneri akışını ve tarife özel sohbeti uçtan uca göstermek.
 
 ### Akış
 
 1. [bereket.app](https://bereket.app) üzerinden problem ve üç sprintlik gelişim anlatılır.
 2. Sistem durumu sayfasında canlı API ve tarif sayısı gösterilir.
-3. [API dokümanında](https://api.bereket.app/api/docs) test hesabıyla giriş yapılır.
-4. Profil bilgileri ve örnek malzemeler kaydedilir.
-5. Tarif önerisi istenir ve dönen tariflerden biri açılır.
-6. Seçilen tarif için kısa bir tarif sohbeti sorusu sorulur.
-7. Sprint 1 demosu açılarak ilk prototiple canlı sistem arasındaki fark gösterilir.
+3. Flutter uygulaması önceden hazırlanmış test hesabıyla açılır; profil, bütçe, tercih ve alerjen özeti gösterilir.
+4. “Ne Yesem?” ekranında örnek malzemeler, alışveriş tercihi ve bütçe girilir.
+5. Canlı önerilerden biri açılır; eşleşme, eksik malzemeler ve tahminî/kısmi maliyet açıklanır.
+6. Gerçek tarif kataloğu ve tarif detayı gösterilir.
+7. Seçilen tarif için kısa bir sohbet sorusu sorulur; geri dönüp aynı tarif açılarak sohbet geçmişinin korunduğu gösterilir.
+8. Sprint 1 demosu açılarak ilk prototiple canlı mobil ürün arasındaki fark gösterilir.
 
 ### Beklenen Sonuç
 
@@ -53,5 +54,5 @@ Gerçek tarif verisiyle çalışan backend, öneri akışı ve tarif sohbetini g
 - Öneriler malzeme, bütçe ve alerjen bilgisine göre değişir.
 - Seçilen tarifin malzemeleri ve adımları görüntülenir.
 - Tarif sohbeti yalnız seçilen tarif hakkında yanıt verir.
-
-Mobil entegrasyon tamamlandığında 3–6. adımlar API dokümanı yerine Flutter uygulaması üzerinden gösterilecektir.
+- Flutter istemci canlı API'nin `{data, meta}` başarı ve `{error}` hata sözleşmesini kullanır.
+- Sohbet oturumu aynı tarif yeniden açıldığında geçmiş mesajları yükler.

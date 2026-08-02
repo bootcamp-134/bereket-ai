@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteShell } from "@/components/site-shell";
 
@@ -9,6 +10,7 @@ const metrics = [
 ] as const;
 
 const productionCapabilities = [
+  ["Flutter istemci", "Canlı API, güvenli oturum ve gerçek tarif verisi"],
   ["Canlı API", "Kayıt, profil, tarif ve sohbet akışları"],
   ["Tarif verisi", "3.005 tarif, nullable ve tahminî maliyetler"],
   ["Öneri sistemi", "Malzeme, bütçe ve alerjen kısıtları"],
@@ -32,10 +34,61 @@ const sprints = [
   },
   {
     number: "03",
-    period: "Gerçek veri ve servisler",
-    title: "Canlı sisteme geçtik",
-    body: "Tarif verisini, kullanıcı işlemlerini, önerileri ve tarife özel sohbeti production backend'de bir araya getirdik.",
-    status: "Backend hazır",
+    period: "Canlı ürün",
+    title: "Uçtan uca tamamladık",
+    body: "Gerçek tarif verisini, production servislerini ve Flutter istemciyi güvenli oturum, öneri ve tarife özel sohbet akışlarında bir araya getirdik.",
+    status: "Tamamlandı",
+  },
+] as const;
+
+const mobileScreens = [
+  {
+    src: "/mobile/profile-ready.png",
+    width: 381,
+    height: 843,
+    title: "Kişiselleştirilmiş profil",
+    description: "Hane, bütçe, beslenme tercihi ve alerjen bilgileri.",
+    alt: "Bereket AI tamamlanmış profil ve tercihler ekranı",
+  },
+  {
+    src: "/mobile/ingredients-start.png",
+    width: 376,
+    height: 817,
+    title: "Malzeme girişi",
+    description: "En fazla 20 malzeme ve alışveriş tercihiyle öneri başlatma.",
+    alt: "Bereket AI Ne Yesem malzeme giriş ekranı",
+  },
+  {
+    src: "/mobile/ingredients-budget.png",
+    width: 394,
+    height: 830,
+    title: "Bütçe ve alışveriş",
+    description: "Eksik malzemeler için alışveriş izni ve bütçe sınırı.",
+    alt: "Bereket AI seçili malzemeler ve alışveriş bütçesi ekranı",
+  },
+  {
+    src: "/mobile/recommendations.png",
+    width: 362,
+    height: 821,
+    title: "Güvenli öneriler",
+    description: "Eşleşme oranı, eksikler ve tahminî maliyet açıklamaları.",
+    alt: "Bereket AI kişiselleştirilmiş tarif önerileri ekranı",
+  },
+  {
+    src: "/mobile/recipe-detail.png",
+    width: 387,
+    height: 838,
+    title: "Gerçek tarif detayı",
+    description: "Malzemeler, hazırlanış adımları, süre ve maliyet bilgisi.",
+    alt: "Bereket AI tarif detay ekranı",
+  },
+  {
+    src: "/mobile/recipe-assistant.png",
+    width: 393,
+    height: 847,
+    title: "Tarife özel asistan",
+    description: "Seçilen tarif bağlamında kalan ve geçmişi koruyan sohbet.",
+    alt: "Bereket AI tarife özel sohbet asistanı ekranı",
   },
 ] as const;
 
@@ -108,12 +161,12 @@ export default function HomePage() {
         <div className="lg:col-span-7">
           <p className="section-kicker">Ürün bugün nerede?</p>
           <h2 className="section-title max-w-3xl">
-            Backend ve öneri sistemi canlı. Mobil bağlantı son adım.
+            Backend, öneri sistemi ve Flutter istemci birlikte çalışıyor.
           </h2>
           <p className="section-copy max-w-xl">
-            Sprint 3 ile mock veriden gerçek tarif verisine geçildi. Servisler
-            production ortamında çalışıyor; Flutter uygulamasının bu akışlara
-            bağlanması mobil ekip tarafından tamamlanacak.
+            Sprint 3 ile mock veriden gerçek tarif verisine geçildi. Flutter
+            uygulaması; hesap, profil, tarif kataloğu, kişiselleştirilmiş öneri
+            ve tarife özel sohbet akışlarında production API'ye bağlandı.
           </p>
         </div>
         <dl className="border-t border-white/16 lg:col-span-5">
@@ -139,6 +192,48 @@ export default function HomePage() {
             </a>
           </div>
         </dl>
+      </section>
+
+      <section className="border-y border-white/12 bg-neutral-950">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+          <div className="grid gap-6 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <p className="section-kicker">Flutter uygulaması</p>
+            </div>
+            <div className="lg:col-span-8">
+              <h2 className="section-title mt-0">
+                Canlı veriden kişisel tarife.
+              </h2>
+              <p className="section-copy max-w-2xl">
+                Mobil istemci gerçek API sözleşmesini kullanır; güvenli oturum,
+                nullable maliyetler, tarif kataloğu, öneriler ve kalıcı tarif
+                sohbeti tek kullanıcı akışında birleşir.
+              </p>
+            </div>
+          </div>
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {mobileScreens.map((screen) => (
+              <figure key={screen.src}>
+                <div className="overflow-hidden rounded-[2rem] border border-white/12 bg-[#fbf6ee] shadow-2xl shadow-black/30">
+                  <Image
+                    src={screen.src}
+                    width={screen.width}
+                    height={screen.height}
+                    alt={screen.alt}
+                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw"
+                    className="h-auto w-full"
+                  />
+                </div>
+                <figcaption className="mt-5">
+                  <p className="font-medium text-white">{screen.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-neutral-500">
+                    {screen.description}
+                  </p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="border-y border-white/12">
@@ -228,15 +323,15 @@ export default function HomePage() {
           <div className="lg:col-span-8">
             <p className="text-sm text-neutral-500">Jüri için güncel durum</p>
             <h2 className="mt-5 max-w-4xl text-balance text-4xl leading-[1.03] font-semibold tracking-[-0.05em] sm:text-6xl">
-              Canlı servisler hazır; ürünün tamamlanması için mobil entegrasyon
-              bekleniyor.
+              Canlı servisler ve mobil entegrasyon hazır; ürün jüri demosuna
+              hazır.
             </h2>
           </div>
           <div className="lg:col-span-4">
             <p className="max-w-md text-sm leading-7 text-neutral-600">
-              Backend, gerçek tarif verisi ve öneri sistemi production ortamında
-              çalışıyor. Güncel doğrulama sonuçları sistem durumu sayfasında yer
-              alıyor.
+              Flutter uygulaması production API ile uçtan uca çalışıyor. Mağaza
+              imzalama, fiziksel cihaz doğrulaması ve yayın operasyonları ürün
+              geliştirmesinden ayrı teslim adımları olarak izleniyor.
             </p>
             <Link className="light-section-link mt-7" href="/status">
               Sistem durumunu gör <span aria-hidden="true">→</span>

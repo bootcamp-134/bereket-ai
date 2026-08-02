@@ -20,11 +20,11 @@ Sprint 2'de hazırlanan mobil ve backend altyapısını gerçek tarif verisiyle 
 
 | Alan | Sprint 3 çıktısı | Durum |
 | --- | --- | --- |
-| Ürün | Sprint dokümanları, Jira takibi ve demo akışı | Devam ediyor |
+| Ürün | Sprint dokümanları, Jira takibi ve demo akışı | Tamamlandı |
 | Veri | Tarif verisi, maliyet kapsamı ve malzeme normalizasyonu | Tamamlandı |
 | Agent | Tarif önerisi ve tarife özel sohbet akışı | Backend üzerinde tamamlandı |
 | Backend | Auth, profil, tarif, öneri, sohbet ve production yayını | Tamamlandı |
-| Mobil | Mock servislerden canlı API'ye geçiş ve mağaza hazırlığı | Mobil ekipte devam ediyor |
+| Mobil | Canlı API, güvenli oturum, tarif, öneri ve sohbet entegrasyonu | Tamamlandı |
 
 ## Kabul Kriterleri
 
@@ -39,7 +39,7 @@ Sprint 2'de hazırlanan mobil ve backend altyapısını gerçek tarif verisiyle 
 
 ## Sprint Board
 
-Sprint görevleri Jira üzerinde takım tarafından takip edilmektedir. Son görüntüde backend ve veri görevleri tamamlanmış, mobil akış ve teslim işleri devam eden işler arasında yer almaktadır.
+Sprint görevleri Jira üzerinde takım tarafından takip edilmektedir. Board görüntüsü sprint kapanış anını arşivler; sonrasında tamamlanan mobil production entegrasyonu güncel teslim dokümanlarında ayrıca doğrulanmıştır.
 
 ![Sprint 3 Jira board](sprint-3-jira-board-closing.png)
 
@@ -59,4 +59,4 @@ Sprint görevleri Jira üzerinde takım tarafından takip edilmektedir. Son gör
 
 ## Sprint Çıkışı
 
-Backend, gerçek tarif verisi ve agent akışları production ortamında hazırdır. Sprint 3'ün ürün olarak kapanması için mobil uygulamanın canlı API entegrasyonu ve mobil yayın süreci tamamlanmalıdır.
+Backend, gerçek tarif verisi, agent akışları ve Flutter production entegrasyonu hazırdır. Sprint 3 ürün geliştirmesi kapanmıştır; fiziksel cihaz, production imzalama ve mağaza operasyonları release sürecinde izlenir.

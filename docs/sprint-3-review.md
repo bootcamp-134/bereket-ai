@@ -10,6 +10,10 @@
 - `api.bereket.app` ve API dokümanı yayına alındı.
 - Backend testleri, agent senaryoları ve canlı ortam kontrolleri tamamlandı.
 - `bereket.app` jüri ve ürün merkezi olarak hazırlandı.
+- Flutter mock servisleri gerçek HTTP servisleriyle değiştirildi; kayıt/giriş, profil, tarif katalog/detay, öneri ve tarif sohbeti production API'ye bağlandı.
+- Access ve refresh token'lar secure storage'a alındı; refresh mutex ve güvenli oturum kapatma tamamlandı.
+- Nullable/tahminî maliyet, API envelope ve kalıcı tarif sohbeti mobil modellerde karşılandı.
+- `flutter analyze` hatasız, 16 otomatik test başarılı ve Android release APK derlemesi tamamlandı.
 
 ## Demo Gözlemleri
 
@@ -19,15 +23,17 @@
 - Öneriler veri setindeki tariflerle sınırlıdır.
 - Tarif sohbeti seçilen tarifin malzemeleri ve adımları üzerinden yanıt vermektedir.
 - Dış model servisi kullanılamadığında temel öneri akışı devam etmektedir.
+- Flutter uygulaması emülatörde canlı API ile uçtan uca çalışmaktadır.
+- Aynı tarif yeniden açıldığında sohbet oturumu ve geçmiş mesajlar yüklenmektedir.
 
-## Devam Edenler
+## Yayın Sürecinde Devam Edenler
 
-- Flutter uygulamasındaki mock servislerin canlı API ile değiştirilmesi
-- Mobil token saklama ve yenileme akışının tamamlanması
-- Mobil cihaz üzerinde uçtan uca test
-- Android/iOS teslim sürümünün hazırlanması
+- Fiziksel Android cihaz üzerinde son uçtan uca doğrulama
+- Production application ID, Android imzalama ve mağaza yayını
+- iOS signing/build
+- Üç dakikalık jüri videosu ve liste dışı YouTube teslimi
 
-Bu maddeler mobil ekip sorumluluğundadır. Backend sözleşmesi ve canlı servisler entegrasyon için hazırdır.
+Bu maddeler ürün özelliği geliştirmesinden ayrı release ve teslim operasyonlarıdır. Mobil production entegrasyonu tamamlanmıştır.
 
 ## Gelecek İyileştirmeler
 

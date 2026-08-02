@@ -31,7 +31,19 @@ Sprint branch'leri ürünün gelişimini sırasıyla korur: `sprint-1` → `spri
 
 Backend, tarif veri seti ve öneri sistemi `api.bereket.app` üzerinde çalışmaktadır. API; kayıt/giriş, profil, tarif listeleme, tarif önerisi ve tarife özel sohbet akışlarını sunar.
 
-Flutter ekranları ve mock akış mobil branch'te bulunmaktadır. Mobil uygulamanın canlı API'ye bağlanması ve mağaza sürümünün hazırlanması mobil ekip sorumluluğundadır. Bu nedenle mevcut sürüm `v1.0.0-rc.1` olarak tutulmaktadır.
+Flutter uygulaması `mobile` branch'inde production API'ye bağlanmıştır. Kayıt/giriş, profil GET/PATCH, güvenli token saklama ve refresh mutex, tarif kataloğu ve detayı, kişiselleştirilmiş öneriler, nullable/tahminî maliyetler ve kalıcı tarife özel sohbet akışları gerçek servislerle çalışmaktadır. `flutter analyze` hatasız, 16 otomatik test başarılı ve Android release APK derlemesi tamamlanmıştır.
+
+Fiziksel cihaz doğrulaması, production uygulama kimliği/imzası, mağaza yayını ve iOS signing/build işlemleri ürün geliştirmesinden ayrı yayın adımlarıdır. Bu adımlar tamamlanana kadar sürüm `v1.0.0-rc.1` olarak korunur.
+
+## Mobil uygulama
+
+| Profil ve tercihler | Malzeme girişi | Bütçe ve alışveriş |
+| --- | --- | --- |
+| <img src="public/mobile/profile-ready.png" width="240" alt="Tamamlanmış profil ve tercihler ekranı"> | <img src="public/mobile/ingredients-start.png" width="240" alt="Ne Yesem malzeme giriş ekranı"> | <img src="public/mobile/ingredients-budget.png" width="240" alt="Seçili malzemeler ve alışveriş bütçesi ekranı"> |
+
+| Öneriler | Tarif detayı | Tarife özel asistan |
+| --- | --- | --- |
+| <img src="public/mobile/recommendations.png" width="240" alt="Kişiselleştirilmiş tarif önerileri ekranı"> | <img src="public/mobile/recipe-detail.png" width="240" alt="Tarif detay ekranı"> | <img src="public/mobile/recipe-assistant.png" width="240" alt="Tarife özel sohbet asistanı ekranı"> |
 
 ## Veri seti
 
