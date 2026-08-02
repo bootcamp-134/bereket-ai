@@ -152,6 +152,25 @@ async function main() {
     for (let offset = 0; offset < recipes.length; offset += 40) {
       const batch = recipes.slice(offset, offset + 40);
       for (const recipe of batch) {
+        const recipeIngredients = recipe.malzemeler.map((item, position) => ({
+          ingredientId: item.ingredient_id,
+          position,
+          displayName: item.isim,
+          normalizedName: normalizeTurkish(item.canonical_name ?? item.isim),
+          displayAmount: decimal(item.miktar),
+          displayUnit: item.birim,
+          quantity: decimal(item.quantity),
+          unit: item.unit,
+          costQuantity: decimal(item.cost_quantity),
+          costUnit: item.cost_unit,
+          pricePerCostUnitTry: decimal(item.price_per_cost_unit_try),
+          defaultEstimatedCostTry: decimal(item.default_estimated_cost_try),
+          costStatus: item.cost_status,
+        }));
+        const recipeSteps = recipe.yapilis_adimlari.map((text, index) => ({
+          order: index + 1,
+          text,
+        }));
         const common = {
           datasetImportId: dataset.id,
           title: recipe.tarif_adi,
@@ -181,45 +200,22 @@ async function main() {
           missingCoreIngredient: recipe.missing_core_ingredient,
           sourceMetadata: (recipe._source ?? {}) as Prisma.InputJsonValue,
         };
-        await prisma.$transaction(async (tx) => {
-          await tx.recipe.upsert({
-            where: { id: recipe.recipe_id },
-            create: { id: recipe.recipe_id, ...common },
-            update: common,
-          });
-          await tx.recipeIngredient.deleteMany({
-            where: { recipeId: recipe.recipe_id },
-          });
-          await tx.recipeStep.deleteMany({
-            where: { recipeId: recipe.recipe_id },
-          });
-          await tx.recipeIngredient.createMany({
-            data: recipe.malzemeler.map((item, position) => ({
-              recipeId: recipe.recipe_id,
-              ingredientId: item.ingredient_id,
-              position,
-              displayName: item.isim,
-              normalizedName: normalizeTurkish(
-                item.canonical_name ?? item.isim,
-              ),
-              displayAmount: decimal(item.miktar),
-              displayUnit: item.birim,
-              quantity: decimal(item.quantity),
-              unit: item.unit,
-              costQuantity: decimal(item.cost_quantity),
-              costUnit: item.cost_unit,
-              pricePerCostUnitTry: decimal(item.price_per_cost_unit_try),
-              defaultEstimatedCostTry: decimal(item.default_estimated_cost_try),
-              costStatus: item.cost_status,
-            })),
-          });
-          await tx.recipeStep.createMany({
-            data: recipe.yapilis_adimlari.map((text, index) => ({
-              recipeId: recipe.recipe_id,
-              order: index + 1,
-              text,
-            })),
-          });
+        await prisma.recipe.upsert({
+          where: { id: recipe.recipe_id },
+          create: {
+            id: recipe.recipe_id,
+            ...common,
+            ingredients: { createMany: { data: recipeIngredients } },
+            steps: { createMany: { data: recipeSteps } },
+          },
+          update: {
+            ...common,
+            ingredients: {
+              deleteMany: {},
+              createMany: { data: recipeIngredients },
+            },
+            steps: { deleteMany: {}, createMany: { data: recipeSteps } },
+          },
         });
       }
       process.stdout.write(

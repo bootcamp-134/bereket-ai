@@ -21,7 +21,8 @@
     "start:prod": "node dist/main.js",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "vercel-build": "pnpm db:deploy && pnpm db:import && pnpm build"
   },
   "dependencies": {
     "@neondatabase/serverless": "1.1.0",
