@@ -155,8 +155,54 @@ Bereket AI Backend, Bereket AI mobil uygulamasının NestJS tabanlı backend ser
 
 ---
 
+# Sprint 3
+
+**Sprint board update:** Sprint 3 boyunca görev takibi Jira Board üzerinden devam ettirilmiş, sprint başlangıcında oluşturulan backlog güncellenmiştir. Geliştirme sürecinde tamamlanan görevler düzenli olarak **Yapılacaklar / Devam Ediyor / Tamamlandı** sütunları arasında taşınmıştır. Mobil uygulama, Backend, AI, Data Science ve dokümantasyon görevleri ayrı iş kalemleri olarak takip edilmiştir. Sprint sonunda güncel Jira Board ve GitHub repo ekran görüntüleri dokümantasyona eklenmiştir.
+
+**Backlog düzeni ve Story seçimleri:** Sprint 3 backlog'u, Sprint 2 sonunda geliştirilen çalışan MVP'nin tamamlanarak son kullanıcıya hazır hale getirilmesi amacıyla oluşturulmuştur. Öncelik; Flutter mobil uygulaması ile backend servislerinin tam entegrasyonu, Recipe Match Agent'ın tamamlanması, Pantry Parser Agent ve Safety Filter Agent'ın geliştirilmesi, Recipe Chat Agent entegrasyonu, gerçek tarif veri seti kullanımı, performans optimizasyonları, hata düzeltmeleri ve kullanıcı deneyiminin iyileştirilmesine verilmiştir. Sprint kapsamında agent mimarisi tamamlanmış, uçtan uca tarif öneri akışı oluşturulmuş ve tüm story'ler geliştirici sorumluluklarına göre task'lere ayrılarak Jira üzerinde sprint etiketiyle takip edilmiştir.
+
+**Daily Scrum:** Sprint 3 boyunca Daily Scrum toplantıları takım üyelerinin uygunluk durumuna göre Zoom üzerinden gerçekleştirildi; gün içerisindeki ilerleme takibi ve karşılaşılan problemler Slack grubu üzerinden paylaşıldı. Daily Scrum notları Sprint 3 Daily Scrum Notları dokümanında kayıt altına alındı.
+
+**Ürün Durumu:** Sprint 3 sonunda Bereket AI uygulaması, kullanıcıların onboarding sürecinden tarif önerilerine kadar tüm temel akışı çalışan bir MVP olarak tamamlanmıştır. Flutter mobil uygulaması ile Backend API entegrasyonu tamamlanmış, Recipe Match Agent gerçek tarif veri seti üzerinde çalışacak şekilde geliştirilmiştir. Pantry Parser Agent sayesinde kullanıcıların serbest metin olarak girdikleri malzemeler normalize edilerek tarif eşleştirme sistemine aktarılmaktadır. Safety Filter Agent ile alerji ve diyet kısıtlamalarına uygun filtreleme yapılmakta, Agent Pipeline aracılığıyla Pantry Parser Agent → Recipe Match Agent → Safety Filter Agent akışı uçtan uca çalışmaktadır. Recipe Chat Agent entegrasyonu tamamlanmış, kullanıcılar önerilen tarifler hakkında yapay zeka destekli açıklamalar alabilmektedir. Gerçek tarif veri seti, normalize edilmiş malzeme indeksi ve fiyat verileri sisteme entegre edilmiştir. Kullanılan veri seti ve ilgili dosyalar **`data/`** klasöründe yer almakta olup, veri setinin oluşturulma süreci, yapısı ve içerdiği dosyalara ilişkin ayrıntılı açıklamalar yine **`data/README.md`** dosyasında sunulmuştur. Eksik malzemeler için alışveriş listesi oluşturulmuş, mobil uygulamada performans iyileştirmeleri, hata düzeltmeleri ve genel sistem testleri tamamlanmıştır.
+
+**Ekran Görüntüleri:**
+
+Screenshot 12
+
+Screenshot 13
+
+Screenshot 14
+
+Screenshot 15
+
+**Sprint Review:** Sprint review notları Sprint 3 Review dosyasında yer almaktadır. Sprint 3 kapsamında Flutter mobil uygulaması, NestJS backend servisleri ve AI Agent mimarisi başarıyla entegre edilmiştir. Agent kullanılarak kullanıcıların evde bulunan malzemelerine göre güvenli ve kişiselleştirilmiş tarif önerileri sunulabilmektedir. Recipe Chat Agent entegrasyonu tamamlanmış ve Bereket AI uygulamasının final MVP sürümü oluşturulmuştur.
+
+**Sprint Retrospective:** Sprint retrospective notları Sprint-3-Retrospective.md dosyasında yer almaktadır.
+
+**Sprint Panosu Güncellemesi:** Sprint panosu ekran görüntüleri:
+
+Screenshot 16
+
+Screenshot 17
+
+## Sprint 3 Çıktıları
+
+- Sprint Planı
+- Product Requirements
+- Daily Scrum Notları
+- Sprint Review
+- Sprint Retrospective
+- Demo Senaryosu
+- AI Agent Mimarisi
+- Recipe Match Agent
+- Pantry Parser Agent
+- Safety Filter Agent
+- Agent Pipeline
+- Mobile Branch
+- Backend Branch
+- Agent Branch
+- Final MVP Demo
 ---
 
-# Sprint 3
 
 ---
