@@ -21,6 +21,18 @@ Takım 134
 
 - Evdeki mevcut malzemeleri, bozulma sürelerini ve haftalık bütçeyi kullanarak en az maliyetle en az gıda israfı oluşturacak yemek planı çıkaran yapay zeka destekli mutfak planlama uygulaması. YZTA Bootcamp 2026 projesi. Sprint 1'de ürün fikrini gösteren ChatGPT tarzı Türkçe web prototipi geliştirilmiştir.
 
+## Güncel Production Durumu — 2 Ağustos 2026
+
+- Production backend `backend` branch'inde NestJS + Neon PostgreSQL ile çalışır.
+- Kalıcı API adresi: [https://api.bereket.app/api/v1](https://api.bereket.app/api/v1)
+- Swagger: [https://api.bereket.app/api/docs](https://api.bereket.app/api/docs)
+- Auth, profil, tarif, öneri ve tarife özel chat endpointleri canlıdır. Neon Auth kapalıdır; Argon2id/JWT auth backend içinde yönetilir.
+- Aktif dataset 3.005 benzersiz tarif ve 27.382 malzeme satırı içerir. 513 tarif tam, 2.492 tarif kısmi tahminî maliyetlidir.
+- Production agent OpenAI Responses API ile backend içinde çalışır. `agent` branch'i Gemini/RecipeNLG tabanlı tarihsel prototiptir ve canlı runtime değildir.
+- Flutter'ın mock modellerden gerçek HTTP client, secure token storage ve refresh mutex akışına geçişi mobil ekip teslimidir; “mobil-backend entegrasyonu tamamlandı” ifadesi henüz kullanılmamalıdır.
+
+Ayrıntılı ve doğrulanmış durum için [Production Durumu](docs/production-status.md) belgesine bakın.
+
 ## Ürün Özellikleri
 
 - Evdeki mevcut malzemeleri serbest metin veya hızlı seçim listesiyle girme
@@ -121,7 +133,7 @@ mock veriyle doğrulanmıştır.
 
 - **Ürün Durumu:** Sprint 2 sonunda uygulama, Sprint 1'de geliştirilen statik prototipe göre önemli ölçüde geliştirilmiştir. Kullanıcılar onboarding sürecini tamamlayarak hesap oluşturabilmekte; profil bilgilerini, hane bilgilerini ve bütçe tercihlerini kaydedebilmektedir. "Ne Yesem?" ekranı üzerinden malzeme ve alışveriş tercihleri girilebilmekte, tarif önerileri listelenebilmekte ve tarif detay ekranı görüntülenebilmektedir. Ayrıca kullanıcı profil ekranı geliştirilmiş ve uygulamanın temel kullanıcı akışı büyük ölçüde tamamlanmıştır.
 
-Bereket AI Backend, Bereket AI mobil uygulamasının NestJS tabanlı backend servisidir. Kullanıcı yönetimi, onboarding, tarif önerileri, profil işlemleri, sosyal akış ve başarı sistemi için gerekli REST API altyapısını sağlar. Sprint 2 kapsamında temel backend servisleri, Authentication yapısı ve Supabase entegrasyonu tamamlanmış; AI tabanlı Recipe Match Agent ve Recipe Chat Agent geliştirmelerine başlanmıştır.
+Sprint 2 sonunda mock veriyle NestJS API omurgası oluşturulmuş ve agent prototiplerine başlanmıştır. Supabase production entegrasyonu tamamlanmış değildir. Güncel production backend Neon PostgreSQL kullanır; sosyal akış ve başarı endpointleri V1 kapsamında değildir.
 
   -**Ekran Görüntüleri**:
   - ![Screenshot 8](https://github.com/bootcamp-134/bereket-ai/blob/mobile/docs/screenshots/01-welcome.png)
@@ -163,7 +175,7 @@ Bereket AI Backend, Bereket AI mobil uygulamasının NestJS tabanlı backend ser
 
 **Daily Scrum:** Sprint 3 boyunca Daily Scrum toplantıları takım üyelerinin uygunluk durumuna göre Zoom üzerinden gerçekleştirildi; gün içerisindeki ilerleme takibi ve karşılaşılan problemler Slack grubu üzerinden paylaşıldı. Daily Scrum notları Sprint 3 Daily Scrum Notları dokümanında kayıt altına alındı.
 
-**Ürün Durumu:** Sprint 3 sonunda Bereket AI uygulaması, kullanıcıların onboarding sürecinden tarif önerilerine kadar tüm temel akışı çalışan bir MVP olarak tamamlanmıştır. Flutter mobil uygulaması ile Backend API entegrasyonu tamamlanmış, Recipe Match Agent gerçek tarif veri seti üzerinde çalışacak şekilde geliştirilmiştir. Recipe Chat Agent entegrasyonu tamamlanmış, kullanıcılar önerilen tarifler hakkında yapay zeka destekli açıklamalar alabilmektedir. Gerçek tarif veri seti, normalize edilmiş malzeme indeksi ve fiyat verileri sisteme entegre edilmiştir. Kullanılan veri seti ve ilgili dosyalar **`data/`** klasöründe yer almakta olup, veri setinin oluşturulma süreci, yapısı ve içerdiği dosyalara ilişkin ayrıntılı açıklamalar yine **`data/README.md`** dosyasında sunulmuştur. Eksik malzemeler için alışveriş listesi oluşturulmuş, mobil uygulamada performans iyileştirmeleri, hata düzeltmeleri ve genel sistem testleri tamamlanmıştır.
+**Ürün Durumu:** Sprint 3 sonunda production backend, gerçek tarif dataset'i ve OpenAI tabanlı tarif öneri/chat agent'ı tamamlanmıştır. Dataset backend branch'indeki `data/recipes.json` dosyasından checksum kontrollü olarak Neon'a aktarılır. Flutter branch'inde ekran ve mock akış çalışmaları vardır; gerçek HTTP client, secure token storage, refresh mutex ve staging Maestro entegrasyonu kalan mobil teslimidir. Bu nedenle tam mobil-backend uçtan uca entegrasyonu henüz tamamlanmış kabul edilmez.
 
 **Ekran Görüntüleri:**
 
@@ -175,7 +187,7 @@ Screenshot 14
 
 Screenshot 15
 
-**Sprint Review:** Sprint review notları Sprint 3 Review dosyasında yer almaktadır. Sprint 3 kapsamında Flutter mobil uygulaması, NestJS backend servisleri ve AI Agent mimarisi başarıyla entegre edilmiştir. Agent kullanılarak kullanıcıların evde bulunan malzemelerine göre güvenli ve kişiselleştirilmiş tarif önerileri sunulabilmektedir. Recipe Chat Agent entegrasyonu tamamlanmış ve Bereket AI uygulamasının final MVP sürümü oluşturulmuştur.
+**Sprint Review:** Sprint review notları Sprint 3 Review dosyasında yer almaktadır. NestJS backend, Neon dataset importu ve OpenAI agent production ortamında doğrulanmıştır. Mobil uygulamanın gerçek API entegrasyonu ayrı teslim olarak devam etmektedir; final uçtan uca MVP bu entegrasyon ve staging Maestro testleri tamamlandığında kabul edilecektir.
 
 **Sprint Retrospective:** Sprint retrospective notları Sprint-3-Retrospective.md dosyasında yer almaktadır.
 
