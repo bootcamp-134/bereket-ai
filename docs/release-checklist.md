@@ -7,7 +7,7 @@
 - [x] Auth, refresh rotation/reuse, profil, tarif, öneri ve chat testleri
 - [x] Gerçek OpenAI preview smoke testi fallback olmadan geçti
 - [x] Dependency audit temiz
-- [ ] Production deployment ve `api.bereket.app` son smoke testi
+- [x] Production deployment ve `api.bereket.app` son smoke testi
 
 ## Web ve domain
 
@@ -15,16 +15,15 @@
 - [x] Sprint 1 mock demo ayrı rotada
 - [x] Canlı status, reset-password ve privacy rotaları
 - [x] Next.js build, lint ve production audit
-- [ ] `bereket-ai-web` Vercel projesi ve `bereket.app` domain geçişi
-- [ ] `www.bereket.app` yönlendirmesi
+- [x] `bereket-ai-web` Vercel projesi ve `bereket.app` domain geçişi
+- [x] `www.bereket.app` kalıcı `308` yönlendirmesi
 
 ## Sağlayıcılar
 
 - [x] Neon Auth kapalı
-- [x] Production + Preview Neon bağlantısı
-- [ ] Neon Development environment bağlantısı
+- [x] Production + Preview + Development Neon bağlantısı
 - [x] Resend SPF/DKIM gönderim domain’i
-- [ ] DMARC kaydı ve teslim edilen reset e-postası doğrulaması
+- [x] DMARC kaydı ve kontrollü Resend teslimat smoke testi
 
 ## Mobil kapanış
 
