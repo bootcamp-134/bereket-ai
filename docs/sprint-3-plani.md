@@ -41,7 +41,7 @@ Sprint 2'de hazırlanan mobil ve backend altyapısını gerçek tarif verisiyle 
 
 Sprint görevleri Jira üzerinde takım tarafından takip edilmektedir. Son görüntüde backend ve veri görevleri tamamlanmış, mobil akış ve teslim işleri devam eden işler arasında yer almaktadır.
 
-![Sprint 3 Jira board](3SprintJira2.png)
+![Sprint 3 Jira board](sprint-3-jira-board-closing.png)
 
 ## Kapsam Dışı
 

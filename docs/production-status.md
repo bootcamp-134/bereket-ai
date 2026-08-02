@@ -56,7 +56,7 @@ Feed ve achievements V1 kapsamında değildir.
 
 - `backend`: production backend ve production agent.
 - `mobile`: Flutter istemci geliştirmesi; gerçek API/token entegrasyonu tamamlanmayı bekliyor.
-- `agent`: Gemini/RecipeNLG tabanlı tarihsel Python prototipi; production runtime değil.
+- `archive/agent-gemini-prototype`: Gemini/RecipeNLG tabanlı tarihsel Python prototipinin arşiv etiketi; production runtime değil.
 - `sprint-1`: ilk Next.js mock prototipi.
 - `sprint-2`: Sprint 1 üzerine kurulan mobil fikir ve mock backend kaydı.
 - `sprint-3`: jüri merkezi, güncel ürün ve sprint dokümantasyonu; default branch.

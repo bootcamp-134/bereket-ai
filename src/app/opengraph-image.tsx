@@ -13,8 +13,8 @@ export default function OpenGraphImage() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background: "#07130f",
-        color: "#f5f5f4",
+        background: "#000000",
+        color: "#fafafa",
         padding: "72px 80px",
         fontFamily: "sans-serif",
       }}
@@ -24,12 +24,12 @@ export default function OpenGraphImage() {
           style={{
             width: 64,
             height: 64,
-            borderRadius: 20,
+            borderRadius: 10,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "#6ee7b7",
-            color: "#052e22",
+            background: "#ffffff",
+            color: "#000000",
             fontSize: 34,
             fontWeight: 800,
           }}
@@ -37,9 +37,7 @@ export default function OpenGraphImage() {
           B
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span style={{ fontSize: 28, fontWeight: 700, letterSpacing: 5 }}>
-            BEREKET AI
-          </span>
+          <span style={{ fontSize: 28, fontWeight: 700 }}>Bereket AI</span>
           <span style={{ marginTop: 6, color: "#78716c", fontSize: 18 }}>
             YZTA Bootcamp 2026 · Takım 134
           </span>
@@ -63,7 +61,7 @@ export default function OpenGraphImage() {
             lineHeight: 1.02,
             fontWeight: 760,
             letterSpacing: -4,
-            color: "#6ee7b7",
+            color: "#737373",
           }}
         >
           daha akıllı planla.
