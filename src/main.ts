@@ -1,62 +1,28 @@
-import { ValidationPipe } from "@nestjs/common";
+import { Logger, RequestMethod, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 import { AppModule } from "./app.module";
+import { APP_VERSION } from "./common/app-version";
 import { ApiExceptionFilter } from "./common/api-exception.filter";
-
-function requireProductionEnvironment() {
-  if (process.env.NODE_ENV !== "production") return;
-  const required = [
-    "DATABASE_URL",
-    "JWT_ACCESS_SECRET",
-    "REFRESH_TOKEN_PEPPER",
-    "PASSWORD_RESET_TOKEN_PEPPER",
-    "OPENAI_API_KEY",
-    "RESEND_API_KEY",
-  ];
-  const missing = required.filter((name) => !process.env[name]);
-  if (missing.length)
-    throw new Error(
-      `Eksik production environment değişkenleri: ${missing.join(", ")}`,
-    );
-}
-
-function corsOrigins() {
-  const configured = (process.env.CORS_ORIGINS ?? process.env.CORS_ORIGIN ?? "")
-    .split(",")
-    .map((origin) => origin.trim())
-    .filter(Boolean);
-  return new Set([
-    "https://bereket.app",
-    "https://www.bereket.app",
-    ...configured,
-  ]);
-}
+import {
+  configuredCorsOrigins,
+  createCorsOriginGuard,
+} from "./common/cors-origin.middleware";
+import { validateEnvironment } from "./config/environment";
 
 async function bootstrap() {
-  requireProductionEnvironment();
+  validateEnvironment(process.env);
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const logger = new Logger("Bootstrap");
   app.use(helmet({ contentSecurityPolicy: false }));
-  app.setGlobalPrefix("api/v1");
-  const allowedOrigins = corsOrigins();
+  app.setGlobalPrefix("api/v1", {
+    exclude: [{ path: "", method: RequestMethod.GET }],
+  });
+  app.use(createCorsOriginGuard(configuredCorsOrigins(), logger));
   app.enableCors({
     credentials: true,
-    origin(
-      origin: string | undefined,
-      callback: (error: Error | null, allow?: boolean) => void,
-    ) {
-      if (
-        !origin ||
-        allowedOrigins.has(origin) ||
-        (process.env.NODE_ENV !== "production" &&
-          /^http:\/\/localhost:\d+$/.test(origin))
-      ) {
-        callback(null, true);
-        return;
-      }
-      callback(new Error("CORS origin reddedildi."), false);
-    },
+    origin: true,
   });
   app.useGlobalFilters(new ApiExceptionFilter());
   app.useGlobalPipes(
@@ -74,7 +40,7 @@ async function bootstrap() {
       .setDescription(
         "Bereket AI production auth, recipe recommendation and recipe chat API.",
       )
-      .setVersion("1.0.0")
+      .setVersion(APP_VERSION)
       .addServer("https://api.bereket.app", "Production")
       .addBearerAuth()
       .build();

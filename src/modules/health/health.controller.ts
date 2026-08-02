@@ -1,6 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Public } from "../../common/public.decorator";
+import { APP_VERSION } from "../../common/app-version";
 import { PrismaService } from "../../database/prisma.service";
 
 @Public()
@@ -19,7 +20,7 @@ export class HealthController {
     return {
       name: "bereket-ai-backend",
       status: "ok",
-      version: process.env.npm_package_version ?? "0.1.0",
+      version: APP_VERSION,
       database: "ok",
       dataset: dataset
         ? {

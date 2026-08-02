@@ -90,6 +90,13 @@ Süre, porsiyon ve maliyet alanları dataset eksikse `null` olabilir. `estimated
 
 Oturum başka kullanıcıya aitse bilgi sızdırmadan `404` döner. Agent yalnız seçili tarif ve son 10 mesajı kullanır; web/tool erişimi yoktur. Fallback yanıtlarında `assistantMessage.fallback=true` olur.
 
+## Agent çalışma sınırları
+
+- Deterministic katman önce alerjen ve bütçe hard-filter’larını uygular, OpenAI en fazla 15 güvenli adayı yeniden sıralar.
+- Modelin döndürdüğü her `recipeId` aday listesine karşı tekrar doğrulanır; geçersiz veya boş çıktı fallback üretir.
+- Kullanıcıya ait ham kimlik OpenAI’ye gönderilmez; HMAC tabanlı tek yönlü safety identifier kullanılır.
+- Aylık maliyet limiti her çağrıdan önce PostgreSQL üzerinde atomik rezervasyonla korunur. Model hatasında rezervasyon iade edilir.
+
 ## Flutter entegrasyon notları — Anıl
 
 - Base URL ve modelleri bu sözleşmeden üret; eski mock `/api` ve `PUT /me/onboarding` çağrılarını kaldır.

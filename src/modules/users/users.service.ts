@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import type { IncomeLevel, UserProfile } from "@prisma/client";
 import { ApiCode } from "../../common/api-code";
+import { profileComplete } from "../../common/profile-complete";
 import type { UpdateProfileDto } from "./dto";
 import { UsersRepository } from "./users.repository";
 
@@ -45,6 +46,7 @@ export class UsersService {
       id: user.id,
       email: user.email,
       profile: serializeProfile(user.profile),
+      profileComplete: profileComplete(user.profile),
       createdAt: user.createdAt,
     };
   }

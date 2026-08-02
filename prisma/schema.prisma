@@ -244,6 +244,15 @@ model AiUsage {
   @@index([userId, createdAt])
 }
 
+model AiBudgetPeriod {
+  periodStart  DateTime @id @db.Date
+  limitUsd     Decimal  @db.Decimal(12, 8)
+  remainingUsd Decimal  @db.Decimal(12, 8)
+  spentUsd     Decimal  @default(0) @db.Decimal(12, 8)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 model RateLimitBucket {
   key         String
   windowStart DateTime

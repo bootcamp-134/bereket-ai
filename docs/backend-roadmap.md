@@ -2,16 +2,17 @@
 
 ## Backend kapsamı
 
-Bu branch gerçek Neon/PostgreSQL repository’leri, Argon2id/JWT/refresh rotation auth, Resend parola sıfırlama, checksum import, tarif API’si, güvenli deterministic recommendation, OpenAI structured-output rerank, kalıcı tarif sohbeti, rate-limit ve standart envelope içerir.
+`backend` branch’i gerçek Neon/PostgreSQL repository’leri, Argon2id/JWT/refresh rotation auth, Resend parola sıfırlama, checksum import, tarif API’si, güvenli deterministic recommendation, OpenAI structured-output rerank, kalıcı tarif sohbeti, rate-limit, atomik AI bütçe rezervasyonu ve standart envelope içerir.
 
 V1’de feed ve achievements yoktur. `agent` branch’indeki Gemini/RecipeNLG kodu tarihsel prototiptir ve production runtime’a merge edilmez.
 
 ## Test kapıları
 
 - Unit: normalization, alerjen inference, DTO kuralları, refresh reuse/concurrency ve reset concurrency.
-- API contract/E2E: JWT koruması, error envelope ve endpoint allowlist.
-- PostgreSQL integration: migration, idempotent import, checksum/sayılar, nullable maliyet, chat ownership, transaction ve rate-limit.
-- Agent eval: 30 Türkçe alerjen, bütçe, prompt injection, geçersiz ID, privacy ve fallback vakası.
+- API contract/E2E: JWT koruması, error envelope, endpoint allowlist ve API kökü yönlendirmesi.
+- Tam API E2E: register, profil, tarif, öneri, chat ownership, chat mesajı, refresh rotation/reuse ve forgot-password gizliliği.
+- PostgreSQL integration: migration, idempotent import, checksum/sayılar, nullable maliyet, chat ownership, transaction, rate-limit ve eşzamanlı AI bütçe rezervasyonu.
+- Agent eval: 30 Türkçe alerjen, bütçe, prompt injection, geçersiz ID, privacy ve fallback fixture’ı; kritik kurallar fake OpenAI davranış testleriyle doğrulanır.
 - CI: fake/no-op OpenAI ve Resend, gerçek PostgreSQL service; hiçbir provider secret’ı gerekmez.
 - Release: kontrollü hesapla gerçek OpenAI ve Resend smoke testi.
 
@@ -40,15 +41,15 @@ V1’de feed ve achievements yoktur. `agent` branch’indeki Gemini/RecipeNLG ko
 
 ### Samet — altyapı ve release
 
-- Neon Auth kapalı, preview branching ve Frankfurt ayarlarını koruma.
-- Resend `bereket.app` SPF/DKIM ve Vercel env yönetimi.
+- Neon Auth kapalı, preview branching ve Frankfurt ayarlarını koruma; Development environment bağlantısını ayrıca açma.
+- Resend `mail.bereket.app` SPF/DKIM, DMARC ve Vercel env yönetimi.
 - Preview migration/import, live smoke, log taraması ve `backend` release’i.
 
 ## Branch stratejisi
 
 - `backend`: production backend.
-- `codex/backend-production-ready`: doğrulama/preview branch’i.
-- default branch: production durumunu ve gerçek dataset sayılarını anlatan ayrı documentation PR.
+- `release/*`: yalnız PR ve preview süresince yaşayan geçici backend release branch’i; merge sonrası silinir.
+- `sprint-3`: production durumunu ve gerçek dataset sayılarını anlatan default branch.
 - `agent`: Gemini/RecipeNLG’nin tarihsel prototip olduğunu belirten ayrı documentation PR.
 
-Branch geçmişleri topluca merge edilmez.
+`codex/*` branch tutulmaz. Sprint geçmişi `sprint-1` → `sprint-2` → `sprint-3` şeklinde kümülatiftir; mobil branch’i backend çalışmasında değiştirilmez.

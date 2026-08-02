@@ -96,4 +96,38 @@ integration("PostgreSQL migration and dataset integration", () => {
       await prisma.rateLimitBucket.deleteMany({ where: { key } });
     }
   });
+
+  it("reserves the monthly AI budget atomically under concurrency", async () => {
+    const periodStart = new Date("2099-01-01T00:00:00.000Z");
+    try {
+      await prisma.aiBudgetPeriod.create({
+        data: {
+          periodStart,
+          limitUsd: "0.01000000",
+          remainingUsd: "0.01000000",
+        },
+      });
+      const reservations = await Promise.all(
+        Array.from(
+          { length: 5 },
+          () =>
+            prisma.$queryRaw<Array<{ periodStart: Date }>>`
+            UPDATE "AiBudgetPeriod"
+            SET "remainingUsd" = "remainingUsd" - 0.006,
+                "updatedAt" = CURRENT_TIMESTAMP
+            WHERE "periodStart" = ${periodStart}
+              AND "remainingUsd" >= 0.006
+            RETURNING "periodStart"
+          `,
+        ),
+      );
+      expect(reservations.filter((rows) => rows.length === 1)).toHaveLength(1);
+      const period = await prisma.aiBudgetPeriod.findUniqueOrThrow({
+        where: { periodStart },
+      });
+      expect(Number(period.remainingUsd)).toBeCloseTo(0.004, 8);
+    } finally {
+      await prisma.aiBudgetPeriod.deleteMany({ where: { periodStart } });
+    }
+  });
 });

@@ -1,8 +1,9 @@
 {
   "name": "bereket-ai-backend",
-  "version": "0.1.0",
+  "version": "1.0.0-rc.1",
   "private": true,
   "description": "Bereket AI mobile app backend API",
+  "packageManager": "pnpm@10.34.5",
   "engines": {
     "node": "24.x"
   },
@@ -17,6 +18,7 @@
     "lint": "tsc --noEmit",
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
+    "prisma:validate": "prisma validate",
     "start": "node dist/main.js",
     "start:prod": "node dist/main.js",
     "test": "vitest run",
