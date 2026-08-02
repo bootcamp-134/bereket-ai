@@ -77,7 +77,7 @@ export default function OpenGraphImage() {
             lineHeight: 1.4,
           }}
         >
-          Gerçek tarif verisi, güvenli agent mimarisi ve production backend.
+          Evdeki malzemeler ve bütçeye göre akıllı tarif önerileri.
         </span>
       </div>
     </div>,

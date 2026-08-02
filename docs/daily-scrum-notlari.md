@@ -140,18 +140,18 @@ Sprint boyunca ekip üyeleri kendi sorumluluk alanlarındaki son geliştirmeleri
 |------|------|--------|
 | **Sıla KARATAŞ** | Product Owner | Sprint Backlog'u ve Jira Board'u güncelledi, Daily Scrum notlarını hazırladı, Sprint Review ve Sprint Retrospective dokümanlarını oluşturdu, README dosyasını düzenledi, GitHub deposunun son düzenlemelerini gerçekleştirdi, test senaryolarını tamamladı, 3 dakikalık proje tanıtım videosu ile ürün teslim formlarının hazırlanma sürecini koordine etti ve proje teslimini yönetti. |
 | **Burak BAŞODA** | Data Scientist | Tarif veri setini son hâline getirdi, maliyet hesaplama yapısını tamamladı, veri doğrulama ve benchmark çalışmalarını güncelledi. |
-| **Ceren KARABAĞ** | AI Engineer | Agent geliştirmelerini tamamladı, agent entegrasyonlarını gerçekleştirdi ve yapay zekâ akışlarını son hâline getirdi. |
-| **Anıl DİNÇ** | Mobile Developer | Mobil uygulamanın backend entegrasyonlarını tamamladı, kullanıcı arayüzü iyileştirmelerini gerçekleştirdi ve uygulamayı teslim sürümüne hazırladı. |
-| **Samet DÖNMEZ** | Backend Developer | API geliştirmelerini tamamladı, veritabanı yapılandırmasını son hâline getirdi, frontend-backend entegrasyonlarını tamamladı ve sistem testlerini gerçekleştirdi. |
+| **Ceren KARABAĞ** | AI Engineer | Agent akışlarının kalite senaryoları ve kullanıcı sorularına verilecek yanıtların değerlendirme ölçütleri üzerinde çalıştı. |
+| **Anıl DİNÇ** | Mobile Developer | Mobil arayüz iyileştirmelerini sürdürdü; canlı backend entegrasyonu mobil ekip işi olarak devam ediyor. |
+| **Samet DÖNMEZ** | Backend Developer | Production API'yi, veritabanı aktarımını, tarif önerisi ve tarif sohbeti akışlarını tamamladı; canlı ortam ve sistem testlerini gerçekleştirdi. |
 
-> **Not:** Sprint boyunca tamamlanan geliştirmeler düzenli Daily Scrum toplantıları ve Slack üzerinden takip edilmiş, proje teslimine yönelik son kontroller gerçekleştirilmiştir. Sprint sonunda 3 dakikalık proje tanıtım videosu hazırlanmış, ürün teslim formları tamamlanmış ve proje başarıyla teslim edilmiştir.
+> **Not:** Sprint boyunca geliştirmeler Daily Scrum toplantıları ve Slack üzerinden takip edilmiştir. Backend ve agent canlı ortamda hazırdır; mobil entegrasyon ve teslim hazırlıkları devam etmektedir.
 
 ---
 
 ## Engel Notları
 
-- Backend, mobil uygulama ve AI servisleri arasındaki entegrasyon süreçlerinde ortaya çıkan küçük uyumsuzluklar giderildi.
+- Backend ile mobil uygulama arasındaki ortak veri sözleşmesi netleştirildi; canlı mobil entegrasyon henüz kapanmadı.
 - Veri seti ve maliyet hesaplama yapısı son kez doğrulanarak sistemle uyumlu hâle getirildi.
 - Teslim öncesinde kullanıcı senaryoları ve temel fonksiyon testleri tamamlandı.
-- 3 dakikalık tanıtım videosu ve ürün teslim dokümanları ekip koordinasyonu ile zamanında tamamlandı.
-- Sprint sonunda planlanan tüm hedefler tamamlanmış ve proje teslime hazır hâle getirilmiştir.
+- Tanıtım videosu ve ürün teslim dokümanları için hazırlıklar sürdürülmektedir.
+- Backend ve agent hedefleri tamamlandı; mobil entegrasyon tamamlandığında ürün teslim akışı kapanacaktır.

@@ -1,72 +1,54 @@
 # Bereket AI
 
-Bereket AI; evdeki malzemeleri, haftalık bütçeyi ve kullanıcının belirttiği alerjenleri birlikte değerlendirerek güvenli, açıklanabilir ve ekonomik tarifler öneren yapay zekâ destekli mutfak asistanıdır. Google Yapay Zeka ve Teknoloji Akademisi Bootcamp 2026 kapsamında Takım 134 tarafından geliştirilmektedir.
+Bereket AI, evdeki malzemeleri, haftalık bütçeyi ve yemek tercihlerini birlikte değerlendirerek uygun tarifler öneren bir mutfak asistanıdır. Google Yapay Zeka ve Teknoloji Akademisi Bootcamp 2026 kapsamında Takım 134 tarafından geliştirilmektedir.
 
-## Canlı sistem
+## Canlı bağlantılar
 
-| Yüzey | Adres | Durum |
-| --- | --- | --- |
-| Jüri ve ürün merkezi | [bereket.app](https://bereket.app) | Sprint 3 RC |
-| Production API | [api.bereket.app/api/v1](https://api.bereket.app/api/v1/health) | Canlı |
-| Swagger | [api.bereket.app/api/docs](https://api.bereket.app/api/docs) | Canlı |
-| Sprint 1 mock demo | [bereket.app/sprint-1-demo](https://bereket.app/sprint-1-demo) | Tarihsel demo |
+| İçerik | Adres |
+| --- | --- |
+| Jüri ve ürün merkezi | [bereket.app](https://bereket.app) |
+| Canlı API durumu | [api.bereket.app/api/v1/health](https://api.bereket.app/api/v1/health) |
+| API dokümanı | [api.bereket.app/api/docs](https://api.bereket.app/api/docs) |
+| Sprint 1 demosu | [bereket.app/sprint-1-demo](https://bereket.app/sprint-1-demo) |
 
-Neon Auth kapalıdır. Kimlik doğrulama NestJS içinde Argon2id, kısa ömürlü JWT access token ve opaque refresh-token rotation ile yönetilir. Production agent OpenAI Responses API ve structured output kullanır; `agent` branch’i Gemini/RecipeNLG tabanlı tarihsel prototiptir.
+## Ürün ne yapıyor?
 
-## Üç sprintlik ürün hikâyesi
+- Kullanıcı hesabı, profil, hane ve bütçe bilgilerini yönetir.
+- Evdeki malzemeleri tarif kataloğuyla karşılaştırır.
+- Bütçe, yemek tercihi ve alerjen bilgisine göre uygun tarifleri sıralar.
+- Seçilen tarif hakkında tarife bağlı sohbet desteği sunar.
+- Eksik veya tahminî maliyet bilgisini kesin fiyat gibi göstermez.
 
-- `sprint-1`: ChatGPT benzeri Next.js/shadcn web prototipi, hazır sorular ve statik plan verisi.
-- `sprint-2`: Sprint 1’in üzerine Flutter ürün akışı ve mock NestJS backend omurgası.
-- `sprint-3`: Sprint 2’nin üzerine gerçek Neon verisi, production auth, güvenli OpenAI agent, tarif sohbeti ve jüri merkezi.
+## Üç sprintlik gelişim
 
-Bu üç branch kümülatiftir: `sprint-1` → `sprint-2` → `sprint-3`. Varsayılan branch `sprint-3` olmalıdır. Mobil kod yalnız `mobile`, production backend yalnız `backend` branch’inde geliştirilir.
+- **Sprint 1:** Next.js ve shadcn/ui ile hazırlanan, sabit veriler kullanan web prototipi.
+- **Sprint 2:** Flutter kullanıcı akışları ve mobil uygulamanın kullanabileceği mock backend.
+- **Sprint 3:** Gerçek tarif verisi, kullanıcı sistemi, canlı öneri servisi, tarif sohbeti ve production altyapısı.
 
-## Production mimarisi
+Sprint branch'leri ürünün gelişimini sırasıyla korur: `sprint-1` → `sprint-2` → `sprint-3`.
 
-```text
-Flutter mobile
-    │ HTTPS + JWT
-    ▼
-NestJS API · Vercel fra1
-    ├── Neon PostgreSQL · Frankfurt
-    ├── Resend · parola sıfırlama
-    └── Deterministic safety filters
-            │ en fazla 15 güvenli aday
-            ▼
-        OpenAI Responses API
-            │ structured rerank
-            ▼
-        Recipe ID tekrar doğrulama
-```
+## Güncel teslim durumu
 
-OpenAI’ye parola, token, e-posta veya kullanıcı entity’si gönderilmez. Alerjen ve bütçe hard-filter’ları model çağrısından önce çalışır. Model hatası, timeout, rate limit, geçersiz çıktı veya aylık bütçe sınırında deterministic fallback devreye girer.
+Backend, tarif veri seti ve öneri sistemi `api.bereket.app` üzerinde çalışmaktadır. API; kayıt/giriş, profil, tarif listeleme, tarif önerisi ve tarife özel sohbet akışlarını sunar.
 
-## Doğrulanmış veri seti
+Flutter ekranları ve mock akış mobil branch'te bulunmaktadır. Mobil uygulamanın canlı API'ye bağlanması ve mağaza sürümünün hazırlanması mobil ekip sorumluluğundadır. Bu nedenle mevcut sürüm `v1.0.0-rc.1` olarak tutulmaktadır.
 
-| Ölçüm | Değer |
-| --- | ---: |
-| SHA-256 | `63c0fdf21fe854477d31aa803de9be61e901a6b6ed37609217db9b71b3278c9b` |
-| Benzersiz tarif | 3.005 |
-| Malzeme satırı | 27.382 |
-| Fiyatlandırılmış satır | 21.331 |
-| Tam maliyetli tarif | 513 |
-| Kısmi maliyetli tarif | 2.492 |
+## Veri seti
 
-Eksik fiyatlar `0` yapılmaz; nullable kalır. Maliyetler tahminî, alerjen verisi muhafazakâr biçimde çıkarılmış ve `inferred` olarak işaretlenmiştir.
+Canlı sistemde 3.005 benzersiz tarif ve 27.382 malzeme satırı bulunmaktadır. Maliyet bilgisi bulunan malzemeler tahminî değer olarak kullanılır; eksik fiyatlar sıfır kabul edilmez.
 
-## Branch haritası
+Ayrıntılı veri istatistikleri ve doğrulama bilgileri [production durum belgesinde](docs/production-status.md) yer alır.
 
-| Branch | Sorumluluk | Production |
-| --- | --- | --- |
-| `sprint-1` | İlk web mock prototipi | Hayır |
-| `sprint-2` | Kümülatif Sprint 2 proje kaydı | Hayır |
-| `sprint-3` | Jüri merkezi ve güncel proje dokümantasyonu | `bereket.app` |
-| `backend` | NestJS, Prisma, Neon, OpenAI, Resend | `api.bereket.app` |
-| `mobile` | Flutter istemci | Mobil release |
-| `agent` | Tarihsel Gemini/Python prototipi | Hayır |
-| `test/maestro-e2e` | Mobil staging E2E çalışması | Hayır |
+## Branch yapısı
 
-`codex/*`, `backend-django` ve eski birleşik sprint branch’i kalıcı proje branch’i değildir.
+| Branch | İçerik |
+| --- | --- |
+| `sprint-1` | İlk web prototipi |
+| `sprint-2` | Mobil tasarım ve mock backend aşaması |
+| `sprint-3` | Jüri merkezi ve güncel proje dokümantasyonu |
+| `backend` | Canlı NestJS API ve öneri sistemi |
+| `mobile` | Flutter uygulaması |
+| `agent` | İlk agent araştırmalarının tarihsel kaydı |
 
 ## Takım 134
 
@@ -76,11 +58,7 @@ Eksik fiyatlar `0` yapılmaz; nullable kalır. Maliyetler tahminî, alerjen veri
 - Anıl DİNÇ — Flutter
 - Samet DÖNMEZ — Backend ve platform
 
-## Release gerçeği
-
-Backend, veri importu ve production agent hazırdır. Flutter ekranları ve mock akış çalışmaları mevcuttur; gerçek HTTP client, secure token storage, refresh mutex ve staging Maestro senaryosu mobil ekip teslimidir. Bu işler tamamlanana kadar release `v1.0.0-rc.1` olarak tanımlanır.
-
-## Yerel jüri web’i
+## Yerel çalıştırma
 
 Node.js 24 ve pnpm 10.34.5 gerekir.
 
@@ -89,22 +67,15 @@ pnpm install
 pnpm dev
 pnpm lint
 pnpm build
-pnpm audit --prod
 ```
-
-`API_BASE_URL` varsayılan olarak `https://api.bereket.app/api/v1` kullanır. Secret değeri değildir.
 
 ## Dokümantasyon
 
-- [Doğrulanmış production durumu](docs/production-status.md)
-- [Production mimarisi](docs/architecture.md)
-- [Release candidate kontrol listesi](docs/release-checklist.md)
-- [Sprint 1 mock demo kapsamı](docs/sprint-1-mock-demo.md)
-- [Sprint 1 plan/review/retrospective](docs/sprint-1-plani.md)
-- [Sprint 2 plan/review/retrospective](docs/sprint-2-plani.md)
-- [Sprint 3 plan/review/retrospective](docs/sprint-3-plani.md)
+- [Sprint 1 planı](docs/sprint-1-plani.md), [review](docs/sprint-1-review.md), [retrospective](docs/sprint-1-retrospective.md)
+- [Sprint 2 planı](docs/sprint-2-plani.md), [review](docs/sprint-2-review.md), [retrospective](docs/sprint-2-retrospective.md)
+- [Sprint 3 planı](docs/sprint-3-plani.md), [review](docs/sprint-3-review.md), [retrospective](docs/sprint-3-retrospective.md)
+- [Daily Scrum notları](docs/daily-scrum-notlari.md)
 - [Ürün gereksinimleri](docs/product-requirements.md)
 - [Demo senaryosu](docs/demo-senaryosu.md)
-- [Planlama algoritması](docs/planlama-algoritmasi.md)
-
-Provider secret’ları, kullanıcı verileri ve gerçek tokenlar repository dokümantasyonuna yazılmaz.
+- [Teknik mimari](docs/architecture.md)
+- [Canlı sistem durumu](docs/production-status.md)

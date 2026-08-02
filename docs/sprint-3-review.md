@@ -1,38 +1,37 @@
-## Sprint 3 Review
+# Sprint 3 Review
 
-### Tamamlananlar
+## Tamamlananlar
 
-- Sprint 2 sonunda planlanan frontend ve backend entegrasyonu başarıyla tamamlandı.
-- Mobil uygulama ile backend servisleri arasında uçtan uca veri akışı sağlandı.
-- Kullanıcı kayıt, giriş ve kimlik doğrulama sistemi tamamlandı.
-- Onboarding, profil oluşturma, hane bilgileri ve bütçe yönetimi backend ile entegre edildi.
-- "Ne Yesem?" ekranı üzerinden girilen malzemeler kullanılarak JSON formatındaki tarif veri seti üzerinden dinamik tarif önerileri oluşturuldu.
-- Recipe Match Agent uygulamaya entegre edilerek kullanıcıya kişiselleştirilmiş tarif önerileri sunuldu.
-- Recipe Chat Agent tarif detay ekranına entegre edilerek kullanıcıların tarif hakkında yapay zekâ desteği alması sağlandı.
-- Tarif detay ekranı, profil ekranı ve temel kullanıcı akışı başarıyla tamamlandı.
-- API servisleri, mobil uygulama ve AI bileşenleri entegre edilerek sistem uçtan uca çalışır hâle getirildi.
-- Sprint Backlog'u, Jira Board, kullanıcı akışları, demo senaryoları ve proje dokümantasyonları güncellendi.
-- Proje planlanan kapsam doğrultusunda başarıyla tamamlanarak teslim edildi.
+- Production kullanıcı sistemi; kayıt, giriş, token yenileme, çıkış ve parola sıfırlama akışlarıyla tamamlandı.
+- Profil, hane, bütçe, yemek tercihi ve alerjen bilgileri için API'ler hazırlandı.
+- 3.005 benzersiz tarif ve 27.382 malzeme satırı Neon veritabanına aktarıldı.
+- Malzeme eşleştirme, bütçe ve alerjen kontrolleri gerçek tarif verisiyle çalışır hâle getirildi.
+- Tarif önerisi ve tarife özel sohbet akışları canlı backend üzerinde tamamlandı.
+- `api.bereket.app` ve API dokümanı yayına alındı.
+- Backend testleri, agent senaryoları ve canlı ortam kontrolleri tamamlandı.
+- `bereket.app` jüri ve ürün merkezi olarak hazırlandı.
 
-### Demo Gözlemleri
+## Demo Gözlemleri
 
-- Kullanıcı uygulamaya kayıt olup giriş yapabilmektedir.
-- Onboarding süreci tamamlanarak profil, hane bilgileri ve bütçe tercihleri sisteme kaydedilebilmektedir.
-- Kullanıcı "Ne Yesem?" ekranı üzerinden evde bulunan malzemeleri sisteme girebilmektedir.
-- Sistem, JSON formatındaki tarif veri setini kullanarak uygun tarif önerilerini oluşturabilmektedir.
-- Kullanıcı önerilen tariflerin detaylarını görüntüleyebilmektedir.
-- Recipe Chat Agent üzerinden tarif hakkında yapay zekâ destekli yardım alınabilmektedir.
-- Mobil uygulama, backend servisleri ve AI bileşenleri entegre şekilde çalışmaktadır.
-- Proje kapsamında belirlenen temel kullanıcı akışı başarıyla tamamlanmış ve demo senaryosu sorunsuz şekilde gerçekleştirilmiştir.
+- Sağlık kontrolü canlı veritabanını ve aktif tarif sayısını doğrulamaktadır.
+- Kullanıcı hesabı ve profil akışları API üzerinden uçtan uca çalışmaktadır.
+- Farklı malzeme ve bütçe girdileri farklı tarif listeleri üretmektedir.
+- Öneriler veri setindeki tariflerle sınırlıdır.
+- Tarif sohbeti seçilen tarifin malzemeleri ve adımları üzerinden yanıt vermektedir.
+- Dış model servisi kullanılamadığında temel öneri akışı devam etmektedir.
 
-### Kapsam Dışı Kalanlar
+## Devam Edenler
 
-Proje kapsamında belirlenen temel hedefler tamamlanarak teslim edilmiştir. Aşağıdaki geliştirmeler proje kapsamı dışında değerlendirilmiş olup gelecekte yapılabilecek iyileştirmeler olarak planlanabilir:
+- Flutter uygulamasındaki mock servislerin canlı API ile değiştirilmesi
+- Mobil token saklama ve yenileme akışının tamamlanması
+- Mobil cihaz üzerinde uçtan uca test
+- Android/iOS teslim sürümünün hazırlanması
 
-- Daha büyük ve zengin tarif veri setlerinin kullanılması
-- Gelişmiş öneri algoritmaları ile tarif eşleştirme doğruluğunun artırılması
-- Gerçek zamanlı market fiyat entegrasyonu
-- Barkod veya fiş okuma desteği
-- Gelişmiş kişiselleştirilmiş öneri sistemi
-- Çoklu dil desteği
-- Performans ve ölçeklenebilirlik optimizasyonları
+Bu maddeler mobil ekip sorumluluğundadır. Backend sözleşmesi ve canlı servisler entegrasyon için hazırdır.
+
+## Gelecek İyileştirmeler
+
+- Gerçek kullanıcı geri bildirimiyle öneri kalitesinin ölçülmesi
+- Maliyet verisi kapsamının artırılması
+- Daha ayrıntılı alerjen doğrulaması
+- Canlı market fiyatı için uygun ve izinli bir veri kaynağı bulunması

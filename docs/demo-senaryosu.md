@@ -1,87 +1,57 @@
-# Demo Senaryosu-1
+# Demo Senaryoları
 
-## Amaç
+## Sprint 1 — Fikrin Gösterimi
 
-Bu senaryo, Bereket AI'nın evdeki malzemeler ve bütçeye göre yemek planı oluşturma fikrini Sprint 1 prototipi üzerinden göstermek için hazırlanmıştır.
+### Amaç
 
-## Örnek Girdi
+Evdeki malzeme ve bütçeye göre yemek planlama fikrini sabit verili web prototipiyle anlatmak.
 
-```text
-Evde patates, soğan, tavuk, yoğurt, makarna, domates, pirinç ve yumurta var.
-5 kişilik aile.
-5 günlük plan.
-Haftalık bütçe 900 TL.
-Bozulabilecek ürünler önce kullanılsın.
-```
+### Akış
 
-## Beklenen Çıktı
+1. Hazır sorulardan biri seçilir.
+2. Beş günlük örnek plan ve alışveriş listesi gösterilir.
+3. Bütçe, israf ve kiler kullanımı skorları incelenir.
+4. Tema değiştirme ve sohbet temizleme gösterilir.
 
-- 5 günlük yemek planı (Tavuklu Makarna, Yoğurtlu Patates, Domatesli Makarna, Tavuklu Patates Yemeği, Sebzeli Makarna)
-- Kullanılan mevcut malzemeler
-- Eksik alışveriş listesi (Krema, Maydanoz, Salça, Biber)
-- Tahmini ek maliyet: ₺155
-- İsrafı azaltma açıklaması
-- Bütçe uyumu, israf azaltma ve kiler kullanımı skorları
+Bu demo yalnız Sprint 1'e ait örnek veri kullanır.
 
-## Sunum Akışı
+## Sprint 2 — Mobil Ürün Akışı
 
-1. Ana ekrandaki hazır promptlardan biri seçilir (veya serbest metin yazılır).
-2. Cevabın harf harf akması ("düşünme" animasyonu) gösterilir.
-3. Chat cevabı tamamlandıktan sonra plan ve alışveriş listesi okunur.
-4. Skor grafiği (Recharts) ve attachment kartları üzerinden ürünün karar desteği anlatılır.
-5. Header'daki tema değiştirici ile aydınlık/karanlık geçiş gösterilir.
-6. Çöp ikonuna tıklanır ve onay penceresi ile sohbet temizlenir.
+### Amaç
 
+Flutter uygulamasındaki onboarding, profil, bütçe, tarif önerisi ve tarif detayı ekranlarını göstermek.
 
-# Demo Senaryosu-2
+### Akış
 
-## Amaç
+1. Kullanıcı onboarding adımlarını tamamlar.
+2. Hane bilgisi, haftalık bütçe ve yemek tercihlerini girer.
+3. “Ne Yesem?” ekranında evdeki malzemeleri seçer.
+4. Mock tarif listesi ve tarif detayı açılır.
+5. Profil ekranı gösterilir.
 
-Bu senaryo, Bereket AI'nın Sprint 2 kapsamında geliştirilen mobil uygulama arayüzlerini, kullanıcı onboarding sürecini, profil oluşturma akışını, tarif öneri ekranlarını ve backend altyapısını tanıtmak amacıyla hazırlanmıştır. Ayrıca AI Agent geliştirmeleri için oluşturulan temel altyapının gösterilmesi hedeflenmektedir.
+Bu aşamada mobil akış mock backend verileriyle çalışır.
 
----
+## Sprint 3 — Canlı Backend ve Agent
 
-## Örnek Senaryo
+### Amaç
 
-- Kullanıcı uygulamayı ilk kez açar.
-- Onboarding ekranında profil bilgilerini oluşturur.
-- Hane kişi sayısını **5** olarak girer.
-- Haftalık bütçesini **900 TL** olarak belirler.
-- Yemek tercihlerini tamamlar.
-- **"Ne Yesem?"** ekranına geçerek evde bulunan malzemeleri girer.
+Gerçek tarif verisiyle çalışan backend, öneri akışı ve tarif sohbetini göstermek.
 
-**Evde bulunan malzemeler:**
+### Akış
 
-- Patates
-- Soğan
-- Tavuk
-- Yoğurt
-- Makarna
-- Domates
-- Pirinç
-- Yumurta
+1. [bereket.app](https://bereket.app) üzerinden problem ve üç sprintlik gelişim anlatılır.
+2. Sistem durumu sayfasında canlı API ve tarif sayısı gösterilir.
+3. [API dokümanında](https://api.bereket.app/api/docs) test hesabıyla giriş yapılır.
+4. Profil bilgileri ve örnek malzemeler kaydedilir.
+5. Tarif önerisi istenir ve dönen tariflerden biri açılır.
+6. Seçilen tarif için kısa bir tarif sohbeti sorusu sorulur.
+7. Sprint 1 demosu açılarak ilk prototiple canlı sistem arasındaki fark gösterilir.
 
----
+### Beklenen Sonuç
 
-## Beklenen Çıktı
+- Canlı servis 3.005 tariflik veri setini kullanır.
+- Öneriler malzeme, bütçe ve alerjen bilgisine göre değişir.
+- Seçilen tarifin malzemeleri ve adımları görüntülenir.
+- Tarif sohbeti yalnız seçilen tarif hakkında yanıt verir.
 
-- Kullanıcı onboarding sürecini tamamlayabilir.
-- Profil, hane bilgileri ve bütçe tercihleri görüntülenebilir.
-- Kullanıcının girdiği malzemelere göre tarif önerileri listelenebilir.
-- Kullanıcı önerilen tariflerden birini seçebilir.
-- Tarif detay ekranında malzemeler, hazırlanış adımları ve tarif bilgileri görüntülenebilir.
-- Backend servisleri ve AI Agent entegrasyonu için hazırlanan altyapı tanıtılır.
-- Profil ekranı görüntülenebilir.
-
----
-
-## Sunum Akışı
-
-1. Uygulama açılarak onboarding süreci gösterilir.
-2. Kullanıcı profil, hane bilgileri ve bütçe bilgileri girilir.
-3. **"Ne Yesem?"** ekranına geçilerek örnek malzemeler sisteme girilir.
-4. Sistem tarafından önerilen tarifler görüntülenir.
-5. Bir tarif seçilerek detay ekranı açılır.
-6. Profil ekranı açılarak kullanıcı bilgilerinin görüntülenmesi gösterilir.
-7. Backend API yapısı, Supabase veritabanı ve AI Agent geliştirme süreci kısaca tanıtılır.
-8. Uygulamanın temel kullanıcı akışı (**Onboarding → Profil → Ne Yesem? → Tarif Önerileri → Tarif Detayı**) gösterilerek Sprint 2 çıktıları sunulur.
+Mobil entegrasyon tamamlandığında 3–6. adımlar API dokümanı yerine Flutter uygulaması üzerinden gösterilecektir.

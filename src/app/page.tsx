@@ -18,10 +18,10 @@ const sprints = [
   },
   {
     number: "03",
-    title: "Gerçek sistemi ürettik",
-    period: "Production backend + agent",
-    body: "Neon verisi, güvenli auth, OpenAI agent, tarif sohbeti ve canlı API ile ölçeklenebilir üretim omurgasını tamamladık.",
-    status: "Release candidate",
+    title: "Canlı sisteme geçtik",
+    period: "Gerçek veri + çalışan servisler",
+    body: "Tarif verisini, hesap işlemlerini, öneri akışını ve tarife özel sohbeti canlı backend üzerinde bir araya getirdik.",
+    status: "Backend hazır",
   },
 ] as const;
 
@@ -29,7 +29,7 @@ const metrics = [
   ["3.005", "benzersiz tarif"],
   ["27.382", "malzeme satırı"],
   ["21.331", "fiyatlandırılmış satır"],
-  ["30+", "agent güvenlik vakası"],
+  ["30+", "Türkçe test senaryosu"],
 ] as const;
 
 const team = [
@@ -48,7 +48,9 @@ export default function HomePage() {
         <div className="absolute -top-48 left-1/2 -z-10 size-[42rem] -translate-x-1/2 rounded-full bg-emerald-400/10 blur-[130px]" />
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:py-36">
           <div>
-            <p className="section-kicker">YZTA Bootcamp 2026 · Sprint 3</p>
+            <p className="section-kicker">
+              Google Yapay Zeka ve Teknoloji Akademisi · Takım 134
+            </p>
             <h1 className="mt-6 max-w-4xl text-balance text-5xl leading-[0.98] font-semibold tracking-[-0.055em] text-white sm:text-7xl lg:text-[5.6rem]">
               Mutfağındakiyle
               <span className="block text-emerald-300">
@@ -56,9 +58,8 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="mt-8 max-w-2xl text-pretty text-lg leading-8 text-stone-400 sm:text-xl">
-              Bereket AI; evdeki malzemeleri, bütçeyi ve alerjen sınırlarını
-              birlikte değerlendirerek güvenli, açıklanabilir ve ekonomik
-              tarifler önerir.
+              Evdeki malzemeleri, bütçeyi ve yemek tercihlerini birlikte
+              değerlendirir; ne pişireceğine karar vermeyi kolaylaştırır.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Link className="primary-link" href="/status">
@@ -75,10 +76,10 @@ export default function HomePage() {
             <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-6">
               <div>
                 <p className="text-xs font-semibold tracking-[0.18em] text-stone-500 uppercase">
-                  Production RC
+                  Sprint 3
                 </p>
                 <p className="mt-2 text-xl font-medium text-white">
-                  Sistem omurgası hazır
+                  Backend ve öneri sistemi hazır
                 </p>
               </div>
               <span className="flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1.5 text-xs font-medium text-emerald-200">
@@ -88,10 +89,10 @@ export default function HomePage() {
             </div>
             <div className="mt-6 space-y-3">
               {[
-                ["API", "NestJS · Vercel fra1"],
-                ["Veri", "Neon PostgreSQL · Frankfurt"],
-                ["Agent", "OpenAI Responses API"],
-                ["Güvenlik", "Argon2id · JWT rotation"],
+                ["Tarif kataloğu", "3.005 tarif"],
+                ["Öneri", "Malzeme · bütçe · alerjen"],
+                ["Tarif desteği", "Tarife özel sohbet"],
+                ["Canlı servis", "API kullanıma hazır"],
               ].map(([label, value]) => (
                 <div
                   className="flex items-center justify-between gap-6 rounded-2xl border border-white/7 bg-black/15 px-4 py-3.5"
@@ -110,7 +111,7 @@ export default function HomePage() {
               rel="noreferrer"
               className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-emerald-200 transition-colors hover:text-emerald-100"
             >
-              Swagger sözleşmesini aç <span aria-hidden="true">→</span>
+              API dokümanını aç <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
@@ -134,14 +135,12 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
         <div className="max-w-3xl">
-          <p className="section-kicker">Üç sprint, tek ürün hikâyesi</p>
-          <h2 className="section-title">
-            Mock fikirden çalışan üretim omurgasına.
-          </h2>
+          <p className="section-kicker">Üç sprintlik gelişim</p>
+          <h2 className="section-title">Fikirden çalışan ürüne, adım adım.</h2>
           <p className="section-copy">
-            Branch yapısı sprintlerin gerçek ilerleyişini kümülatif olarak
-            korur. Her aşama bir sonrakinin tabanıdır; tarihsel prototiplerle
-            canlı sistem birbirine karıştırılmaz.
+            Her sprintte bir önceki çıktıyı koruyup bir sonraki ihtiyacı ele
+            aldık. Böylece ürünün nasıl geliştiği hem demoda hem GitHub
+            geçmişinde açıkça görülebiliyor.
           </p>
         </div>
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
@@ -171,38 +170,38 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div>
-              <p className="section-kicker">Güvenli agent mimarisi</p>
+              <p className="section-kicker">Nasıl çalışır?</p>
               <h2 className="section-title">
-                Model karar vermez; güvenli adayları sıralar.
+                Kullanıcı bilgisinden uygun tarife.
               </h2>
               <p className="section-copy">
-                Alerjen ve bütçe kuralları deterministic katmanda uygulanır.
-                OpenAI yalnız güvenli adayları görür; her tarif kimliği dönüşte
-                yeniden doğrulanır ve sağlayıcı hatasında aynı istek fallback
-                ile devam eder.
+                Sistem önce kullanıcının malzemelerini ve tercihlerini tarif
+                verisiyle karşılaştırır. Uygun seçenekleri bütçe ve alerjen
+                bilgisine göre daraltır, ardından en anlamlı tarifleri kısa bir
+                açıklamayla sunar.
               </p>
             </div>
             <ol className="space-y-3">
               {[
                 [
                   "01",
-                  "Neon sorgusu",
-                  "Aktif, checksum doğrulanmış tarif verisi",
+                  "Bilgileri al",
+                  "Evdeki malzemeler, bütçe ve yemek tercihleri",
                 ],
                 [
                   "02",
-                  "Hard filter",
-                  "Alerjen, mevcut malzeme ve güvenilir bütçe sınırı",
+                  "Uygun tarifleri bul",
+                  "Tarif kataloğunda malzeme eşleşmesi",
                 ],
                 [
                   "03",
-                  "Structured rerank",
-                  "En fazla 15 aday, en fazla 5 açıklanabilir sonuç",
+                  "Kısıtları uygula",
+                  "Bütçe ve alerjen bilgisine göre güvenli seçim",
                 ],
                 [
                   "04",
-                  "Tekrar doğrulama",
-                  "Recipe ID, maliyet ve güvenlik kuralları",
+                  "Sonuçları açıkla",
+                  "En fazla 5 tarif ve seçilen tarife özel sohbet",
                 ],
               ].map(([number, title, description]) => (
                 <li
@@ -230,7 +229,7 @@ export default function HomePage() {
           <div>
             <p className="section-kicker">Takım 134</p>
             <h2 className="section-title">
-              Ürün, veri, mobil ve platform aynı masada.
+              Farklı uzmanlıklar, ortak bir ürün.
             </h2>
             <div className="mt-10 grid gap-3 sm:grid-cols-2">
               {team.map(([name, role]) => (
@@ -246,21 +245,21 @@ export default function HomePage() {
           </div>
           <div className="rounded-[2rem] border border-amber-200/15 bg-amber-100/[0.045] p-7 sm:p-9">
             <p className="text-xs font-semibold tracking-[0.18em] text-amber-200/70 uppercase">
-              Dürüst release durumu
+              Jüri notu
             </p>
             <h3 className="mt-4 text-2xl font-medium tracking-tight text-white">
-              Backend ve agent hazır. Mobil entegrasyon kapanış aşamasında.
+              Canlı servisler hazır; son adım mobil bağlantı.
             </h3>
             <p className="mt-4 leading-7 text-stone-400">
-              Flutter ekranları ve mock akış mevcut; gerçek HTTP client, secure
-              token storage, refresh mutex ve staging Maestro senaryosu mobil
-              ekip teslimidir.
+              Backend, gerçek tarif verisi ve öneri sistemi production ortamında
+              çalışıyor. Flutter uygulamasının canlı API'ye bağlanması mobil
+              ekip tarafından tamamlanacak.
             </p>
             <Link
               className="mt-7 inline-flex items-center gap-2 text-sm font-medium text-amber-100 hover:text-white"
               href="/status"
             >
-              Doğrulanmış release durumunu gör <span aria-hidden="true">→</span>
+              Canlı sistem durumunu gör <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
