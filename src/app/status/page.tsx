@@ -4,8 +4,7 @@ import { SiteShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
   title: "Sistem Durumu",
-  description:
-    "Bereket AI production API ve veri setinin doğrulanmış canlı durumu.",
+  description: "Bereket AI canlı servis ve tarif verisi durumu.",
 };
 
 type HealthData = {
@@ -47,15 +46,15 @@ export default async function StatusPage() {
   return (
     <SiteShell>
       <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8 sm:py-24">
-        <p className="section-kicker">Production gözlemi</p>
+        <p className="section-kicker">Canlı sistem</p>
         <div className="mt-6 flex flex-col gap-7 border-b border-white/8 pb-12 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-4xl font-semibold tracking-[-0.045em] text-white sm:text-6xl">
               Sistem durumu
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-stone-400">
-              Bu sayfa production health endpoint’ini dakikada bir doğrular.
-              Secret, kullanıcı verisi veya operasyonel log göstermez.
+              Backend servisinin ve tarif verisinin güncel durumunu gösterir.
+              Bilgi dakikada bir yenilenir.
             </p>
           </div>
           <span
@@ -68,16 +67,16 @@ export default async function StatusPage() {
             <span
               className={`size-2 rounded-full ${ready ? "bg-emerald-300" : "bg-amber-200"}`}
             />
-            {ready ? "Tüm çekirdek servisler hazır" : "Canlı durum alınamıyor"}
+            {ready ? "Servisler hazır" : "Canlı durum alınamıyor"}
           </span>
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
           {[
-            ["API", health?.status ?? "unavailable"],
-            ["Database", health?.database ?? "unavailable"],
-            ["Dataset", health?.dataset.status ?? "unavailable"],
-            ["Release", health?.version ?? "unavailable"],
+            ["API", health?.status ?? "ulaşılamıyor"],
+            ["Veritabanı", health?.database ?? "ulaşılamıyor"],
+            ["Tarif verisi", health?.dataset.status ?? "ulaşılamıyor"],
+            ["Sürüm", health?.version ?? "ulaşılamıyor"],
           ].map(([label, value]) => (
             <div
               className="rounded-2xl border border-white/8 bg-white/[0.025] p-6"
@@ -92,7 +91,7 @@ export default async function StatusPage() {
         {health?.dataset.status === "ready" ? (
           <section className="mt-10 rounded-[2rem] border border-white/8 bg-black/15 p-7 sm:p-9">
             <h2 className="text-2xl font-medium tracking-tight text-white">
-              Aktif veri sürümü
+              Tarif verisi
             </h2>
             <dl className="mt-7 grid gap-6 sm:grid-cols-2">
               <div>
@@ -102,7 +101,7 @@ export default async function StatusPage() {
                 </dd>
               </div>
               <div>
-                <dt className="text-sm text-stone-500">Checksum</dt>
+                <dt className="text-sm text-stone-500">Veri sürümü</dt>
                 <dd className="mt-2 break-all font-mono text-xs leading-6 text-stone-300">
                   {health.dataset.checksum}
                 </dd>
@@ -118,7 +117,7 @@ export default async function StatusPage() {
             target="_blank"
             rel="noreferrer"
           >
-            Swagger’ı aç <span aria-hidden="true">↗</span>
+            API dokümanını aç <span aria-hidden="true">↗</span>
           </a>
           <a
             className="secondary-link"
@@ -126,7 +125,7 @@ export default async function StatusPage() {
             target="_blank"
             rel="noreferrer"
           >
-            Backend branch’i
+            Backend kodu
           </a>
         </div>
       </div>

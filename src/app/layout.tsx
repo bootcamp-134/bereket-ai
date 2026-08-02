@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Bereket AI",
     title: "Bereket AI | Akıllı Mutfak Planlama",
     description:
-      "Mock fikirden production backend ve güvenli tarif agent’ına uzanan Takım 134 projesi.",
+      "Evdeki malzemeler ve bütçeye göre tarif öneren Takım 134 projesi.",
   },
   twitter: {
     card: "summary_large_image",
