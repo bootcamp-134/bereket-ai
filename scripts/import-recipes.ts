@@ -158,74 +158,77 @@ async function main() {
 
     for (let offset = 0; offset < recipes.length; offset += 40) {
       const batch = recipes.slice(offset, offset + 40);
-      for (const recipe of batch) {
-        const recipeIngredients = recipe.malzemeler.map((item, position) => ({
-          ingredientId: item.ingredient_id,
-          position,
-          displayName: item.isim,
-          normalizedName: normalizeTurkish(item.canonical_name ?? item.isim),
-          displayAmount: decimal(item.miktar),
-          displayAmountText: item.miktar === null ? null : String(item.miktar),
-          displayUnit: item.birim,
-          quantity: decimal(item.quantity),
-          unit: item.unit,
-          costQuantity: decimal(item.cost_quantity),
-          costUnit: item.cost_unit,
-          pricePerCostUnitTry: decimal(item.price_per_cost_unit_try),
-          defaultEstimatedCostTry: decimal(item.default_estimated_cost_try),
-          costStatus: item.cost_status,
-        }));
-        const recipeSteps = recipe.yapilis_adimlari.map((text, index) => ({
-          order: index + 1,
-          text,
-        }));
-        const common = {
-          datasetImportId: dataset.id,
-          title: recipe.tarif_adi,
-          normalizedTitle: normalizeTurkish(recipe.tarif_adi),
-          description: description(recipe) || null,
-          category: recipe.kategori,
-          servings: decimal(recipe.porsiyon),
-          servingType: recipe.porsiyon_tipi,
-          preparationMinutes: recipe.hazirlik_suresi_dk,
-          cookingMinutes: recipe.pisirme_suresi_dk,
-          difficulty: recipe.zorluk,
-          cookingMethods: recipe.pisirme_yontemi ?? [],
-          defaultEstimatedCostTry: decimal(recipe.default_estimated_cost_try),
-          estimatedCostIsPartial: recipe.estimated_cost_is_partial,
-          costableIngredientCount: recipe.costable_ingredient_count,
-          totalIngredientCount: recipe.total_ingredient_count,
-          costCoverageRatio: decimal(recipe.cost_coverage_ratio),
-          costType: recipe.cost_type,
-          priceReferenceDate: recipe.price_reference_date
-            ? new Date(recipe.price_reference_date)
-            : null,
-          costReliability: recipe.cost_reliability,
-          allergenCategories: inferAllergens(
-            recipe.malzemeler.map((item) => item.canonical_name ?? item.isim),
-          ),
-          allergenDataStatus: "inferred",
-          missingCoreIngredient: recipe.missing_core_ingredient,
-          sourceMetadata: (recipe._source ?? {}) as Prisma.InputJsonValue,
-        };
-        await prisma.recipe.upsert({
-          where: { id: recipe.recipe_id },
-          create: {
-            id: recipe.recipe_id,
-            ...common,
-            ingredients: { createMany: { data: recipeIngredients } },
-            steps: { createMany: { data: recipeSteps } },
-          },
-          update: {
-            ...common,
-            ingredients: {
-              deleteMany: {},
-              createMany: { data: recipeIngredients },
+      await Promise.all(
+        batch.map(async (recipe) => {
+          const recipeIngredients = recipe.malzemeler.map((item, position) => ({
+            ingredientId: item.ingredient_id,
+            position,
+            displayName: item.isim,
+            normalizedName: normalizeTurkish(item.canonical_name ?? item.isim),
+            displayAmount: decimal(item.miktar),
+            displayAmountText:
+              item.miktar === null ? null : String(item.miktar),
+            displayUnit: item.birim,
+            quantity: decimal(item.quantity),
+            unit: item.unit,
+            costQuantity: decimal(item.cost_quantity),
+            costUnit: item.cost_unit,
+            pricePerCostUnitTry: decimal(item.price_per_cost_unit_try),
+            defaultEstimatedCostTry: decimal(item.default_estimated_cost_try),
+            costStatus: item.cost_status,
+          }));
+          const recipeSteps = recipe.yapilis_adimlari.map((text, index) => ({
+            order: index + 1,
+            text,
+          }));
+          const common = {
+            datasetImportId: dataset.id,
+            title: recipe.tarif_adi,
+            normalizedTitle: normalizeTurkish(recipe.tarif_adi),
+            description: description(recipe) || null,
+            category: recipe.kategori,
+            servings: decimal(recipe.porsiyon),
+            servingType: recipe.porsiyon_tipi,
+            preparationMinutes: recipe.hazirlik_suresi_dk,
+            cookingMinutes: recipe.pisirme_suresi_dk,
+            difficulty: recipe.zorluk,
+            cookingMethods: recipe.pisirme_yontemi ?? [],
+            defaultEstimatedCostTry: decimal(recipe.default_estimated_cost_try),
+            estimatedCostIsPartial: recipe.estimated_cost_is_partial,
+            costableIngredientCount: recipe.costable_ingredient_count,
+            totalIngredientCount: recipe.total_ingredient_count,
+            costCoverageRatio: decimal(recipe.cost_coverage_ratio),
+            costType: recipe.cost_type,
+            priceReferenceDate: recipe.price_reference_date
+              ? new Date(recipe.price_reference_date)
+              : null,
+            costReliability: recipe.cost_reliability,
+            allergenCategories: inferAllergens(
+              recipe.malzemeler.map((item) => item.canonical_name ?? item.isim),
+            ),
+            allergenDataStatus: "inferred",
+            missingCoreIngredient: recipe.missing_core_ingredient,
+            sourceMetadata: (recipe._source ?? {}) as Prisma.InputJsonValue,
+          };
+          await prisma.recipe.upsert({
+            where: { id: recipe.recipe_id },
+            create: {
+              id: recipe.recipe_id,
+              ...common,
+              ingredients: { createMany: { data: recipeIngredients } },
+              steps: { createMany: { data: recipeSteps } },
             },
-            steps: { deleteMany: {}, createMany: { data: recipeSteps } },
-          },
-        });
-      }
+            update: {
+              ...common,
+              ingredients: {
+                deleteMany: {},
+                createMany: { data: recipeIngredients },
+              },
+              steps: { deleteMany: {}, createMany: { data: recipeSteps } },
+            },
+          });
+        }),
+      );
       process.stdout.write(
         `\r${Math.min(offset + batch.length, recipes.length)}/${recipes.length}`,
       );
