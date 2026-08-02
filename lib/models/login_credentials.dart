@@ -17,3 +17,15 @@ class AuthResult {
   const AuthResult.failure(String message)
     : this._(isSuccess: false, message: message);
 }
+
+class RegistrationDetails {
+  final String fullName;
+  final String email;
+  final String password;
+
+  const RegistrationDetails({
+    required this.fullName,
+    required this.email,
+    required this.password,
+  });
+}

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../models/login_credentials.dart';
+import '../services/app_services.dart';
+import '../services/auth_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/primary_button.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final AuthService? authService;
+
+  const RegisterScreen({super.key, this.authService});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -23,6 +28,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscureConfirmation = true;
   bool _acceptedTerms = false;
   bool _isLoading = false;
+  late final AuthService _authService;
+
+  @override
+  void initState() {
+    super.initState();
+    _authService = widget.authService ?? AppServices.instance.auth;
+  }
 
   Future<void> _register() async {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -36,10 +48,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     setState(() => _isLoading = true);
-    await Future<void>.delayed(const Duration(milliseconds: 850));
+    final result = await _authService.register(
+      RegistrationDetails(
+        fullName: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      ),
+    );
 
     if (!mounted) return;
     setState(() => _isLoading = false);
+    if (!result.isSuccess) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(result.message)));
+      return;
+    }
     Navigator.of(context).pushReplacementNamed('/profile-setup');
   }
 
@@ -60,8 +84,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   String? _validatePassword(String? value) {
-    if (value == null || value.length < 6) {
-      return 'Şifre en az 6 karakter olmalı.';
+    if (value == null || value.length < 12) {
+      return 'Şifre en az 12 karakter olmalı.';
     }
     return null;
   }
@@ -149,7 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       AppTextField(
                         controller: _passwordController,
                         label: 'Şifre',
-                        hint: 'En az 6 karakter',
+                        hint: 'En az 12 karakter',
                         prefixIcon: Icons.lock_outline_rounded,
                         obscureText: _obscurePassword,
                         textInputAction: TextInputAction.next,

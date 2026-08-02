@@ -1,0 +1,10 @@
+appId: com.example.bereket_ai_mobile
+name: BereketAI authentication smoke test
+tags:
+  - smoke
+  - authentication
+---
+- launchApp:
+    clearState: true
+
+- runFlow: ../subflows/login.yaml

@@ -17,7 +17,7 @@ class RecipeRecommendation {
   final int matchPercentage;
   final List<RecipeIngredient> matchedIngredients;
   final List<RecipeIngredient> missingIngredients;
-  final int estimatedExtraCost;
+  final num estimatedExtraCost;
   final String reason;
 
   const RecipeRecommendation({
@@ -27,5 +27,19 @@ class RecipeRecommendation {
     required this.missingIngredients,
     required this.estimatedExtraCost,
     required this.reason,
+  });
+}
+
+class RecommendationBatch {
+  final List<RecipeRecommendation> recommendations;
+  final String? noResultsReason;
+  final String generatedBy;
+  final bool fallback;
+
+  const RecommendationBatch({
+    required this.recommendations,
+    this.noResultsReason,
+    this.generatedBy = 'deterministic',
+    this.fallback = false,
   });
 }

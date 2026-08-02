@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 
 import '../models/user_profile.dart';
-import '../services/mock_profile_service.dart';
+import '../services/app_services.dart';
+import '../services/auth_service.dart';
+import '../services/profile_service.dart';
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/primary_button.dart';
 import 'profile_section_screen.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
-  const ProfileSetupScreen({super.key});
+  final ProfileService? profileService;
+  final AuthService? authService;
+
+  const ProfileSetupScreen({super.key, this.profileService, this.authService});
 
   @override
   State<ProfileSetupScreen> createState() => _ProfileSetupScreenState();
 }
 
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
-  final ProfileService _profileService = MockProfileService.instance;
+  late final ProfileService _profileService;
+  late final AuthService _authService;
 
   UserProfile _profile = const UserProfile();
   bool _loading = true;
@@ -24,6 +31,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   @override
   void initState() {
     super.initState();
+    _profileService = widget.profileService ?? AppServices.instance.profile;
+    _authService = widget.authService ?? AppServices.instance.auth;
     _loadProfile();
   }
 
@@ -75,7 +84,13 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
       _showMessage('Devam etmek için üç bölümü de tamamla.');
       return;
     }
-    Navigator.of(context).pushReplacementNamed('/what-should-i-eat');
+    Navigator.of(context).pushNamed('/what-should-i-eat');
+  }
+
+  Future<void> _signOut() async {
+    await _authService.signOut();
+    if (!mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
   }
 
   void _showMessage(String message) {
@@ -94,10 +109,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Çıkış'),
-          ),
+          TextButton(onPressed: _signOut, child: const Text('Çıkış')),
           const SizedBox(width: 10),
         ],
       ),
@@ -128,6 +140,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         ),
                         const SizedBox(height: 30),
                         _SetupStep(
+                          semanticIdentifier: AppSemantics.profilePersonal,
                           number: '1',
                           icon: Icons.person_outline_rounded,
                           title: 'Kişisel bilgiler',
@@ -139,6 +152,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         ),
                         const SizedBox(height: 12),
                         _SetupStep(
+                          semanticIdentifier: AppSemantics.profileHousehold,
                           number: '2',
                           icon: Icons.groups_outlined,
                           title: 'Hane bilgileri',
@@ -150,6 +164,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         ),
                         const SizedBox(height: 12),
                         _SetupStep(
+                          semanticIdentifier: AppSemantics.profilePreferences,
                           number: '3',
                           icon: Icons.tune_rounded,
                           title: 'Bütçe ve tercihler',
@@ -166,6 +181,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         const SizedBox(height: 32),
                         PrimaryButton(
                           key: const Key('open-what-should-i-eat-button'),
+                          semanticIdentifier: AppSemantics.profileContinue,
                           label: _profile.isComplete
                               ? 'Tariflerini Keşfet'
                               : 'Profilini Tamamla',
@@ -183,6 +199,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 }
 
 class _SetupStep extends StatelessWidget {
+  final String semanticIdentifier;
   final String number;
   final IconData icon;
   final String title;
@@ -191,6 +208,7 @@ class _SetupStep extends StatelessWidget {
   final VoidCallback onTap;
 
   const _SetupStep({
+    required this.semanticIdentifier,
     required this.number,
     required this.icon,
     required this.title,
@@ -201,73 +219,79 @@ class _SetupStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: isComplete ? AppColors.sage : Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadii.card),
-        side: BorderSide(
-          color: isComplete ? AppColors.leaf : AppColors.outline,
+    return Semantics(
+      identifier: semanticIdentifier,
+      child: Material(
+        color: isComplete ? AppColors.sage : Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadii.card),
+          side: BorderSide(
+            color: isComplete ? AppColors.leaf : AppColors.outline,
+          ),
         ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadii.card),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                width: 42,
-                height: 42,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: isComplete ? AppColors.forest : AppColors.cream,
-                  shape: BoxShape.circle,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppRadii.card),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: isComplete ? AppColors.forest : AppColors.cream,
+                    shape: BoxShape.circle,
+                  ),
+                  child: isComplete
+                      ? const Icon(
+                          Icons.check_rounded,
+                          color: Colors.white,
+                          size: 22,
+                        )
+                      : Text(
+                          number,
+                          style: const TextStyle(
+                            color: AppColors.forest,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
                 ),
-                child: isComplete
-                    ? const Icon(
-                        Icons.check_rounded,
-                        color: Colors.white,
-                        size: 22,
-                      )
-                    : Text(
-                        number,
+                const SizedBox(width: 14),
+                Icon(icon, color: AppColors.forest, size: 24),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
                         style: const TextStyle(
-                          color: AppColors.forest,
-                          fontWeight: FontWeight.w800,
+                          color: AppColors.ink,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-              ),
-              const SizedBox(width: 14),
-              Icon(icon, color: AppColors.forest, size: 24),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        color: AppColors.ink,
-                        fontWeight: FontWeight.w700,
+                      const SizedBox(height: 3),
+                      Text(
+                        description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: AppColors.mutedInk,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppColors.mutedInk,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              const Icon(Icons.chevron_right_rounded, color: AppColors.forest),
-            ],
+                const SizedBox(width: 8),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.forest,
+                ),
+              ],
+            ),
           ),
         ),
       ),

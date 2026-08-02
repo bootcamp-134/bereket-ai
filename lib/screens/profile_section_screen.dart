@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../models/user_profile.dart';
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/primary_button.dart';
 
@@ -229,6 +230,7 @@ class _ProfileSectionScreenState extends State<ProfileSectionScreen> {
                     ..._sectionFields(),
                     const SizedBox(height: 28),
                     PrimaryButton(
+                      semanticIdentifier: AppSemantics.profileSectionSave,
                       label: 'Kaydet',
                       icon: Icons.check_rounded,
                       isLoading: _submitting,
@@ -247,131 +249,156 @@ class _ProfileSectionScreenState extends State<ProfileSectionScreen> {
   List<Widget> _sectionFields() {
     return switch (widget.section) {
       ProfileSection.personal => [
-        TextFormField(
-          controller: _nameController,
-          textInputAction: TextInputAction.next,
-          maxLength: 60,
-          validator: (value) => _requiredText(value, maxLength: 60),
-          decoration: const InputDecoration(
-            labelText: 'Ad ve soyad',
-            hintText: 'Adını ve soyadını gir',
-            prefixIcon: Icon(Icons.badge_outlined),
+        Semantics(
+          identifier: AppSemantics.profilePersonalName,
+          child: TextFormField(
+            controller: _nameController,
+            textInputAction: TextInputAction.next,
+            maxLength: 60,
+            validator: (value) => _requiredText(value, maxLength: 60),
+            decoration: const InputDecoration(
+              labelText: 'Ad ve soyad',
+              hintText: 'Adını ve soyadını gir',
+              prefixIcon: Icon(Icons.badge_outlined),
+            ),
           ),
         ),
         const SizedBox(height: 14),
-        TextFormField(
-          controller: _ageController,
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.done,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) =>
-              _numberInRange(value, minimum: 13, maximum: 120),
-          decoration: const InputDecoration(
-            labelText: 'Yaş',
-            hintText: 'Örn. 28',
-            prefixIcon: Icon(Icons.cake_outlined),
+        Semantics(
+          identifier: AppSemantics.profilePersonalAge,
+          child: TextFormField(
+            controller: _ageController,
+            keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.done,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            validator: (value) =>
+                _numberInRange(value, minimum: 13, maximum: 120),
+            decoration: const InputDecoration(
+              labelText: 'Yaş',
+              hintText: 'Örn. 28',
+              prefixIcon: Icon(Icons.cake_outlined),
+            ),
           ),
         ),
       ],
       ProfileSection.household => [
-        TextFormField(
-          controller: _householdController,
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.next,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) => _numberInRange(value, minimum: 1, maximum: 20),
-          decoration: const InputDecoration(
-            labelText: 'Hanedeki kişi sayısı',
-            hintText: 'Örn. 4',
-            prefixIcon: Icon(Icons.groups_outlined),
+        Semantics(
+          identifier: AppSemantics.profileHouseholdSize,
+          child: TextFormField(
+            controller: _householdController,
+            keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.next,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            validator: (value) =>
+                _numberInRange(value, minimum: 1, maximum: 20),
+            decoration: const InputDecoration(
+              labelText: 'Hanedeki kişi sayısı',
+              hintText: 'Örn. 4',
+              prefixIcon: Icon(Icons.groups_outlined),
+            ),
           ),
         ),
         const SizedBox(height: 14),
-        TextFormField(
-          controller: _mealsController,
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.done,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) => _numberInRange(value, minimum: 1, maximum: 6),
-          decoration: const InputDecoration(
-            labelText: 'Günlük ana öğün sayısı',
-            hintText: 'Örn. 3',
-            prefixIcon: Icon(Icons.restaurant_outlined),
+        Semantics(
+          identifier: AppSemantics.profileMealsPerDay,
+          child: TextFormField(
+            controller: _mealsController,
+            keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.done,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            validator: (value) => _numberInRange(value, minimum: 1, maximum: 6),
+            decoration: const InputDecoration(
+              labelText: 'Günlük ana öğün sayısı',
+              hintText: 'Örn. 3',
+              prefixIcon: Icon(Icons.restaurant_outlined),
+            ),
           ),
         ),
       ],
       ProfileSection.preferences => [
-        DropdownButtonFormField<String>(
-          initialValue: _incomeStatus,
-          decoration: const InputDecoration(
-            labelText: 'Gelir durumu',
-            prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-          ),
-          items: _incomeOptions
-              .map(
-                (option) =>
-                    DropdownMenuItem(value: option, child: Text(option)),
-              )
-              .toList(),
-          onChanged: (value) {
-            if (value != null) {
-              setState(() => _incomeStatus = value);
-            }
-          },
-        ),
-        const SizedBox(height: 14),
-        TextFormField(
-          controller: _budgetController,
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.next,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) =>
-              _numberInRange(value, minimum: 1, maximum: 100000),
-          decoration: const InputDecoration(
-            labelText: 'Haftalık gıda bütçesi',
-            hintText: 'Örn. 2500',
-            prefixText: '₺ ',
-            prefixIcon: Icon(Icons.payments_outlined),
+        Semantics(
+          identifier: AppSemantics.profileIncomeStatus,
+          child: DropdownButtonFormField<String>(
+            initialValue: _incomeStatus,
+            decoration: const InputDecoration(
+              labelText: 'Gelir durumu',
+              prefixIcon: Icon(Icons.account_balance_wallet_outlined),
+            ),
+            items: _incomeOptions
+                .map(
+                  (option) =>
+                      DropdownMenuItem(value: option, child: Text(option)),
+                )
+                .toList(),
+            onChanged: (value) {
+              if (value != null) {
+                setState(() => _incomeStatus = value);
+              }
+            },
           ),
         ),
         const SizedBox(height: 14),
-        DropdownButtonFormField<String>(
-          initialValue: _dietaryPreference,
-          decoration: const InputDecoration(
-            labelText: 'Beslenme şekli',
-            prefixIcon: Icon(Icons.eco_outlined),
+        Semantics(
+          identifier: AppSemantics.profileWeeklyBudget,
+          child: TextFormField(
+            controller: _budgetController,
+            keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.next,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            validator: (value) =>
+                _numberInRange(value, minimum: 1, maximum: 100000),
+            decoration: const InputDecoration(
+              labelText: 'Haftalık gıda bütçesi',
+              hintText: 'Örn. 2500',
+              prefixText: '₺ ',
+              prefixIcon: Icon(Icons.payments_outlined),
+            ),
           ),
-          items: _dietOptions
-              .map(
-                (option) =>
-                    DropdownMenuItem(value: option, child: Text(option)),
-              )
-              .toList(),
-          onChanged: (value) {
-            if (value != null) {
-              setState(() => _dietaryPreference = value);
-            }
-          },
         ),
         const SizedBox(height: 14),
-        TextFormField(
-          controller: _allergiesController,
-          minLines: 2,
-          maxLines: 3,
-          maxLength: 200,
-          textInputAction: TextInputAction.done,
-          validator: (value) {
-            final normalized = value?.trim() ?? '';
-            if (RegExp(r'[\u0000-\u001F\u007F]').hasMatch(normalized)) {
-              return 'Geçersiz karakter içeriyor.';
-            }
-            return null;
-          },
-          decoration: const InputDecoration(
-            labelText: 'Alerjiler',
-            hintText: 'Yoksa boş bırakabilirsin',
-            prefixIcon: Icon(Icons.health_and_safety_outlined),
-            alignLabelWithHint: true,
+        Semantics(
+          identifier: AppSemantics.profileDietaryPreference,
+          child: DropdownButtonFormField<String>(
+            initialValue: _dietaryPreference,
+            decoration: const InputDecoration(
+              labelText: 'Beslenme şekli',
+              prefixIcon: Icon(Icons.eco_outlined),
+            ),
+            items: _dietOptions
+                .map(
+                  (option) =>
+                      DropdownMenuItem(value: option, child: Text(option)),
+                )
+                .toList(),
+            onChanged: (value) {
+              if (value != null) {
+                setState(() => _dietaryPreference = value);
+              }
+            },
+          ),
+        ),
+        const SizedBox(height: 14),
+        Semantics(
+          identifier: AppSemantics.profileAllergies,
+          child: TextFormField(
+            controller: _allergiesController,
+            minLines: 2,
+            maxLines: 3,
+            maxLength: 200,
+            textInputAction: TextInputAction.done,
+            validator: (value) {
+              final normalized = value?.trim() ?? '';
+              if (RegExp(r'[\u0000-\u001F\u007F]').hasMatch(normalized)) {
+                return 'Geçersiz karakter içeriyor.';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              labelText: 'Alerjiler',
+              hintText: 'Yoksa boş bırakabilirsin',
+              prefixIcon: Icon(Icons.health_and_safety_outlined),
+              alignLabelWithHint: true,
+            ),
           ),
         ),
       ],

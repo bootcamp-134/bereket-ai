@@ -1,0 +1,15 @@
+appId: com.example.bereket_ai_mobile
+name: BereketAI profile setup journey
+tags:
+  - profile
+  - regression
+---
+- launchApp:
+    clearState: true
+
+- runFlow: ../subflows/login.yaml
+- runFlow: ../subflows/complete_profile.yaml
+
+- tapOn:
+    id: "profile-continue"
+- assertVisible: "Evde neler var?"

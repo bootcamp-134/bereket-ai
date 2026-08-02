@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 
 import '../models/recommendation.dart';
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import 'recipe_detail_screen.dart';
 
 class RecommendationResultsScreen extends StatelessWidget {
   final RecommendationRequest request;
   final List<RecipeRecommendation> recommendations;
+  final String? noResultsReason;
+  final String generatedBy;
+  final bool fallback;
 
   const RecommendationResultsScreen({
     super.key,
     required this.request,
     required this.recommendations,
+    this.noResultsReason,
+    this.generatedBy = 'deterministic',
+    this.fallback = false,
   });
 
   void _openRecipe(BuildContext context, RecipeRecommendation recommendation) {
@@ -41,54 +48,81 @@ class RecommendationResultsScreen extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 620),
             child: recommendations.isEmpty
-                ? _EmptyResults(onChangeInputs: () => Navigator.pop(context))
-                : ListView.separated(
-                    key: const Key('recommendation-results-list'),
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 32),
-                    itemCount: recommendations.length + 1,
-                    separatorBuilder: (_, _) => const SizedBox(height: 14),
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              '${recommendations.length} uygun tarif bulduk',
-                              style: theme.textTheme.headlineMedium,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              '${request.availableIngredients.length} malzemene göre, en yüksek eşleşmeden başlayarak sıralandı.',
-                              style: theme.textTheme.bodyLarge,
-                            ),
-                            const SizedBox(height: 12),
-                            Container(
-                              padding: const EdgeInsets.all(13),
-                              decoration: BoxDecoration(
-                                color: AppColors.sage.withValues(alpha: 0.62),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadii.control,
+                ? _EmptyResults(
+                    reason: noResultsReason,
+                    onChangeInputs: () => Navigator.pop(context),
+                  )
+                : Semantics(
+                    identifier: AppSemantics.recommendationList,
+                    child: ListView.separated(
+                      key: const Key('recommendation-results-list'),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 32),
+                      itemCount: recommendations.length + 1,
+                      separatorBuilder: (_, _) => const SizedBox(height: 14),
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                '${recommendations.length} uygun tarif bulduk',
+                                style: theme.textTheme.headlineMedium,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '${request.availableIngredients.length} malzemene göre, en yüksek eşleşmeden başlayarak sıralandı.',
+                                style: theme.textTheme.bodyLarge,
+                              ),
+                              const SizedBox(height: 12),
+                              if (fallback || generatedBy == 'openai') ...[
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.cream,
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadii.control,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    fallback
+                                        ? 'Yapay zekâ yanıt veremedi; güvenli yedek sıralama kullanıldı.'
+                                        : 'Öneriler yapay zekâ ile kişiselleştirildi.',
+                                    style: const TextStyle(
+                                      color: AppColors.mutedInk,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                              ],
+                              Container(
+                                padding: const EdgeInsets.all(13),
+                                decoration: BoxDecoration(
+                                  color: AppColors.sage.withValues(alpha: 0.62),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadii.control,
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Eşleşme oranı, evindeki malzemelerin tarife ne kadar uyduğunu gösterir.',
+                                  style: TextStyle(
+                                    color: AppColors.forestDark,
+                                    fontSize: 12,
+                                    height: 1.4,
+                                  ),
                                 ),
                               ),
-                              child: const Text(
-                                'Eşleşme oranı, evindeki malzemelerin tarife ne kadar uyduğunu gösterir.',
-                                style: TextStyle(
-                                  color: AppColors.forestDark,
-                                  fontSize: 12,
-                                  height: 1.4,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      }
+                            ],
+                          );
+                        }
 
-                      final recommendation = recommendations[index - 1];
-                      return _RecommendationCard(
-                        recommendation: recommendation,
-                        onOpen: () => _openRecipe(context, recommendation),
-                      );
-                    },
+                        final recommendation = recommendations[index - 1];
+                        return _RecommendationCard(
+                          recommendation: recommendation,
+                          onOpen: () => _openRecipe(context, recommendation),
+                        );
+                      },
+                    ),
                   ),
           ),
         ),
@@ -219,20 +253,24 @@ class _RecommendationCard extends StatelessWidget {
               ),
             ],
             const SizedBox(height: 16),
-            FilledButton.icon(
-              key: ValueKey('open-recipe-${recipe.id}'),
-              onPressed: onOpen,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.forest,
-                minimumSize: const Size.fromHeight(50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadii.control),
+            Semantics(
+              identifier: AppSemantics.recipeOpen(recipe.id),
+              button: true,
+              child: FilledButton.icon(
+                key: ValueKey('open-recipe-${recipe.id}'),
+                onPressed: onOpen,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.forest,
+                  minimumSize: const Size.fromHeight(50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppRadii.control),
+                  ),
                 ),
-              ),
-              icon: const Icon(Icons.menu_book_outlined),
-              label: const Text(
-                'Tarifi Gör',
-                style: TextStyle(fontWeight: FontWeight.w700),
+                icon: const Icon(Icons.menu_book_outlined),
+                label: const Text(
+                  'Tarifi Gör',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ],
@@ -278,8 +316,9 @@ class _InfoPill extends StatelessWidget {
 
 class _EmptyResults extends StatelessWidget {
   final VoidCallback onChangeInputs;
+  final String? reason;
 
-  const _EmptyResults({required this.onChangeInputs});
+  const _EmptyResults({required this.onChangeInputs, this.reason});
 
   @override
   Widget build(BuildContext context) {
@@ -308,7 +347,8 @@ class _EmptyResults extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Daha fazla malzeme eklemeyi, alışveriş seçeneğini açmayı veya bütçeni değiştirmeyi deneyebilirsin.',
+            reason ??
+                'Daha fazla malzeme eklemeyi, alışveriş seçeneğini açmayı veya bütçeni değiştirmeyi deneyebilirsin.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge,
           ),

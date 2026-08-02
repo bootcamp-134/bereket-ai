@@ -14,6 +14,7 @@ class AppTextField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final String? Function(String?)? validator;
   final ValueChanged<String>? onFieldSubmitted;
+  final String? semanticIdentifier;
 
   const AppTextField({
     super.key,
@@ -30,11 +31,12 @@ class AppTextField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.none,
     this.validator,
     this.onFieldSubmitted,
+    this.semanticIdentifier,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    final textField = TextFormField(
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
@@ -54,5 +56,11 @@ class AppTextField extends StatelessWidget {
         counterText: '',
       ),
     );
+
+    if (semanticIdentifier == null) {
+      return textField;
+    }
+
+    return Semantics(identifier: semanticIdentifier, child: textField);
   }
 }

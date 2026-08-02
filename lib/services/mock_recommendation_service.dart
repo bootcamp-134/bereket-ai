@@ -28,9 +28,7 @@ class MockRecommendationService implements RecommendationService {
   }
 
   @override
-  Future<List<RecipeRecommendation>> recommend(
-    RecommendationRequest request,
-  ) async {
+  Future<RecommendationBatch> recommend(RecommendationRequest request) async {
     _validateRequest(request);
     if (simulatedLatency > Duration.zero) {
       await Future<void>.delayed(simulatedLatency);
@@ -100,7 +98,9 @@ class MockRecommendationService implements RecommendationService {
       );
     });
 
-    return List.unmodifiable(recommendations);
+    return RecommendationBatch(
+      recommendations: List.unmodifiable(recommendations),
+    );
   }
 
   void _validateRequest(RecommendationRequest request) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/recommendation.dart';
 import '../services/mock_recommendation_service.dart';
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/primary_button.dart';
 import 'recipe_assistant_screen.dart';
@@ -214,6 +215,7 @@ class RecipeDetailScreen extends StatelessWidget {
                   PrimaryButton(
                     label: 'Bana Yardım Et',
                     icon: Icons.chat_bubble_outline_rounded,
+                    semanticIdentifier: AppSemantics.recipeAssistantOpen,
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(

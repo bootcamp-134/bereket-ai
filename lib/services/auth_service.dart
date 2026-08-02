@@ -2,6 +2,10 @@ import '../models/login_credentials.dart';
 
 abstract interface class AuthService {
   Future<AuthResult> signIn(LoginCredentials credentials);
+  Future<AuthResult> register(RegistrationDetails details);
+  Future<void> requestPasswordReset(String email);
+  Future<void> resetPassword({required String token, required String password});
+  Future<void> signOut();
 }
 
 class DemoAuthService implements AuthService {
@@ -23,4 +27,20 @@ class DemoAuthService implements AuthService {
       'E-posta veya şifre hatalı. Bilgilerini kontrol edip tekrar dene.',
     );
   }
+
+  @override
+  Future<AuthResult> register(RegistrationDetails details) async =>
+      const AuthResult.success('Kayıt başarılı.');
+
+  @override
+  Future<void> requestPasswordReset(String email) async {}
+
+  @override
+  Future<void> resetPassword({
+    required String token,
+    required String password,
+  }) async {}
+
+  @override
+  Future<void> signOut() async {}
 }

@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../models/recipe.dart';
-import '../services/mock_recipe_assistant_service.dart';
+import '../services/app_services.dart';
+import '../services/recipe_chat_service.dart';
 import '../theme/app_theme.dart';
 
 class RecipeAssistantScreen extends StatefulWidget {
   final Recipe recipe;
+  final RecipeChatService? chatService;
 
-  const RecipeAssistantScreen({super.key, required this.recipe});
+  const RecipeAssistantScreen({
+    super.key,
+    required this.recipe,
+    this.chatService,
+  });
 
   @override
   State<RecipeAssistantScreen> createState() => _RecipeAssistantScreenState();
@@ -21,17 +27,20 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
     'Eksik malzeme yerine ne kullanabilirim?',
   ];
 
-  final MockRecipeAssistantService _assistantService =
-      const MockRecipeAssistantService();
+  static const int _maxQuestionLength = 1000;
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final List<_ChatMessage> _messages = [];
 
   bool _isReplying = false;
+  late final RecipeChatService _chatService;
+  Future<String>? _sessionId;
 
   @override
   void initState() {
     super.initState();
+    _chatService = widget.chatService ?? AppServices.instance.recipeChat;
+    _sessionId = _chatService.createSession(widget.recipe.id);
     _messages.add(
       _ChatMessage(
         text:
@@ -55,15 +64,15 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
       return;
     }
 
-    final question = _assistantService.cleanQuestion(
-      quickQuestion ?? _messageController.text,
-    );
+    final question = (quickQuestion ?? _messageController.text)
+        .trim()
+        .replaceAll(RegExp(r'\s+'), ' ');
 
     if (question.isEmpty) {
       return;
     }
 
-    if (question.length > MockRecipeAssistantService.maxQuestionLength) {
+    if (question.length > _maxQuestionLength) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Sorunuz en fazla 300 karakter olabilir.'),
@@ -82,9 +91,10 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
     _scrollToBottom();
 
     try {
-      final reply = await _assistantService.getReply(
-        recipe: widget.recipe,
-        question: question,
+      final sessionId = await _sessionId!;
+      final reply = await _chatService.sendMessage(
+        sessionId: sessionId,
+        message: question,
       );
 
       if (!mounted) {
@@ -92,7 +102,12 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
       }
 
       setState(() {
-        _messages.add(_ChatMessage(text: reply, isUser: false));
+        final fallbackNote = reply.fallback
+            ? '\n\nNot: Bu yanıt güvenli yedek sistem tarafından oluşturuldu.'
+            : '';
+        _messages.add(
+          _ChatMessage(text: '${reply.content}$fallbackNote', isUser: false),
+        );
       });
     } catch (_) {
       if (!mounted) {
@@ -240,7 +255,7 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
                   enabled: !_isReplying,
                   minLines: 1,
                   maxLines: 3,
-                  maxLength: MockRecipeAssistantService.maxQuestionLength,
+                  maxLength: _maxQuestionLength,
                   textInputAction: TextInputAction.send,
                   onSubmitted: (_) => _sendMessage(),
                   decoration: const InputDecoration(

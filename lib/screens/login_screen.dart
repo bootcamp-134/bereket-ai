@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../models/login_credentials.dart';
+import '../services/app_services.dart';
 import '../services/auth_service.dart';
+import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/primary_button.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final AuthService? authService;
+
+  const LoginScreen({super.key, this.authService});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -19,11 +23,17 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _identifierController = TextEditingController();
   final _passwordController = TextEditingController();
-  final AuthService _authService = const DemoAuthService();
+  late final AuthService _authService;
 
   bool _isLoading = false;
   bool _obscurePassword = true;
   bool _rememberMe = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _authService = widget.authService ?? AppServices.instance.auth;
+  }
 
   Future<void> _attemptLogin() async {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -68,10 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _validateIdentifier(String? value) {
     final identifier = value?.trim() ?? '';
     if (identifier.isEmpty) {
-      return 'E-posta veya kullanıcı adını gir.';
+      return 'E-posta adresini gir.';
     }
-    if (identifier.length < 3) {
-      return 'En az 3 karakter kullan.';
+    if (!identifier.contains('@') || !identifier.contains('.')) {
+      return 'Geçerli bir e-posta adresi gir.';
     }
     return null;
   }
@@ -140,8 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 34),
                       AppTextField(
+                        semanticIdentifier: AppSemantics.loginIdentifier,
                         controller: _identifierController,
-                        label: 'E-posta veya kullanıcı adı',
+                        label: 'E-posta',
                         hint: 'ornek@eposta.com',
                         prefixIcon: Icons.person_outline_rounded,
                         keyboardType: TextInputType.emailAddress,
@@ -155,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
                       AppTextField(
+                        semanticIdentifier: AppSemantics.loginPassword,
                         controller: _passwordController,
                         label: 'Şifre',
                         hint: 'Şifreni gir',
@@ -199,15 +211,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const Spacer(),
-                          TextButton(
-                            onPressed: _openForgotPassword,
-                            child: const Text('Şifremi unuttum'),
+                          Semantics(
+                            identifier: AppSemantics.forgotPassword,
+                            child: TextButton(
+                              onPressed: _openForgotPassword,
+                              child: const Text('Şifremi unuttum'),
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 18),
                       PrimaryButton(
                         key: const Key('login-submit-button'),
+                        semanticIdentifier: AppSemantics.loginSubmit,
                         label: 'Giriş Yap',
                         icon: Icons.arrow_forward_rounded,
                         isLoading: _isLoading,
