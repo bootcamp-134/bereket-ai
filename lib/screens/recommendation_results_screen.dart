@@ -234,9 +234,9 @@ class _RecommendationCard extends StatelessWidget {
                 ),
                 _InfoPill(
                   icon: Icons.shopping_bag_outlined,
-                  label: recommendation.estimatedExtraCost == 0
-                      ? 'Ek masraf yok'
-                      : 'Tahmini ₺${recommendation.estimatedExtraCost}',
+                  label: _additionalCostLabel(
+                    recommendation.estimatedExtraCost,
+                  ),
                 ),
               ],
             ),
@@ -278,6 +278,15 @@ class _RecommendationCard extends StatelessWidget {
       ),
     );
   }
+}
+
+String _additionalCostLabel(num? cost) {
+  if (cost == null) return 'Ek maliyet bilinmiyor';
+  if (cost == 0) return 'Ek masraf yok';
+  final amount = cost % 1 == 0
+      ? cost.toInt().toString()
+      : cost.toStringAsFixed(2);
+  return 'Tahminî ₺$amount';
 }
 
 class _InfoPill extends StatelessWidget {

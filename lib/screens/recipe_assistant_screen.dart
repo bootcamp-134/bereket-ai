@@ -40,7 +40,6 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
   void initState() {
     super.initState();
     _chatService = widget.chatService ?? AppServices.instance.recipeChat;
-    _sessionId = _chatService.createSession(widget.recipe.id);
     _messages.add(
       _ChatMessage(
         text:
@@ -50,6 +49,29 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
         isUser: false,
       ),
     );
+    _sessionId = _initializeSession();
+  }
+
+  Future<String> _initializeSession() async {
+    final session = await _chatService.openSession(widget.recipe.id);
+    if (mounted && session.messages.isNotEmpty) {
+      setState(() {
+        _messages
+          ..clear()
+          ..addAll(
+            session.messages.map(
+              (message) => _ChatMessage(
+                text: message.fallback
+                    ? '${message.content}\n\nNot: Bu yanıt güvenli yedek sistem tarafından oluşturuldu.'
+                    : message.content,
+                isUser: message.role == 'user',
+              ),
+            ),
+          );
+      });
+      _scrollToBottom();
+    }
+    return session.id;
   }
 
   @override
@@ -75,7 +97,7 @@ class _RecipeAssistantScreenState extends State<RecipeAssistantScreen> {
     if (question.length > _maxQuestionLength) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Sorunuz en fazla 300 karakter olabilir.'),
+          content: Text('Sorunuz en fazla 1000 karakter olabilir.'),
         ),
       );
       return;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/recipe.dart';
 import '../models/recommendation.dart';
 import '../services/mock_recommendation_service.dart';
 import '../testing/app_semantics.dart';
@@ -8,19 +9,26 @@ import '../widgets/primary_button.dart';
 import 'recipe_assistant_screen.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
-  final RecipeRecommendation recommendation;
+  final RecipeRecommendation? recommendation;
+  final Recipe? standaloneRecipe;
 
-  const RecipeDetailScreen({super.key, required this.recommendation});
+  const RecipeDetailScreen({
+    super.key,
+    this.recommendation,
+    this.standaloneRecipe,
+  }) : assert(recommendation != null || standaloneRecipe != null);
 
   @override
   Widget build(BuildContext context) {
-    final recipe = recommendation.recipe;
-    final matchedNames = recommendation.matchedIngredients
-        .map(
-          (ingredient) =>
-              MockRecommendationService.normalizeIngredient(ingredient.name),
-        )
-        .toSet();
+    final recipe = recommendation?.recipe ?? standaloneRecipe!;
+    final matchedNames =
+        (recommendation?.matchedIngredients ?? const <RecipeIngredient>[])
+            .map(
+              (ingredient) => MockRecommendationService.normalizeIngredient(
+                ingredient.name,
+              ),
+            )
+            .toSet();
 
     return Scaffold(
       appBar: AppBar(
@@ -56,29 +64,30 @@ class RecipeDetailScreen extends StatelessWidget {
                             size: 78,
                           ),
                         ),
-                        Positioned(
-                          right: 16,
-                          top: 16,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                AppRadii.control,
+                        if (recommendation != null)
+                          Positioned(
+                            right: 16,
+                            top: 16,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
                               ),
-                            ),
-                            child: Text(
-                              '%${recommendation.matchPercentage} eşleşme',
-                              style: const TextStyle(
-                                color: AppColors.forest,
-                                fontWeight: FontWeight.w800,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                  AppRadii.control,
+                                ),
+                              ),
+                              child: Text(
+                                '%${recommendation!.matchPercentage} eşleşme',
+                                style: const TextStyle(
+                                  color: AppColors.forest,
+                                  fontWeight: FontWeight.w800,
+                                ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),
@@ -108,9 +117,11 @@ class RecipeDetailScreen extends StatelessWidget {
                       ),
                       _DetailPill(
                         icon: Icons.payments_outlined,
-                        text: recommendation.estimatedExtraCost == 0
-                            ? 'Ek masraf yok'
-                            : 'Tahmini ₺${recommendation.estimatedExtraCost}',
+                        text: recommendation == null
+                            ? _recipeCostLabel(recipe.estimatedCost)
+                            : _additionalCostLabel(
+                                recommendation!.estimatedExtraCost,
+                              ),
                       ),
                     ],
                   ),
@@ -121,11 +132,13 @@ class RecipeDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   ...recipe.ingredients.map((ingredient) {
-                    final isAvailable = matchedNames.contains(
-                      MockRecommendationService.normalizeIngredient(
-                        ingredient.name,
-                      ),
-                    );
+                    final isAvailable =
+                        recommendation == null ||
+                        matchedNames.contains(
+                          MockRecommendationService.normalizeIngredient(
+                            ingredient.name,
+                          ),
+                        );
                     return Container(
                       margin: const EdgeInsets.only(bottom: 9),
                       padding: const EdgeInsets.all(14),
@@ -233,6 +246,21 @@ class RecipeDetailScreen extends StatelessWidget {
     );
   }
 }
+
+String _additionalCostLabel(num? cost) {
+  if (cost == null) return 'Ek maliyet bilinmiyor';
+  if (cost == 0) return 'Ek masraf yok';
+  return 'Tahminî ₺${_formatAmount(cost)}';
+}
+
+String _recipeCostLabel(RecipeEstimatedCost cost) {
+  if (cost.amountTry == null) return 'Maliyet bilinmiyor';
+  final partial = cost.isPartial ? ' (kısmi)' : '';
+  return '${cost.label}: ₺${_formatAmount(cost.amountTry!)}$partial';
+}
+
+String _formatAmount(num amount) =>
+    amount % 1 == 0 ? amount.toInt().toString() : amount.toStringAsFixed(2);
 
 class _DetailHeading extends StatelessWidget {
   final IconData icon;

@@ -59,7 +59,7 @@ class HttpRecommendationService implements RecommendationService {
             matchPercentage: (item['matchPercentage'] as num?)?.round() ?? 0,
             matchedIngredients: matched,
             missingIngredients: missing,
-            estimatedExtraCost: item['estimatedAdditionalCostTry'] as num? ?? 0,
+            estimatedExtraCost: item['estimatedAdditionalCostTry'] as num?,
             reason: item['reason']?.toString() ?? '',
           );
         })

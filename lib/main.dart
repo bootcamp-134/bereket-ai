@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'screens/forgot_password_screen.dart';
+import 'navigation/app_navigator.dart';
+import 'screens/recipe_catalog_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/profile_setup_screen.dart';
 import 'screens/register_screen.dart';
@@ -18,6 +20,7 @@ class BereketAiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: AppNavigator.key,
       title: 'BereketAI',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
@@ -28,6 +31,7 @@ class BereketAiApp extends StatelessWidget {
         '/forgot-password': (_) => const ForgotPasswordScreen(),
         '/profile-setup': (_) => const ProfileSetupScreen(),
         '/what-should-i-eat': (_) => const WhatShouldIEatScreen(),
+        '/recipes': (_) => const RecipeCatalogScreen(),
       },
     );
   }

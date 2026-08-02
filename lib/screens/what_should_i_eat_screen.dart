@@ -182,6 +182,14 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            tooltip: 'Tüm tarifler',
+            onPressed: () => Navigator.of(context).pushNamed('/recipes'),
+            icon: const Icon(Icons.menu_book_outlined),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SafeArea(
         top: false,

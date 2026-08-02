@@ -1,7 +1,7 @@
 class RecipeIngredient {
   final String name;
   final String amount;
-  final int estimatedCost;
+  final num? estimatedCost;
 
   const RecipeIngredient({
     required this.name,
@@ -22,9 +22,31 @@ class RecipeIngredient {
     return RecipeIngredient(
       name: json['name']?.toString() ?? '',
       amount: displayAmount,
-      estimatedCost: (json['estimatedCostTry'] as num?)?.round() ?? 0,
+      estimatedCost: json['estimatedCostTry'] as num?,
     );
   }
+}
+
+class RecipeEstimatedCost {
+  final num? amountTry;
+  final bool isPartial;
+  final num? coverageRatio;
+  final String label;
+
+  const RecipeEstimatedCost({
+    this.amountTry,
+    this.isPartial = false,
+    this.coverageRatio,
+    this.label = 'Tahminî maliyet',
+  });
+
+  factory RecipeEstimatedCost.fromJson(Map<String, dynamic>? json) =>
+      RecipeEstimatedCost(
+        amountTry: json?['amountTry'] as num?,
+        isPartial: json?['isPartial'] == true,
+        coverageRatio: json?['coverageRatio'] as num?,
+        label: json?['label']?.toString() ?? 'Tahminî maliyet',
+      );
 }
 
 class Recipe {
@@ -35,6 +57,7 @@ class Recipe {
   final String difficulty;
   final List<RecipeIngredient> ingredients;
   final List<String> steps;
+  final RecipeEstimatedCost estimatedCost;
 
   const Recipe({
     required this.id,
@@ -44,6 +67,7 @@ class Recipe {
     required this.difficulty,
     required this.ingredients,
     required this.steps,
+    this.estimatedCost = const RecipeEstimatedCost(),
   });
 
   factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
@@ -63,5 +87,20 @@ class Recipe {
         )
         .where((step) => step.isNotEmpty)
         .toList(growable: false),
+    estimatedCost: RecipeEstimatedCost.fromJson(
+      (json['estimatedCost'] as Map?)?.cast<String, dynamic>(),
+    ),
   );
+}
+
+class RecipePage {
+  final List<Recipe> recipes;
+  final int page;
+  final bool hasMore;
+
+  const RecipePage({
+    required this.recipes,
+    required this.page,
+    required this.hasMore,
+  });
 }

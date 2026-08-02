@@ -57,7 +57,7 @@ class MockRecommendationService implements RecommendationService {
 
       final estimatedCost = missing.fold<int>(
         0,
-        (sum, ingredient) => sum + ingredient.estimatedCost,
+        (sum, ingredient) => sum + (ingredient.estimatedCost ?? 0).round(),
       );
       if (request.wantsToShop && estimatedCost > request.budget!) continue;
 
@@ -88,8 +88,8 @@ class MockRecommendationService implements RecommendationService {
       );
       if (scoreOrder != 0) return scoreOrder;
 
-      final costOrder = first.estimatedExtraCost.compareTo(
-        second.estimatedExtraCost,
+      final costOrder = (first.estimatedExtraCost ?? double.infinity).compareTo(
+        second.estimatedExtraCost ?? double.infinity,
       );
       if (costOrder != 0) return costOrder;
 

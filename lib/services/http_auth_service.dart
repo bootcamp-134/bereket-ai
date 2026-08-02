@@ -51,7 +51,7 @@ class HttpAuthService implements AuthService {
 
   Future<void> _saveTokens(Map<String, dynamic> data) async {
     final tokens = (data['tokens'] as Map).cast<String, dynamic>();
-    await _api.tokenStorage.saveTokens(
+    await _api.saveTokens(
       accessToken: tokens['accessToken'] as String,
       refreshToken: tokens['refreshToken'] as String,
     );

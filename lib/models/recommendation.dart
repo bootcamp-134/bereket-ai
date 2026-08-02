@@ -17,7 +17,7 @@ class RecipeRecommendation {
   final int matchPercentage;
   final List<RecipeIngredient> matchedIngredients;
   final List<RecipeIngredient> missingIngredients;
-  final num estimatedExtraCost;
+  final num? estimatedExtraCost;
   final String reason;
 
   const RecipeRecommendation({
