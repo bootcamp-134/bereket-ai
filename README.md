@@ -1,5 +1,17 @@
 # BereketAgent
 
+> **Tarihsel prototip uyarısı:** Bu branch Gemini + RecipeNLG ile hazırlanmış deneysel Python agent çalışmasını korur; Bereket AI production runtime'ı değildir. Canlı tarif önerisi ve recipe chat agent'ı `backend` branch'inde NestJS, Neon ve OpenAI Responses API ile çalışır. Branch geçmişleri topluca merge edilmemelidir.
+
+## Production'a geçiş notu — 2 Ağustos 2026
+
+- Canlı API: `https://api.bereket.app/api/v1`
+- Production model: `gpt-5.4-mini-2026-03-17`
+- Production dataset: 3.005 tarif, 27.382 malzeme satırı; SHA-256 `63c0fdf21fe854477d31aa803de9be61e901a6b6ed37609217db9b71b3278c9b`
+- Akış: Neon sorgusu → deterministic scoring → alerjen/bütçe hard-filter → en fazla 15 aday → OpenAI structured-output rerank → recipe ID doğrulaması → en fazla 5 sonuç.
+- Timeout, 429, geçersiz çıktı ve aylık 5 USD uygulama limitinde deterministic fallback kullanılır.
+
+Bu branch araştırma ve tarihsel karşılaştırma için saklanır. Yeni production agent değişiklikleri burada değil `backend` branch'inde yapılmalıdır.
+
 Bereket AI projesinin **agent katmanı** — kullanıcının kilerindeki malzemelere göre güvenli, kişiselleştirilmiş yemek tarifi önerileri üreten agent zinciri.
 
 Bu repo, Bereket AI ekibindeki **AI Engineer** rolünün sorumluluğunda geliştirilen kısmı içerir: Pantry Parser Agent, Recipe Match Agent ve alerji/kısıtlama güvenlik filtresi.
