@@ -1,5 +1,6 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { Resend } from "resend";
+import { Inject, Injectable, Logger } from "@nestjs/common";
+import type { Resend } from "resend";
+import { RESEND_CLIENT } from "./resend.provider";
 
 function escapeHtml(value: string) {
   return value
@@ -14,14 +15,15 @@ function escapeHtml(value: string) {
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
 
+  constructor(@Inject(RESEND_CLIENT) private readonly resend: Resend | null) {}
+
   async sendPasswordReset(input: {
     email: string;
     fullName?: string | null;
     token: string;
     tokenId: string;
   }) {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
+    if (!this.resend) {
       if (process.env.NODE_ENV === "production") {
         throw new Error("RESEND_API_KEY tanımlı değil.");
       }
@@ -32,11 +34,11 @@ export class EmailService {
     }
 
     const appBaseUrl = process.env.APP_BASE_URL ?? "https://bereket.app";
-    const from = process.env.RESEND_FROM ?? "Bereket AI <noreply@bereket.app>";
+    const from =
+      process.env.RESEND_FROM ?? "Bereket AI <noreply@mail.bereket.app>";
     const resetUrl = `${appBaseUrl}/reset-password#token=${encodeURIComponent(input.token)}`;
     const name = escapeHtml(input.fullName?.trim() || "Bereket AI kullanıcısı");
-    const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send(
+    const { error } = await this.resend.emails.send(
       {
         from,
         to: input.email,

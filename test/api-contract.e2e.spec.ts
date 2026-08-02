@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import type { INestApplication } from "@nestjs/common";
-import { ValidationPipe } from "@nestjs/common";
+import { RequestMethod, ValidationPipe } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import request from "supertest";
@@ -15,13 +15,16 @@ describe("production API contract", () => {
   beforeAll(async () => {
     process.env.DATABASE_URL =
       "postgresql://unused:unused@localhost:5432/unused";
-    process.env.JWT_SECRET = "test-jwt-secret-at-least-32-characters";
+    process.env.JWT_ACCESS_SECRET =
+      "test-jwt-access-secret-at-least-32-characters";
     const module = await Test.createTestingModule({ imports: [AppModule] })
       .overrideProvider(PrismaService)
       .useValue({ $disconnect: async () => undefined })
       .compile();
     app = module.createNestApplication();
-    app.setGlobalPrefix("api/v1");
+    app.setGlobalPrefix("api/v1", {
+      exclude: [{ path: "", method: RequestMethod.GET }],
+    });
     app.useGlobalFilters(new ApiExceptionFilter());
     app.useGlobalPipes(
       new ValidationPipe({
@@ -34,6 +37,13 @@ describe("production API contract", () => {
   });
 
   afterAll(async () => app.close());
+
+  it("redirects the API root to Swagger", async () => {
+    await request(app.getHttpServer())
+      .get("/")
+      .expect(308)
+      .expect("location", "/api/docs");
+  });
 
   it("returns the standard error envelope for a protected endpoint", async () => {
     const response = await request(app.getHttpServer())
@@ -76,7 +86,10 @@ describe("production API contract", () => {
     );
     expect(
       paths.some(
-        (path) => path.includes("feed") || path.includes("achievements"),
+        (path) =>
+          path.includes("feed") ||
+          path.includes("achievements") ||
+          path.includes("internal"),
       ),
     ).toBe(false);
   });

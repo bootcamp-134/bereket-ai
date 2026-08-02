@@ -4,16 +4,17 @@ import { AuthController } from "./auth.controller";
 import { AuthRepository } from "./auth.repository";
 import { AuthService } from "./auth.service";
 import { EmailService } from "./email.service";
+import { resendClientProvider } from "./resend.provider";
 
 @Module({
   controllers: [AuthController],
   exports: [JwtModule],
   imports: [
-    JwtModule.register({
+    JwtModule.registerAsync({
       global: true,
-      secret: process.env.JWT_ACCESS_SECRET ?? process.env.JWT_SECRET,
+      useFactory: () => ({ secret: process.env.JWT_ACCESS_SECRET }),
     }),
   ],
-  providers: [AuthRepository, AuthService, EmailService],
+  providers: [AuthRepository, AuthService, EmailService, resendClientProvider],
 })
 export class AuthModule {}

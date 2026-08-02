@@ -10,7 +10,7 @@ Bereket AI mobil uygulamasının production backend’i. NestJS, PostgreSQL/Neon
 - Neon runtime bağlantısı pooled `DATABASE_URL`, migration/import bağlantısı `DATABASE_URL_UNPOOLED` kullanır.
 - Vercel Function region: Frankfurt `fra1`.
 - Resend hesabı ve domain doğrulaması manuel; secret’lar yalnız Vercel environment değişkenlerindedir.
-- OpenAI modeli: `gpt-5.4-mini-2026-03-17`; aylık uygulama sınırı 5 USD ve deterministic fallback aktiftir.
+- OpenAI modeli: `gpt-5.4-mini-2026-03-17`; yarış koşuluna dayanıklı aylık 5 USD bütçe rezervasyonu ve deterministic fallback aktiftir.
 
 ## Güvenlik ve veri kuralları
 
@@ -20,10 +20,12 @@ Bereket AI mobil uygulamasının production backend’i. NestJS, PostgreSQL/Neon
 - Alerjen eşleşmesi muhafazakâr hard-filter’dır; veri `allergenDataStatus: "inferred"` olarak sunulur.
 - Eksik fiyatlar `0` yapılmaz. Kısmi maliyetli tarifler bütçeye uygun kabul edilmez ve tüm maliyetler “Tahminî maliyet” olarak etiketlenir.
 - OpenAI yalnız veritabanından güvenli biçimde seçilmiş en fazla 15 aday görür; dönüşte recipe ID’leri yeniden doğrulanır.
+- OpenAI’ye kullanıcı kimliği yerine HMAC tabanlı `safety_identifier` gönderilir. Resend ve OpenAI istemcileri testlerde fake provider ile değiştirilebilir.
+- Süresi dolmuş rate-limit, reset ve refresh kayıtları Vercel Cron ile her gün temizlenir; bakım endpoint’i Swagger’dan gizlidir ve `CRON_SECRET` ile korunur.
 
 ## Yerel geliştirme
 
-Node.js 24 ve pnpm 11 gerekir.
+Node.js 24 ve pnpm 10.34.5 gerekir.
 
 ```bash
 pnpm install
@@ -70,6 +72,8 @@ POST   /recipe-chat/sessions/:sessionId/messages
 ```
 
 `/feed` ve `/achievements` V1 kapsamında değildir.
+
+API kökü `GET /` kalıcı olarak `/api/docs` adresine yönlendirir. Internal bakım endpoint’i V1 ürün sözleşmesine dahil değildir.
 
 ## Dokümantasyon
 

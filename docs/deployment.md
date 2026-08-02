@@ -2,12 +2,12 @@
 
 ## Altyapı
 
-- Vercel project: `bereket-ai`
+- Vercel project: `bereket-ai-api`
 - Production branch: `backend`
 - Domain: `api.bereket.app`
 - Function region: `fra1`
 - Neon: Frankfurt, Neon Auth kapalı, preview database branching açık
-- Resend: manuel hesap ve doğrulanmış `bereket.app` domain’i
+- Resend: manuel hesap ve doğrulanmış `mail.bereket.app` gönderim domain’i
 
 Gerekli Vercel environment değişkenleri:
 
@@ -17,11 +17,13 @@ DATABASE_URL_UNPOOLED
 JWT_ACCESS_SECRET
 REFRESH_TOKEN_PEPPER
 PASSWORD_RESET_TOKEN_PEPPER
+OPENAI_SAFETY_PEPPER
+CRON_SECRET
 APP_BASE_URL=https://bereket.app
 API_BASE_URL=https://api.bereket.app/api/v1
 CORS_ORIGINS=https://bereket.app,https://www.bereket.app
 RESEND_API_KEY
-RESEND_FROM=Bereket AI <noreply@bereket.app>
+RESEND_FROM=Bereket AI <noreply@mail.bereket.app>
 OPENAI_API_KEY
 OPENAI_MODEL=gpt-5.4-mini-2026-03-17
 OPENAI_MONTHLY_BUDGET_USD=5
@@ -32,12 +34,13 @@ Secret değerleri dokümana, loga veya Git’e yazılmaz. `NEON_AUTH_BASE_URL` k
 
 ## Preview release
 
-1. `codex/backend-production-ready` branch’ini push et.
+1. Kısa ömürlü `release/*` branch’ini push et; `codex/*` branch kullanma.
 2. Vercel preview deployment’ın Neon preview branch oluşturduğunu doğrula.
 3. Preview direct URL ile `prisma migrate deploy` çalıştır.
 4. `pnpm db:import` komutunu iki kez çalıştır; ikinci koşu değişiklik yapmamalı.
 5. `RUN_DATABASE_TESTS=true pnpm test`, lint, build, Prisma validate ve audit kapılarını çalıştır.
 6. Preview API’de auth, profile, recipe, recommendation ve chat smoke testi yap.
+7. CI’daki fake OpenAI/Resend tam API akışının ve PostgreSQL bütçe yarış testinin geçtiğini doğrula.
 
 ## Production release
 
@@ -47,6 +50,7 @@ Secret değerleri dokümana, loga veya Git’e yazılmaz. `NEON_AUTH_BASE_URL` k
 4. Doğrulanmış commit’i `backend` branch’ine gönder.
 5. Vercel production deployment tamamlanınca `https://api.bereket.app/api/v1/health` ve tam kullanıcı akışını test et.
 6. Vercel runtime loglarında 5xx, timeout, OpenAI fallback ve Resend hatalarını request ID ile tara.
+7. `GET /api/v1/internal/maintenance` cron çalışmasının yalnız doğru `CRON_SECRET` ile 200, aksi halde güvenli 404 verdiğini doğrula.
 
 ## Rollback
 

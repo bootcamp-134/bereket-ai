@@ -54,6 +54,7 @@ export class RecommendationsService {
       .filter((candidate) => {
         if (!dto.wantsToShop) return candidate.missingIngredients.length === 0;
         return (
+          !candidate.recipe.estimatedCostIsPartial &&
           candidate.estimatedAdditionalCostTry !== null &&
           candidate.estimatedAdditionalCostTry <= (dto.budgetTry ?? -1)
         );

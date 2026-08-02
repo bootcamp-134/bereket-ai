@@ -230,7 +230,7 @@ export class AuthService {
   }
 
   private hashToken(token: string, variable: string) {
-    const pepper = process.env[variable] ?? process.env.JWT_SECRET;
+    const pepper = process.env[variable];
     if (!pepper) throw new Error(`${variable} tanımlı değil.`);
     return createHmac("sha256", pepper).update(token).digest("hex");
   }
