@@ -3,6 +3,7 @@ import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 import { AppModule } from "./app.module";
+import { APP_VERSION } from "./common/app-version";
 import { ApiExceptionFilter } from "./common/api-exception.filter";
 import {
   configuredCorsOrigins,
@@ -39,7 +40,7 @@ async function bootstrap() {
       .setDescription(
         "Bereket AI production auth, recipe recommendation and recipe chat API.",
       )
-      .setVersion("1.0.0")
+      .setVersion(APP_VERSION)
       .addServer("https://api.bereket.app", "Production")
       .addBearerAuth()
       .build();

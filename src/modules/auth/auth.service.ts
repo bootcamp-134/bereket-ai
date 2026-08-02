@@ -7,6 +7,7 @@ import {
 import { JwtService } from "@nestjs/jwt";
 import { Algorithm, hash, verify } from "@node-rs/argon2";
 import { createHmac, randomBytes, randomUUID } from "node:crypto";
+import { profileComplete } from "../../common/profile-complete";
 import { AuthRepository } from "./auth.repository";
 import type {
   ForgotPasswordDto,
@@ -19,28 +20,6 @@ import { EmailService } from "./email.service";
 const ACCESS_TOKEN_SECONDS = 15 * 60;
 const REFRESH_TOKEN_MS = 30 * 24 * 60 * 60 * 1000;
 const RESET_TOKEN_MS = 30 * 60 * 1000;
-
-function profileComplete(
-  profile: {
-    fullName: string | null;
-    age: number | null;
-    householdSize: number | null;
-    mealsPerDay: number | null;
-    incomeLevel: unknown;
-    weeklyFoodBudget: unknown;
-    dietPreferences: string[];
-  } | null,
-) {
-  return Boolean(
-    profile?.fullName &&
-    profile.age &&
-    profile.householdSize &&
-    profile.mealsPerDay &&
-    profile.incomeLevel &&
-    profile.weeklyFoodBudget !== null &&
-    profile.dietPreferences.length,
-  );
-}
 
 @Injectable()
 export class AuthService {
