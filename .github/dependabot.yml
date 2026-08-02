@@ -1,0 +1,47 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: sprint-3
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "03:00"
+      timezone: Europe/Istanbul
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+
+  - package-ecosystem: npm
+    directory: /
+    target-branch: backend
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "03:15"
+      timezone: Europe/Istanbul
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: sprint-3
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "03:30"
+      timezone: Europe/Istanbul
+    commit-message:
+      prefix: "chore(actions)"
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: backend
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "03:45"
+      timezone: Europe/Istanbul
+    commit-message:
+      prefix: "chore(actions)"
