@@ -169,6 +169,7 @@ model RecipeIngredient {
   displayName             String
   normalizedName          String
   displayAmount           Decimal?    @db.Decimal(16, 4)
+  displayAmountText       String?
   displayUnit             String?
   quantity                Decimal?    @db.Decimal(16, 4)
   unit                    String?

@@ -24,6 +24,7 @@ export function serializeRecipe(recipe: RecipeWithDetails) {
     ingredients: recipe.ingredients.map((item) => ({
       name: item.displayName,
       amount: decimal(item.displayAmount),
+      amountText: item.displayAmountText,
       unit: item.displayUnit,
       estimatedCostTry: decimal(item.defaultEstimatedCostTry),
       costStatus: item.costStatus,

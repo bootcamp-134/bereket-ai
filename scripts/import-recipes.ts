@@ -15,7 +15,7 @@ const EXPECTED_PRICED_COUNT = 21331;
 
 type RawIngredient = {
   isim: string;
-  miktar: number | null;
+  miktar: number | string | null;
   birim: string | null;
   quantity: number | null;
   unit: string | null;
@@ -52,8 +52,15 @@ type RawRecipe = {
   _source?: Record<string, unknown>;
 };
 
-const decimal = (value: number | null) =>
-  value === null ? null : new Prisma.Decimal(value);
+const decimal = (value: number | string | null) => {
+  if (value === null) return null;
+  if (typeof value === "number")
+    return Number.isFinite(value) ? new Prisma.Decimal(value) : null;
+  const normalized = value.trim().replace(",", ".");
+  return /^-?\d+(?:\.\d+)?$/.test(normalized)
+    ? new Prisma.Decimal(normalized)
+    : null;
+};
 
 function description(recipe: RawRecipe) {
   return [recipe.kategori, recipe.zorluk, ...(recipe.pisirme_yontemi ?? [])]
@@ -158,6 +165,7 @@ async function main() {
           displayName: item.isim,
           normalizedName: normalizeTurkish(item.canonical_name ?? item.isim),
           displayAmount: decimal(item.miktar),
+          displayAmountText: item.miktar === null ? null : String(item.miktar),
           displayUnit: item.birim,
           quantity: decimal(item.quantity),
           unit: item.unit,

@@ -69,6 +69,7 @@ export class RecipeChatService {
       ingredients: session.recipe.ingredients.map((item) => ({
         name: item.displayName,
         amount: item.displayAmount === null ? null : Number(item.displayAmount),
+        amountText: item.displayAmountText,
         unit: item.displayUnit,
       })),
       steps: session.recipe.steps.map((step) => step.text),

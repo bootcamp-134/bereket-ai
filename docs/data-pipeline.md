@@ -43,6 +43,8 @@ Eksik tutarlar nullable kalır; bilinmeyen maliyet `0` değildir. API şunları 
 - `priceReferenceDate`
 - `label: "Tahminî maliyet"`
 
+Kaynak `miktar` alanı sayısal değilse (ör. “az miktar”) `amount=null` kalır ve kayıpsız gösterim için ham değer `amountText` alanında sunulur.
+
 Bir öneride eksik malzemelerden herhangi biri fiyatlandırılmamışsa tarif bütçe filtresinden geçmez.
 
 ## Alerjen semantiği
