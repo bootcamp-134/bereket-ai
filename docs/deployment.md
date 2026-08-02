@@ -1,75 +1,69 @@
-# Deployment Notes
+# Production deployment ve rollback runbook
 
-Bu dosya backend branch'inin staging/demo ortamına nasıl alınacağını ve hangi sınırlara sahip olduğunu açıklar.
+## Altyapı
 
-## Environment Variables
+- Vercel project: `bereket-ai`
+- Production branch: `backend`
+- Domain: `api.bereket.app`
+- Function region: `fra1`
+- Neon: Frankfurt, Neon Auth kapalı, preview database branching açık
+- Resend: manuel hesap ve doğrulanmış `bereket.app` domain’i
 
-Staging/demo için:
+Gerekli Vercel environment değişkenleri:
 
 ```text
-PORT=3001
+DATABASE_URL
+DATABASE_URL_UNPOOLED
+JWT_ACCESS_SECRET
+REFRESH_TOKEN_PEPPER
+PASSWORD_RESET_TOKEN_PEPPER
+APP_BASE_URL=https://bereket.app
+API_BASE_URL=https://api.bereket.app/api/v1
+CORS_ORIGINS=https://bereket.app,https://www.bereket.app
+RESEND_API_KEY
+RESEND_FROM=Bereket AI <noreply@bereket.app>
+OPENAI_API_KEY
+OPENAI_MODEL=gpt-5.4-mini-2026-03-17
+OPENAI_MONTHLY_BUDGET_USD=5
 SWAGGER_ENABLED=true
-CORS_ORIGIN=https://mobil-preview-url.example
-JWT_SECRET=staging-only-change-me
-DATABASE_URL=postgresql://placeholder
 ```
 
-Notlar:
+Secret değerleri dokümana, loga veya Git’e yazılmaz. `NEON_AUTH_BASE_URL` kullanılmaz.
 
-- Vercel kendi `PORT` değerini sağlayabilir; lokal geliştirme için `3001` kullanılır.
-- `DATABASE_URL` şu an aktif kullanılmaz, Prisma schema hedefi için yer tutucudur.
-- `JWT_SECRET` şu an gerçek JWT üretiminde kullanılmaz, sonraki auth fazı için hazır tutulur.
-- `CORS_ORIGIN` virgülle ayrılmış origin listesi alır. Boş bırakılırsa tüm origin'lere izin verilir.
-- `SWAGGER_ENABLED=false` yapıldığında `/api/docs` kapatılır.
+## Preview release
 
-## Deploy Sonrası Kontrol
+1. `codex/backend-production-ready` branch’ini push et.
+2. Vercel preview deployment’ın Neon preview branch oluşturduğunu doğrula.
+3. Preview direct URL ile `prisma migrate deploy` çalıştır.
+4. `pnpm db:import` komutunu iki kez çalıştır; ikinci koşu değişiklik yapmamalı.
+5. `RUN_DATABASE_TESTS=true pnpm test`, lint, build, Prisma validate ve audit kapılarını çalıştır.
+6. Preview API’de auth, profile, recipe, recommendation ve chat smoke testi yap.
+
+## Production release
+
+1. Migration SQL’ini destructive işlem açısından incele. Bu sürüm additive başlangıç migration’ıdır.
+2. Production `DATABASE_URL_UNPOOLED` ile `pnpm db:deploy` çalıştır.
+3. Production’da `pnpm db:import` çalıştır ve `/health` üzerindeki checksum/sayıyı doğrula.
+4. Doğrulanmış commit’i `backend` branch’ine gönder.
+5. Vercel production deployment tamamlanınca `https://api.bereket.app/api/v1/health` ve tam kullanıcı akışını test et.
+6. Vercel runtime loglarında 5xx, timeout, OpenAI fallback ve Resend hatalarını request ID ile tara.
+
+## Rollback
+
+- Kod hatasında Vercel’de önceki başarılı deployment’ı production’a promote et.
+- Dataset importu yalnız tamamlandıktan sonra aktifleşir. Gerekirse daha önceki `DatasetImport` kaydını transaction içinde tekrar `active=true`, yenisini `active=false` yap.
+- Migration geri alınmaz; kod önceki additive şemayla uyumlu tutulur. Destructive schema düzeltmeleri ayrı forward migration ile yapılır.
+- Token secret’ı sızdıysa ilgili secret’ı rotate et. JWT secret rotasyonu mevcut access tokenları; refresh pepper rotasyonu tüm refresh tokenları geçersiz kılar.
+- Resend/OpenAI kesintisinde secret veya provider detayı kullanıcıya gösterilmez; recommendation/chat deterministic fallback ile devam eder.
+
+## Canlı kontrol listesi
 
 ```text
-GET https://<project-url>/api/health
-GET https://<project-url>/api/docs
-GET https://<project-url>/api/recipes
-POST https://<project-url>/api/recommendations/recipes
+GET  /api/v1/health                  200 + dataset.ready
+GET  /api/docs                       200
+POST /api/v1/auth/register           201
+POST /api/v1/auth/login              200
+POST /api/v1/auth/forgot-password    202
+POST /api/v1/recommendations/recipes 200
+POST /api/v1/recipe-chat/...         200
 ```
-
-Health response örneği:
-
-```json
-{
-  "name": "bereket-ai-backend",
-  "status": "ok",
-  "version": "0.1.0"
-}
-```
-
-## Mevcut Sınırlar
-
-- Gerçek database yoktur.
-- Auth mock token döndürür.
-- Feed görsel yükleme yapmaz, sadece `imageUrl` kabul eder.
-- Recipe chat gerçek LLM'e bağlı değildir.
-- Recommendation sonucu seed tariflere göre kural tabanlı üretilir.
-
-## Database Fazı Geldiğinde
-
-Prisma ORM v7 kullanıldığı için database bağlantı URL'i `schema.prisma` içinde değil, proje kökündeki `prisma.config.ts` dosyasında yönetilir. `schema.prisma` model ve datasource provider bilgisini tutar.
-
-Prisma Client aktif kullanılmaya başladığında Vercel build sırasında Prisma Client'ın güncel üretilmesi gerekir. Bunun için `postinstall` veya özel build komutuna `prisma generate` eklenmelidir. Migration aşamasında `prisma migrate deploy` ayrıca planlanmalıdır.
-
-Önerilen database seçenekleri:
-
-- Prisma Postgres veya Neon Postgres
-- Vercel Marketplace üzerinden yönetilen Postgres
-- Preview ve production için ayrı database kullanımı
-
-## Güvenlik Fazı Geldiğinde
-
-Production öncesi tamamlanması gerekenler:
-
-- Gerçek JWT access/refresh token akışı
-- Password hashleme
-- Auth guard ve role/owner kontrolleri
-- Rate limit
-- Swagger erişimini kapatma veya koruma
-- CORS origin allowlist
-- Request logging ve hata takibi
-- Dosya yükleme için güvenli storage ve MIME/size kontrolü

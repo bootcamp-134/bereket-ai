@@ -1,180 +1,101 @@
-# Bereket AI API Contract
+# Bereket AI V1 API sözleşmesi
 
-Base URL:
+Base URL: `https://api.bereket.app/api/v1`
 
-```text
-http://localhost:3001/api
-```
+Swagger: `https://api.bereket.app/api/docs`
 
-Swagger:
+## Envelope
 
-```text
-http://localhost:3001/api/docs
-```
-
-Not: Staging deploy sonrası bu değer Vercel proje URL'siyle değişir.
-
-## Durum Notu
-
-Bu API sözleşmesi ilk mobil entegrasyon içindir. Şu anda data in-memory seed veriden gelir, gerçek database ve gerçek JWT auth aktif değildir.
-
-## Health
-
-### `GET /health`
-
-Backend'in ayakta olduğunu doğrular.
+Başarılı yanıt:
 
 ```json
 {
-  "name": "bereket-ai-backend",
-  "status": "ok",
-  "version": "0.1.0"
+  "data": {},
+  "meta": { "requestId": "req_..." }
 }
 ```
+
+Hata:
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Gönderilen alanlardan biri geçersiz.",
+    "details": [{ "reason": "..." }],
+    "requestId": "req_..."
+  }
+}
+```
+
+Health ve auth dışındaki tüm endpointlerde `Authorization: Bearer <accessToken>` zorunludur.
 
 ## Auth
 
-### `POST /auth/register`
+- `POST /auth/register` — `email`, 12–128 karakter `password`, opsiyonel `fullName`.
+- `POST /auth/login` — access ve refresh token döndürür.
+- `POST /auth/refresh` — opaque refresh tokenı rotate eder. Flutter eski tokenı başarıyla yenilendiği anda kalıcı depodan silmelidir.
+- `POST /auth/logout` — access token içindeki session’ı revoke eder; `204`.
+- `POST /auth/forgot-password` — kullanıcı varlığını açıklamadan her zaman `202`.
+- `POST /auth/reset-password` — `token` ve yeni parola; başarılıysa `204`.
 
-```json
-{
-  "email": "samet@bereket.ai",
-  "password": "StrongPass123",
-  "fullName": "Samet Dönmez"
-}
-```
+Access token 15 dakika, refresh token 30 gündür. Aynı anda gelen refresh isteklerini Flutter tarafında tek bir mutex/future altında birleştirmek zorunludur. Rotation sonrası eski tokenın yeniden kullanılması tüm token ailesini revoke eder.
 
-### `POST /auth/login`
+## Profil
 
-```json
-{
-  "email": "samet@bereket.ai",
-  "password": "StrongPass123"
-}
-```
+- `GET /me`
+- `PATCH /me/profile`
 
-İlk geliştirme sürümünde tokenlar dev amaçlı mock string olarak üretilir.
+Patch alanları: `fullName`, `age`, `householdSize`, `mealsPerDay`, `incomeLevel`, `weeklyFoodBudget`, `dietPreferences`, `allergens`.
 
-Response içinde dönen token mobil tarafın auth header entegrasyonunu prova etmesi içindir:
+`null` kabul edilmez. Dizi temizlemek için `[]` gönderilir. Gönderilmeyen alan değişmez.
+
+Flutter enum değerleri:
 
 ```text
-Authorization: Bearer <token>
-```
-
-Mevcut sürümde endpoint'ler bu token'ı zorunlu tutmaz.
-
-## Onboarding
-
-### `PUT /me/onboarding`
-
-```json
-{
-  "fullName": "Samet Dönmez",
-  "ageRange": "25-34",
-  "householdSize": 3,
-  "incomeLevel": "middle",
-  "weeklyFoodBudget": 900,
-  "dietPreferences": ["balanced"],
-  "allergens": ["yer fistigi", "sut"],
-  "dislikedIngredients": ["mantar"],
-  "cookingSkill": "beginner",
-  "availableEquipment": ["ocak", "firin"],
-  "shoppingFrequency": "weekly"
-}
-```
-
-## Ne Yesem?
-
-### `POST /recommendations/recipes`
-
-```json
-{
-  "availableIngredients": ["tavuk", "patates", "yoğurt", "domates"],
-  "wantsToSpendMoney": true,
-  "budget": 250,
-  "servings": 3,
-  "confirmAllergens": true
-}
-```
-
-Response, tarif skorlarını, eksik malzemeleri, tahmini ek maliyeti ve neden önerildi açıklamasını döner.
-
-Örnek response şekli:
-
-```json
-{
-  "generatedBy": "rule-based-dev-recommender",
-  "results": [
-    {
-      "recipeId": "recipe_domatesli_makarna",
-      "title": "Domatesli Makarna",
-      "matchScore": 74,
-      "estimatedExtraCost": 75,
-      "matchedIngredients": ["makarna", "domates", "soğan"],
-      "missingIngredients": ["salça", "baharat"],
-      "allergenWarnings": ["gluten içerebilir."],
-      "reason": "3 mevcut malzemeyi kullanır; tahmini ek maliyet 75 TL."
-    }
-  ]
-}
+incomeLevel: unspecified | low | middle | high
 ```
 
 ## Tarifler
 
-### `GET /recipes`
+- `GET /recipes?search=&category=&difficulty=&excludeAllergens=&page=1&pageSize=20`
+- `GET /recipes/:id`
 
-Query parametreleri:
+Süre, porsiyon ve maliyet alanları dataset eksikse `null` olabilir. `estimatedCost.isPartial=true` ise tutar yalnız fiyatlandırılabilen malzemelerin toplamıdır. `allergenDataStatus` şu an `inferred` değerindedir.
 
-- `search`
-- `tag`
-- `allergenFree` comma separated: `sut,gluten`
+## Öneriler
 
-### `GET /recipes/:id`
-
-Tarif detayını, malzemeleri, adımları, alerjenleri ve besin değerlerini döner.
-
-## Tarife Özel Chat
-
-### `POST /recipe-chat/sessions`
+`POST /recommendations/recipes`
 
 ```json
 {
-  "userId": "user_demo",
-  "recipeId": "recipe_tavuklu_patates"
+  "availableIngredients": ["tavuk", "patates"],
+  "wantsToShop": true,
+  "budgetTry": 250
 }
 ```
 
-### `POST /recipe-chat/sessions/:sessionId/messages`
+- En fazla 20 malzeme.
+- `wantsToShop=true` ise `budgetTry` zorunlu.
+- `wantsToShop=false` ise yalnız eksiksiz tarifler döner.
+- Kullanıcının profil alerjenleri hard-filter’dır.
+- Sonuç yoksa HTTP başarıdır: `results: []` ve `noResultsReason` döner.
+- `generatedBy` değeri `openai` veya `deterministic`; `fallback` modele ulaşılamadığını belirtir.
 
-```json
-{
-  "message": "Fırınım yoksa bunu tencerede yapabilir miyim?"
-}
-```
+## Tarif sohbeti
 
-İlk sürümde cevaplar mock agent mantığıyla üretilir. Gelecekte LLM yalnızca seçili tarif context'iyle sınırlandırılacaktır.
+- `POST /recipe-chat/sessions` — body `{ "recipeId": "rec_..." }`.
+- `GET /recipe-chat/sessions/:sessionId/messages`
+- `POST /recipe-chat/sessions/:sessionId/messages` — body `{ "message": "..." }`.
 
-### `GET /recipe-chat/sessions/:sessionId/messages`
+Oturum başka kullanıcıya aitse bilgi sızdırmadan `404` döner. Agent yalnız seçili tarif ve son 10 mesajı kullanır; web/tool erişimi yoktur. Fallback yanıtlarında `assistantMessage.fallback=true` olur.
 
-Seçili chat session içindeki mesajları döner.
+## Flutter entegrasyon notları — Anıl
 
-## Akış
-
-### `POST /feed/posts`
-
-```json
-{
-  "userId": "user_demo",
-  "recipeId": "recipe_tavuklu_patates",
-  "imageUrl": "https://cdn.example.com/uploads/tavuklu-patates.jpg",
-  "comment": "Biber yoktu, domatesi biraz artırdım."
-}
-```
-
-Bu sürümde dosya upload yoktur. Mobil taraf şimdilik URL gönderir.
-
-## Achievement
-
-### `GET /achievements/me`
-
-Kullanıcının başarımlarını ve ilerleme durumunu döner.
+- Base URL ve modelleri bu sözleşmeden üret; eski mock `/api` ve `PUT /me/onboarding` çağrılarını kaldır.
+- Access/refresh tokenları platform secure storage’da tut.
+- 401’de tek refresh mutex kullan; başarılı rotation sonrası isteği bir kez tekrar et.
+- Refresh de 401 dönerse local oturumu temizle ve login’e yönlendir.
+- Nullable süre/porsiyon/maliyet alanlarını zorunlu Dart tipi yapma.
+- UI’da `isPartial`, `allergenDataStatus`, `fallback` ve `noResultsReason` durumlarını görünür ele al.
+- Staging Maestro akışları: register → profile → recommendations → detail → chat → refresh → logout.

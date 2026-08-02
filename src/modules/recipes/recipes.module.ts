@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
-import { DataModule } from "../data/data.module";
 import { RecipesController } from "./recipes.controller";
+import { RecipesRepository } from "./recipes.repository";
 import { RecipesService } from "./recipes.service";
 
 @Module({
   controllers: [RecipesController],
-  imports: [DataModule],
-  providers: [RecipesService],
+  providers: [RecipesRepository, RecipesService],
+  exports: [RecipesRepository, RecipesService],
 })
 export class RecipesModule {}

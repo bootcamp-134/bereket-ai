@@ -1,16 +1,64 @@
-import { Injectable } from "@nestjs/common";
-import { InMemoryStore } from "../data/in-memory.store";
-import type { OnboardingDto } from "./dto";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import type { IncomeLevel, UserProfile } from "@prisma/client";
+import { ApiCode } from "../../common/api-code";
+import type { UpdateProfileDto } from "./dto";
+import { UsersRepository } from "./users.repository";
+
+const normalizeList = (values: string[]) => [
+  ...new Set(
+    values
+      .map((value) => value.trim().toLocaleLowerCase("tr-TR"))
+      .filter(Boolean),
+  ),
+];
+
+function serializeProfile(profile: UserProfile | null) {
+  if (!profile) return null;
+  return {
+    fullName: profile.fullName,
+    age: profile.age,
+    householdSize: profile.householdSize,
+    mealsPerDay: profile.mealsPerDay,
+    incomeLevel: profile.incomeLevel?.toLowerCase() ?? null,
+    weeklyFoodBudget:
+      profile.weeklyFoodBudget === null
+        ? null
+        : Number(profile.weeklyFoodBudget),
+    dietPreferences: profile.dietPreferences,
+    allergens: profile.allergens,
+  };
+}
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly store: InMemoryStore) {}
+  constructor(private readonly users: UsersRepository) {}
 
-  getMe() {
-    return this.store.getUser();
+  async getMe(userId: string) {
+    const user = await this.users.findById(userId);
+    if (!user) {
+      throw new NotFoundException({
+        code: ApiCode.NOT_FOUND,
+        message: "Kullanıcı bulunamadı.",
+      });
+    }
+    return {
+      id: user.id,
+      email: user.email,
+      profile: serializeProfile(user.profile),
+      createdAt: user.createdAt,
+    };
   }
 
-  updateOnboarding(dto: OnboardingDto) {
-    return this.store.updateProfile(this.store.getDefaultUserId(), dto);
+  async updateProfile(userId: string, dto: UpdateProfileDto) {
+    const profile = await this.users.updateProfile(userId, {
+      ...dto,
+      fullName: dto.fullName?.trim(),
+      incomeLevel: dto.incomeLevel?.toUpperCase() as IncomeLevel | undefined,
+      dietPreferences: dto.dietPreferences
+        ? normalizeList(dto.dietPreferences)
+        : undefined,
+      allergens: dto.allergens ? normalizeList(dto.allergens) : undefined,
+    });
+    return serializeProfile(profile);
   }
 }

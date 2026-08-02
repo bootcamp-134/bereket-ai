@@ -1,42 +1,37 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import {
+  ArrayMaxSize,
+  ArrayMinSize,
   IsArray,
   IsBoolean,
-  IsInt,
-  IsOptional,
+  IsNumber,
   IsString,
+  MaxLength,
   Min,
+  ValidateIf,
 } from "class-validator";
 
 export class RecommendRecipesDto {
-  @ApiPropertyOptional({ example: "user_demo" })
-  @IsOptional()
-  @IsString()
-  userId?: string;
-
-  @ApiProperty({ example: ["tavuk", "patates", "yoğurt", "domates"] })
+  @ApiProperty({
+    example: ["tavuk", "patates", "yoğurt", "domates"],
+    maxItems: 20,
+  })
   @IsArray()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(20)
   @IsString({ each: true })
+  @MaxLength(80, { each: true })
   availableIngredients!: string[];
 
   @ApiProperty({ example: true })
   @IsBoolean()
-  wantsToSpendMoney!: boolean;
+  wantsToShop!: boolean;
 
-  @ApiPropertyOptional({ example: 250 })
-  @IsOptional()
-  @IsInt()
+  @ApiPropertyOptional({ example: 250, minimum: 0 })
+  @ValidateIf((object: RecommendRecipesDto) => object.wantsToShop)
+  @Type(() => Number)
+  @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
-  budget?: number;
-
-  @ApiPropertyOptional({ example: 3 })
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  servings?: number;
-
-  @ApiPropertyOptional({ example: true })
-  @IsOptional()
-  @IsBoolean()
-  confirmAllergens?: boolean;
+  budgetTry?: number;
 }

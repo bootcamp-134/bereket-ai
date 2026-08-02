@@ -1,70 +1,76 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import {
-  ArrayMinSize,
+  ArrayMaxSize,
   IsArray,
   IsIn,
   IsInt,
-  IsOptional,
+  IsNumber,
   IsString,
+  Max,
+  MaxLength,
   Min,
+  ValidateIf,
 } from "class-validator";
-import type { CookingSkill, IncomeLevel } from "../data/types";
 
-export class OnboardingDto {
-  @ApiProperty({ example: "Samet Dönmez" })
+const whenDefined = (_object: unknown, value: unknown) => value !== undefined;
+
+export class UpdateProfileDto {
+  @ApiPropertyOptional({ example: "Samet Dönmez" })
+  @ValidateIf(whenDefined)
   @IsString()
-  fullName!: string;
+  @MaxLength(120)
+  fullName?: string;
 
-  @ApiProperty({ example: "25-34", required: false })
-  @IsOptional()
-  @IsString()
-  ageRange?: string;
+  @ApiPropertyOptional({ example: 28, minimum: 13, maximum: 120 })
+  @ValidateIf(whenDefined)
+  @Type(() => Number)
+  @IsInt()
+  @Min(13)
+  @Max(120)
+  age?: number;
 
-  @ApiProperty({ example: 3 })
+  @ApiPropertyOptional({ example: 3, minimum: 1, maximum: 30 })
+  @ValidateIf(whenDefined)
+  @Type(() => Number)
   @IsInt()
   @Min(1)
-  householdSize!: number;
+  @Max(30)
+  householdSize?: number;
 
-  @ApiProperty({ enum: ["low", "middle", "high"], example: "middle" })
-  @IsIn(["low", "middle", "high"])
-  incomeLevel!: IncomeLevel;
-
-  @ApiProperty({ example: 900, required: false })
-  @IsOptional()
+  @ApiPropertyOptional({ example: 2, minimum: 1, maximum: 10 })
+  @ValidateIf(whenDefined)
+  @Type(() => Number)
   @IsInt()
+  @Min(1)
+  @Max(10)
+  mealsPerDay?: number;
+
+  @ApiPropertyOptional({ enum: ["unspecified", "low", "middle", "high"] })
+  @ValidateIf(whenDefined)
+  @IsIn(["unspecified", "low", "middle", "high"])
+  incomeLevel?: "unspecified" | "low" | "middle" | "high";
+
+  @ApiPropertyOptional({ example: 1500, minimum: 0 })
+  @ValidateIf(whenDefined)
+  @Type(() => Number)
+  @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
   weeklyFoodBudget?: number;
 
-  @ApiProperty({ example: ["balanced"] })
+  @ApiPropertyOptional({ example: ["balanced"] })
+  @ValidateIf(whenDefined)
   @IsArray()
+  @ArrayMaxSize(10)
   @IsString({ each: true })
-  dietPreferences!: string[];
+  @MaxLength(50, { each: true })
+  dietPreferences?: string[];
 
-  @ApiProperty({ example: ["yer fistigi", "sut"] })
+  @ApiPropertyOptional({ example: ["gluten", "sut"] })
+  @ValidateIf(whenDefined)
   @IsArray()
+  @ArrayMaxSize(20)
   @IsString({ each: true })
-  allergens!: string[];
-
-  @ApiProperty({ example: ["mantar"] })
-  @IsArray()
-  @IsString({ each: true })
-  dislikedIngredients!: string[];
-
-  @ApiProperty({
-    enum: ["beginner", "intermediate", "advanced"],
-    example: "beginner",
-  })
-  @IsIn(["beginner", "intermediate", "advanced"])
-  cookingSkill!: CookingSkill;
-
-  @ApiProperty({ example: ["ocak", "firin"] })
-  @IsArray()
-  @ArrayMinSize(0)
-  @IsString({ each: true })
-  availableEquipment!: string[];
-
-  @ApiProperty({ example: "weekly", required: false })
-  @IsOptional()
-  @IsString()
-  shoppingFrequency?: string;
+  @MaxLength(50, { each: true })
+  allergens?: string[];
 }

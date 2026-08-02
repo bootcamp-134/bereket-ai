@@ -1,9 +1,10 @@
 import { Controller, Get, Param, Query } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { RecipeQueryDto } from "./dto";
 import { RecipesService } from "./recipes.service";
 
 @ApiTags("recipes")
+@ApiBearerAuth()
 @Controller("recipes")
 export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}

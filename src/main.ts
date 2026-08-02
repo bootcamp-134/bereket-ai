@@ -1,81 +1,70 @@
 import { ValidationPipe } from "@nestjs/common";
-import type { INestApplication } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import helmet from "helmet";
 import { AppModule } from "./app.module";
+import { ApiExceptionFilter } from "./common/api-exception.filter";
 
-const swaggerUiVersion = "5.32.8";
-
-type HtmlResponse = {
-  type: (contentType: string) => StaticAssetResponse;
-  send: (body: string) => unknown;
-};
-
-type StaticAssetResponse = {
-  send: (body: string) => unknown;
-};
-
-function getCorsOrigin() {
-  const corsOrigin = process.env.CORS_ORIGIN;
-
-  if (!corsOrigin) {
-    return true;
-  }
-
-  return corsOrigin.split(",").map((origin) => origin.trim());
+function requireProductionEnvironment() {
+  if (process.env.NODE_ENV !== "production") return;
+  const required = [
+    "DATABASE_URL",
+    "JWT_ACCESS_SECRET",
+    "REFRESH_TOKEN_PEPPER",
+    "PASSWORD_RESET_TOKEN_PEPPER",
+    "OPENAI_API_KEY",
+    "RESEND_API_KEY",
+  ];
+  const missing = required.filter((name) => !process.env[name]);
+  if (missing.length)
+    throw new Error(
+      `Eksik production environment değişkenleri: ${missing.join(", ")}`,
+    );
 }
 
-function createSwaggerHtml() {
-  return `<!doctype html>
-<html lang="tr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bereket AI Backend API</title>
-    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@${swaggerUiVersion}/swagger-ui.css" />
-  </head>
-  <body>
-    <div id="swagger-ui"></div>
-    <script src="https://unpkg.com/swagger-ui-dist@${swaggerUiVersion}/swagger-ui-bundle.js" crossorigin></script>
-    <script src="https://unpkg.com/swagger-ui-dist@${swaggerUiVersion}/swagger-ui-standalone-preset.js" crossorigin></script>
-    <script>
-      window.onload = () => {
-        window.ui = SwaggerUIBundle({
-          url: "/api/docs-json",
-          dom_id: "#swagger-ui",
-          deepLinking: true,
-          presets: [
-            SwaggerUIBundle.presets.apis,
-            SwaggerUIStandalonePreset
-          ],
-          layout: "StandaloneLayout"
-        });
-      };
-    </script>
-  </body>
-</html>`;
-}
-
-function registerSwaggerPage(app: INestApplication) {
-  const httpAdapter = app.getHttpAdapter();
-
-  httpAdapter.get("/api/docs", (_request: unknown, response: HtmlResponse) => {
-    response.type("text/html");
-    return response.send(createSwaggerHtml());
-  });
+function corsOrigins() {
+  const configured = (process.env.CORS_ORIGINS ?? process.env.CORS_ORIGIN ?? "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  return new Set([
+    "https://bereket.app",
+    "https://www.bereket.app",
+    ...configured,
+  ]);
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  app.setGlobalPrefix("api");
+  requireProductionEnvironment();
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.setGlobalPrefix("api/v1");
+  const allowedOrigins = corsOrigins();
   app.enableCors({
-    origin: getCorsOrigin(),
+    credentials: true,
+    origin(
+      origin: string | undefined,
+      callback: (error: Error | null, allow?: boolean) => void,
+    ) {
+      if (
+        !origin ||
+        allowedOrigins.has(origin) ||
+        (process.env.NODE_ENV !== "production" &&
+          /^http:\/\/localhost:\d+$/.test(origin))
+      ) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error("CORS origin reddedildi."), false);
+    },
   });
+  app.useGlobalFilters(new ApiExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
       whitelist: true,
+      forbidNonWhitelisted: true,
+      stopAtFirstError: false,
     }),
   );
 
@@ -83,18 +72,17 @@ async function bootstrap() {
     const swaggerConfig = new DocumentBuilder()
       .setTitle("Bereket AI Backend API")
       .setDescription(
-        "Mobile onboarding, recipe recommendation, recipe chat, feed, and achievements API.",
+        "Bereket AI production auth, recipe recommendation and recipe chat API.",
       )
-      .setVersion("0.1.0")
+      .setVersion("1.0.0")
+      .addServer("https://api.bereket.app", "Production")
       .addBearerAuth()
       .build();
-
     const document = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup("api/docs", app, document, {
-      raw: ["json"],
-      ui: false,
+      jsonDocumentUrl: "api/docs-json",
+      customSiteTitle: "Bereket AI API",
     });
-    registerSwaggerPage(app);
   }
 
   const port = Number(process.env.PORT ?? 3001);

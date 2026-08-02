@@ -1,48 +1,59 @@
-# Data Pipeline Notes
+# Tarif veri pipeline’ı
 
-## Amaç
+## Doğrulanmış dataset
 
-Burak'ın veri/ML çalışması, backend'in kullanacağı tarif veritabanını temizlemek ve zenginleştirmek için kullanılacaktır. İlk hedef yemek uydurmak değil, tarifleri güvenilir şekilde etiketlemektir.
+Kaynak: `data/recipes.json`
 
-## Pipeline
+| Ölçüm                  |                                                              Değer |
+| ---------------------- | -----------------------------------------------------------------: |
+| SHA-256                | `63c0fdf21fe854477d31aa803de9be61e901a6b6ed37609217db9b71b3278c9b` |
+| Benzersiz tarif        |                                                              3.005 |
+| Malzeme satırı         |                                                             27.382 |
+| Fiyatlandırılmış satır |                                                             21.331 |
+| Tam maliyetli tarif    |                                                                513 |
+| Kısmi maliyetli tarif  |                                                              2.492 |
 
-```text
-Raw recipe dataset
-→ Malzeme temizleme
-→ Malzeme normalizasyonu
-→ Alerjen etiketleme
-→ Nutrition eşleştirme
-→ Tarif tag'leri
-→ Backend seed/import formatı
-→ PostgreSQL
+Tariflerin `rec_*`, malzemelerin `ing_*` kimlikleri korunur. Import beklenen checksum ve dört temel sayıyı doğrulamadan veritabanına yazmaz.
+
+## Import davranışı
+
+```bash
+pnpm db:deploy
+pnpm db:import
 ```
 
-## Backend Import Formatı
+Import:
 
-```json
-{
-  "title": "Tavuklu Patates Yemeği",
-  "servings": 3,
-  "cookingMinutes": 35,
-  "tags": ["butce-dostu", "israf-azaltma"],
-  "allergens": ["sut"],
-  "ingredients": [
-    {
-      "name": "tavuk",
-      "amount": "400 g",
-      "estimatedPrice": 0
-    }
-  ],
-  "nutrition": {
-    "calories": 520,
-    "proteinGrams": 36,
-    "carbGrams": 48,
-    "fatGrams": 18
-  },
-  "steps": ["Tavukları mühürleyin.", "Sebzeleri ekleyin."]
-}
-```
+1. Dosya checksum ve kayıt sayılarını doğrular.
+2. Aynı tamamlanmış checksum zaten aktifse değişiklik yapmadan çıkar.
+3. Ingredient ve alias kayıtlarını tekrar güvenli biçimde oluşturur.
+4. Tarifleri stable ID ile upsert eder; malzeme ve adımları transaction içinde yeniler.
+5. Tüm tarifler tamamlandıktan sonra yeni dataset sürümünü atomik olarak aktif eder.
 
-## Alerjen Güvenliği
+Başarısız veya yarım import aktif dataset’i değiştirmez. `DatasetImport` kaydı provenance, checksum, sayılar ve tamamlanma zamanını tutar.
 
-Alerjen alanında ML tahmini kesin bilgi gibi gösterilmemelidir. Veri kaynağı belirsizse mobil uygulama "içerebilir / doğrulanmalı" uyarısı göstermelidir.
+## Maliyet semantiği
+
+Eksik tutarlar nullable kalır; bilinmeyen maliyet `0` değildir. API şunları ayrı sunar:
+
+- `amountTry`
+- `isPartial`
+- `coverageRatio`
+- `reliability`
+- `priceReferenceDate`
+- `label: "Tahminî maliyet"`
+
+Bir öneride eksik malzemelerden herhangi biri fiyatlandırılmamışsa tarif bütçe filtresinden geçmez.
+
+## Alerjen semantiği
+
+Dataset doğrulanmış alerjen etiketi içermediği için canonical malzeme adlarından muhafazakâr çıkarım yapılır. Kategoriler gluten, süt, yumurta, balık, kabuklu deniz ürünü, yer fıstığı, soya, sert kabuklu, kereviz, hardal, susam, sülfit, acı bakla ve yumuşakçadır.
+
+Bu alan güvenlik hard-filter’ında kullanılır ancak API her zaman `allergenDataStatus: "inferred"` döndürür. Ürün etiketi ve profesyonel görüşün yerini almaz.
+
+## Burak veri teslimi
+
+- Kaynak değiştiğinde yeni checksum ve bütün sayaçları bağımsız doğrulamak.
+- Alias çakışmalarını ve canonical ingredient kapsamını raporlamak.
+- Alerjen eşleme fixture’larını gözden geçirmek.
+- Tam/kısmi maliyet kapsamındaki değişimi release notuna eklemek.

@@ -8,6 +8,8 @@ export default defineConfig({
   },
   datasource: {
     url:
+      process.env.DATABASE_URL_UNPOOLED ??
+      process.env.POSTGRES_URL_NON_POOLING ??
       process.env.DATABASE_URL ??
       "postgresql://postgres:postgres@localhost:5432/bereket_ai?schema=public",
   },
