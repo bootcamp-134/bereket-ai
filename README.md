@@ -197,7 +197,7 @@ Screenshot 15
 * [mobile Branch](https://github.com/bootcamp-134/bereket-ai/tree/mobile)
 * [backend Branch](https://github.com/bootcamp-134/bereket-ai/tree/backend)
 * [agent Branch](https://github.com/bootcamp-134/bereket-ai/tree/agent)
-* [test/maestro-e2e Branch](https://github.com/bootcamp-134/bereket-ai/tree/test/maestro-e2e)
+
 ---
 
 
