@@ -181,7 +181,7 @@ Screenshot 15
 
 **Sprint Panosu Güncellemesi:** Sprint panosu ekran görüntüleri:
 
-Screenshot 16
+ ![Screenshot 16](https://github.com/YZTA-134/134/blob/main/docs/3SprintJira.png)
 
 Screenshot 17
 
