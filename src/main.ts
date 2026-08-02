@@ -1,15 +1,14 @@
 import { Logger, RequestMethod, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 import { AppModule } from "./app.module";
-import { APP_VERSION } from "./common/app-version";
 import { ApiExceptionFilter } from "./common/api-exception.filter";
 import {
   configuredCorsOrigins,
   createCorsOriginGuard,
 } from "./common/cors-origin.middleware";
 import { validateEnvironment } from "./config/environment";
+import { configureSwagger } from "./swagger";
 
 async function bootstrap() {
   validateEnvironment(process.env);
@@ -35,20 +34,7 @@ async function bootstrap() {
   );
 
   if (process.env.SWAGGER_ENABLED !== "false") {
-    const swaggerConfig = new DocumentBuilder()
-      .setTitle("Bereket AI Backend API")
-      .setDescription(
-        "Bereket AI production auth, recipe recommendation and recipe chat API.",
-      )
-      .setVersion(APP_VERSION)
-      .addServer("https://api.bereket.app", "Production")
-      .addBearerAuth()
-      .build();
-    const document = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup("api/docs", app, document, {
-      jsonDocumentUrl: "api/docs-json",
-      customSiteTitle: "Bereket AI API",
-    });
+    configureSwagger(app);
   }
 
   const port = Number(process.env.PORT ?? 3001);
