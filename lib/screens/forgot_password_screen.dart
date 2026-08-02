@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../services/app_services.dart';
+import '../services/auth_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/primary_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({super.key});
+  final AuthService? authService;
+
+  const ForgotPasswordScreen({super.key, this.authService});
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -18,13 +22,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   bool _isLoading = false;
   bool _emailSent = false;
+  late final AuthService _authService;
+
+  @override
+  void initState() {
+    super.initState();
+    _authService = widget.authService ?? AppServices.instance.auth;
+  }
 
   Future<void> _sendResetLink() async {
     FocusManager.instance.primaryFocus?.unfocus();
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     setState(() => _isLoading = true);
-    await Future<void>.delayed(const Duration(milliseconds: 800));
+    try {
+      await _authService.requestPasswordReset(_emailController.text.trim());
+    } catch (error) {
+      if (!mounted) return;
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.toString())));
+      return;
+    }
     if (!mounted) return;
     setState(() {
       _isLoading = false;

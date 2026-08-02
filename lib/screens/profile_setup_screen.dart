@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../models/user_profile.dart';
-import '../services/mock_profile_service.dart';
+import '../services/app_services.dart';
+import '../services/auth_service.dart';
+import '../services/profile_service.dart';
 import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
 import '../widgets/brand_mark.dart';
@@ -9,14 +11,18 @@ import '../widgets/primary_button.dart';
 import 'profile_section_screen.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
-  const ProfileSetupScreen({super.key});
+  final ProfileService? profileService;
+  final AuthService? authService;
+
+  const ProfileSetupScreen({super.key, this.profileService, this.authService});
 
   @override
   State<ProfileSetupScreen> createState() => _ProfileSetupScreenState();
 }
 
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
-  final ProfileService _profileService = MockProfileService.instance;
+  late final ProfileService _profileService;
+  late final AuthService _authService;
 
   UserProfile _profile = const UserProfile();
   bool _loading = true;
@@ -25,6 +31,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   @override
   void initState() {
     super.initState();
+    _profileService = widget.profileService ?? AppServices.instance.profile;
+    _authService = widget.authService ?? AppServices.instance.auth;
     _loadProfile();
   }
 
@@ -76,7 +84,13 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
       _showMessage('Devam etmek için üç bölümü de tamamla.');
       return;
     }
-    Navigator.of(context).pushReplacementNamed('/what-should-i-eat');
+    Navigator.of(context).pushNamed('/what-should-i-eat');
+  }
+
+  Future<void> _signOut() async {
+    await _authService.signOut();
+    if (!mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
   }
 
   void _showMessage(String message) {
@@ -95,10 +109,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Çıkış'),
-          ),
+          TextButton(onPressed: _signOut, child: const Text('Çıkış')),
           const SizedBox(width: 10),
         ],
       ),

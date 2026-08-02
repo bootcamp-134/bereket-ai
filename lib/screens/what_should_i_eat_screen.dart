@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../models/recommendation.dart';
 import '../services/mock_recommendation_service.dart';
+import '../services/app_services.dart';
 import '../services/recommendation_service.dart';
 import '../testing/app_semantics.dart';
 import '../theme/app_theme.dart';
@@ -50,7 +51,7 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
   void initState() {
     super.initState();
     _recommendationService =
-        widget.recommendationService ?? const MockRecommendationService();
+        widget.recommendationService ?? AppServices.instance.recommendations;
   }
 
   void _addIngredient([String? suggestedIngredient]) {
@@ -136,14 +137,17 @@ class _WhatShouldIEatScreenState extends State<WhatShouldIEatScreen> {
 
     setState(() => _isLoading = true);
     try {
-      final recommendations = await _recommendationService.recommend(request);
+      final batch = await _recommendationService.recommend(request);
       if (!mounted) return;
       setState(() => _isLoading = false);
       await Navigator.of(context).push(
         MaterialPageRoute<void>(
           builder: (_) => RecommendationResultsScreen(
             request: request,
-            recommendations: recommendations,
+            recommendations: batch.recommendations,
+            noResultsReason: batch.noResultsReason,
+            generatedBy: batch.generatedBy,
+            fallback: batch.fallback,
           ),
         ),
       );

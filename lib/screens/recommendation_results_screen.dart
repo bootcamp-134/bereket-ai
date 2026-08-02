@@ -8,11 +8,17 @@ import 'recipe_detail_screen.dart';
 class RecommendationResultsScreen extends StatelessWidget {
   final RecommendationRequest request;
   final List<RecipeRecommendation> recommendations;
+  final String? noResultsReason;
+  final String generatedBy;
+  final bool fallback;
 
   const RecommendationResultsScreen({
     super.key,
     required this.request,
     required this.recommendations,
+    this.noResultsReason,
+    this.generatedBy = 'deterministic',
+    this.fallback = false,
   });
 
   void _openRecipe(BuildContext context, RecipeRecommendation recommendation) {
@@ -42,7 +48,10 @@ class RecommendationResultsScreen extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 620),
             child: recommendations.isEmpty
-                ? _EmptyResults(onChangeInputs: () => Navigator.pop(context))
+                ? _EmptyResults(
+                    reason: noResultsReason,
+                    onChangeInputs: () => Navigator.pop(context),
+                  )
                 : Semantics(
                     identifier: AppSemantics.recommendationList,
                     child: ListView.separated(
@@ -65,6 +74,27 @@ class RecommendationResultsScreen extends StatelessWidget {
                                 style: theme.textTheme.bodyLarge,
                               ),
                               const SizedBox(height: 12),
+                              if (fallback || generatedBy == 'openai') ...[
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.cream,
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadii.control,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    fallback
+                                        ? 'Yapay zekâ yanıt veremedi; güvenli yedek sıralama kullanıldı.'
+                                        : 'Öneriler yapay zekâ ile kişiselleştirildi.',
+                                    style: const TextStyle(
+                                      color: AppColors.mutedInk,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                              ],
                               Container(
                                 padding: const EdgeInsets.all(13),
                                 decoration: BoxDecoration(
@@ -286,8 +316,9 @@ class _InfoPill extends StatelessWidget {
 
 class _EmptyResults extends StatelessWidget {
   final VoidCallback onChangeInputs;
+  final String? reason;
 
-  const _EmptyResults({required this.onChangeInputs});
+  const _EmptyResults({required this.onChangeInputs, this.reason});
 
   @override
   Widget build(BuildContext context) {
@@ -316,7 +347,8 @@ class _EmptyResults extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Daha fazla malzeme eklemeyi, alışveriş seçeneğini açmayı veya bütçeni değiştirmeyi deneyebilirsin.',
+            reason ??
+                'Daha fazla malzeme eklemeyi, alışveriş seçeneğini açmayı veya bütçeni değiştirmeyi deneyebilirsin.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
