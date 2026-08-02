@@ -183,7 +183,7 @@ Screenshot 15
 
  ![Screenshot 16](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/3SprintJira.png)
 
-Screenshot 17
+ ![Screenshot 16](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/3SprintJira2.png)
 
 ## Sprint 3 Çıktıları
 
