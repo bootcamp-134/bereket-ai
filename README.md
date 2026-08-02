@@ -136,8 +136,8 @@ Bereket AI Backend, Bereket AI mobil uygulamasının NestJS tabanlı backend ser
 [Sprint 2 Retrospective](docs/sprint-2-retrospective.md) dosyasında yer almaktadır.
 
 - **Sprint Panosu Güncellemesi**: Sprint panosu ekran görüntüleri:
-  ![Screenshot 10](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2/docs/2SprintJira.png)
- ![Screenshot 11](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2/docs/2SprintJira2.png)
+  ![Screenshot 10](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/2SprintJira.png)
+ ![Screenshot 11](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/2SprintJira2.png)
 
   ## Sprint 2 Çıktıları
 
