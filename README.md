@@ -48,7 +48,8 @@ Ayrıntılı veri istatistikleri ve doğrulama bilgileri [production durum belge
 | `sprint-3` | Jüri merkezi ve güncel proje dokümantasyonu |
 | `backend` | Canlı NestJS API ve öneri sistemi |
 | `mobile` | Flutter uygulaması |
-| `agent` | İlk agent araştırmalarının tarihsel kaydı |
+
+İlk Gemini/RecipeNLG agent araştırması aktif branch listesinden çıkarılmış ve `archive/agent-gemini-prototype` etiketiyle arşivlenmiştir. Production agent `backend` branch'indedir.
 
 ## Takım 134
 

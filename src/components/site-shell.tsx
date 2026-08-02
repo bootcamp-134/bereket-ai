@@ -3,11 +3,11 @@ import type { ReactNode } from "react";
 
 export function BrandMark() {
   return (
-    <span className="grid size-10 place-items-center rounded-2xl bg-emerald-300 text-emerald-950 shadow-[0_0_36px_rgba(110,231,183,0.22)]">
+    <span className="grid size-9 place-items-center rounded-md border border-white/20 bg-white text-black">
       <svg
         aria-hidden="true"
         viewBox="0 0 32 32"
-        className="size-6"
+        className="size-5"
         fill="none"
       >
         <path
@@ -21,19 +21,19 @@ export function BrandMark() {
 
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-dvh bg-[#07130f] text-stone-100">
-      <header className="sticky top-0 z-40 border-b border-white/8 bg-[#07130f]/88 backdrop-blur-xl">
+    <div className="min-h-dvh bg-black text-neutral-100">
+      <header className="sticky top-0 z-40 border-b border-white/12 bg-black/95">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
           <Link
             href="/"
-            className="flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+            className="flex items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             <BrandMark />
             <span>
-              <span className="block text-sm font-semibold tracking-[0.18em] text-emerald-200 uppercase">
+              <span className="block text-sm font-medium text-white">
                 Bereket AI
               </span>
-              <span className="block text-xs text-stone-500">Takım 134</span>
+              <span className="block text-xs text-neutral-600">Takım 134</span>
             </span>
           </Link>
           <nav aria-label="Ana navigasyon" className="flex items-center gap-1">
@@ -56,15 +56,15 @@ export function SiteShell({ children }: { children: ReactNode }) {
         </div>
       </header>
       <main id="main-content">{children}</main>
-      <footer className="border-t border-white/8 bg-black/15">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-9 text-sm text-stone-500 sm:px-8 md:flex-row md:items-center md:justify-between">
+      <footer className="border-t border-white/12 bg-black">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-9 text-sm text-neutral-600 sm:px-8 md:flex-row md:items-center md:justify-between">
           <p>Google Yapay Zeka ve Teknoloji Akademisi · Bootcamp 2026</p>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             <a
               href="https://github.com/bootcamp-134/bereket-ai"
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:text-emerald-200"
+              className="transition-colors hover:text-white"
             >
               GitHub
             </a>
@@ -72,12 +72,12 @@ export function SiteShell({ children }: { children: ReactNode }) {
               href="https://api.bereket.app/api/docs"
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:text-emerald-200"
+              className="transition-colors hover:text-white"
             >
               API dokümanı
             </a>
             <Link
-              className="transition-colors hover:text-emerald-200"
+              className="transition-colors hover:text-white"
               href="/privacy"
             >
               Gizlilik
