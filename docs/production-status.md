@@ -9,8 +9,10 @@ Son doğrulama: 2 Ağustos 2026
 - Runtime: NestJS, Node.js 24, Vercel Function `fra1`
 - Database: Neon PostgreSQL Frankfurt; Neon Auth kapalı
 - Auth: Argon2id, 15 dakikalık JWT access token, 30 günlük opaque refresh rotation
-- E-posta: manuel Resend hesabı ve doğrulanmış `bereket.app` gönderen domain'i
+- E-posta: manuel Resend hesabı ve doğrulanmış `mail.bereket.app` gönderen domain'i
 - Agent: OpenAI Responses API, `gpt-5.4-mini-2026-03-17`, structured output ve deterministic fallback
+- Agent bütçesi: PostgreSQL üzerinde atomik aylık 5 USD rezervasyon sınırı
+- Bakım: süresi dolmuş rate-limit/reset/refresh kayıtları için günlük Vercel Cron
 
 ## Dataset
 
@@ -41,9 +43,11 @@ Feed ve achievements V1 kapsamında değildir.
 - `backend`: production backend ve production agent.
 - `mobile`: Flutter istemci geliştirmesi; gerçek API/token entegrasyonu tamamlanmayı bekliyor.
 - `agent`: Gemini/RecipeNLG tabanlı tarihsel Python prototipi; production runtime değil.
-- `sprint-1-sprint-2-sprint-3`: ürün ve sprint dokümantasyon branch'i.
+- `sprint-1`: ilk Next.js mock prototipi.
+- `sprint-2`: Sprint 1 üzerine kurulan mobil fikir ve mock backend kaydı.
+- `sprint-3`: jüri merkezi, güncel ürün ve sprint dokümantasyonu; default branch.
 
-Branch geçmişleri topluca merge edilmemelidir.
+Sprint branch’leri kümülatiftir: `sprint-1` → `sprint-2` → `sprint-3`. `codex/*`, `backend-django` ve eski birleşik sprint branch’i release sonrasında tutulmaz.
 
 ## Ekipte kalan işler
 

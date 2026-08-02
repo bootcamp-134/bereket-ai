@@ -1,216 +1,110 @@
-# **Takım İsmi**
+# Bereket AI
 
-Takım 134
+Bereket AI; evdeki malzemeleri, haftalık bütçeyi ve kullanıcının belirttiği alerjenleri birlikte değerlendirerek güvenli, açıklanabilir ve ekonomik tarifler öneren yapay zekâ destekli mutfak asistanıdır. Google Yapay Zeka ve Teknoloji Akademisi Bootcamp 2026 kapsamında Takım 134 tarafından geliştirilmektedir.
 
-# Ürün İle İlgili Bilgiler
-
-## Takım Elemanları
-
-- Sıla KARATAŞ: Product Owner
-- Burak BAŞODA: Scrum Master
-- Ceren KARABAĞ: Team Member/Developer
-- Anıl DİNÇ: Team Member/Developer
-- Samet DÖNMEZ: Team Member/Developer
-
-
-## Ürün İsmi
-
-- Bereket AI
-
-## Ürün Açıklaması
-
-- Evdeki mevcut malzemeleri, bozulma sürelerini ve haftalık bütçeyi kullanarak en az maliyetle en az gıda israfı oluşturacak yemek planı çıkaran yapay zeka destekli mutfak planlama uygulaması. YZTA Bootcamp 2026 projesi. Sprint 1'de ürün fikrini gösteren ChatGPT tarzı Türkçe web prototipi geliştirilmiştir.
-
-## Güncel Production Durumu — 2 Ağustos 2026
-
-- Production backend `backend` branch'inde NestJS + Neon PostgreSQL ile çalışır.
-- Kalıcı API adresi: [https://api.bereket.app/api/v1](https://api.bereket.app/api/v1)
-- Swagger: [https://api.bereket.app/api/docs](https://api.bereket.app/api/docs)
-- Auth, profil, tarif, öneri ve tarife özel chat endpointleri canlıdır. Neon Auth kapalıdır; Argon2id/JWT auth backend içinde yönetilir.
-- Aktif dataset 3.005 benzersiz tarif ve 27.382 malzeme satırı içerir. 513 tarif tam, 2.492 tarif kısmi tahminî maliyetlidir.
-- Production agent OpenAI Responses API ile backend içinde çalışır. `agent` branch'i Gemini/RecipeNLG tabanlı tarihsel prototiptir ve canlı runtime değildir.
-- Flutter'ın mock modellerden gerçek HTTP client, secure token storage ve refresh mutex akışına geçişi mobil ekip teslimidir; “mobil-backend entegrasyonu tamamlandı” ifadesi henüz kullanılmamalıdır.
-
-Ayrıntılı ve doğrulanmış durum için [Production Durumu](docs/production-status.md) belgesine bakın.
-
-## Ürün Özellikleri
-
-- Evdeki mevcut malzemeleri serbest metin veya hızlı seçim listesiyle girme
-- Malzemelerin bozulma sürelerine göre önceliklendirilmesi (önce bitecek olan kullanılır)
-- Haftalık bütçeye göre en düşük maliyetli yemek planı oluşturma
-- Kişi sayısına göre porsiyon/miktar otomatik ayarlama
-- Alerji ve diyet kısıtlamalarına (glutensiz, vejetaryen vb.) uygun filtreleme
-- Eksik malzemeler için otomatik alışveriş listesi ve tahmini fiyat çıkarma
-- Her plan için "neden bu seçildi" açıklaması gösterme (maliyet, israf riski gibi)
-- Beğenilmeyen tarifler için alternatif öneri isteme
-- Geçmiş tercihleri (sevmediği yemekler, sık kullanılan malzemeler) hatırlama
-- Haftalık plan sonunda "ne kadar uyguladın" geri bildirimi alma
-
-## Hedef Kitle
-
-- Bütçesini dikkatli yönetmek isteyen haneler
-- Yoğun çalışan, yemek planlamaya vakit ayıramayan bireyler/çiftler
-- Gıda israfını azaltmak isteyen çevre bilinçli kullanıcılar
-- Kalabalık aileler (3+ kişi, haftalık alışveriş planlaması yapanlar)
-- Öğrenciler ve sınırlı bütçeyle yaşayan genç yetişkinler
-- 20 - 55 yaş arası, mutfakla ilgilenen ama karar yorgunluğu yaşayan kullanıcılar
-
-## Product Backlog URL
-
-[Jira Board](https://yzta-team-134.atlassian.net/jira/core/projects/Y1/board)
-
----
-
-# Sprint 1
-
-- **Sprint board update**: Jira board (Product Backlog URL üzerinden) ve GitHub organization/repo
-(3 Temmuz 2026'da kuruldu) üzerinden takip yapılmaktadır. Ekran görüntüleri Sprint 1 sonunda
-ilgili dokümantasyon klasörüne eklenecektir.
-
-- **Backlog düzeni ve Story seçimleri**: Backlog'umuz, 4 Temmuz 2026 tarihindeki tek günlük
-kısıtlı süre göz önünde bulundurularak öncelik sırasına göre düzenlenmiştir. Sprint 1'de hedef,
-uçtan uca akışın (kiler girişi → mock plan → alışveriş listesi) görülebilir ve sunulabilir hale
-getirilmesidir. Bu nedenle gerçek AI optimizasyonu yerine mock/statik veri kullanan story'ler
-önceliklendirilmiştir. Story'ler task'lere bölünmüştür: Jira Pano'da "Yapılacaklar / Devam
-Ediyor / Tamam" sütunlarında her task ayrı bilet olarak, `sprint-1` etiketiyle takip edilmektedir.
-
-- **Daily Scrum**: Daily Scrum toplantıları zamansal sebeplerden ötürü Slack/WhatsApp
-üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantı notları
-[Sprint 1 Daily Scrum Notları](docs/daily-scrum-notlari.md) dosyasında paylaşılacaktır.
-
-- **Ürün Durumu**: Sprint 1'de (4 Temmuz 2026) ürün fikrini sunuma hazır şekilde gösteren
-bir ChatGPT tarzı Türkçe chat prototipi teslim edilmiştir. Yukarıdaki "Ürün Özellikleri" listesi
-ürünün uzun vadeli vizyonudur; Sprint 1 prototipinde gerçekleştirilenler şunlardır: Türkçe arayüz
-(varsayılan karanlık tema + aydınlık/karanlık tema geçişi), hazır promptlar ve serbest metin
-girişi ile sohbet akışı, mock veriyle 5 günlük yemek planı, 8 malzemeli kiler (Patates, Soğan,
-Tavuk, Yoğurt, Makarna, Domates, Pirinç, Yumurta), eksik alışveriş listesi (tahmini ₺155),
-bütçe/israf/kiler skorları ve Recharts grafiği, sohbet temizleme
-ve erişilebilirlik (klavye desteği, odak yönetimi, prototip uyarıları).
-Akışın tamamı [Sprint 1 Mock Demo](docs/sprint-1-mock-demo.md) dosyasında anlatılmaktadır.
-
-- **Ekran Görüntüleri**:
-  ![Screenshot 1](https://github.com/YZTA-134/134/blob/main/docs/1Sprint1.png)
-  ![Screenshot 2](https://github.com/YZTA-134/134/blob/main/docs/1Sprint2.png)
-  ![Screenshot 3](https://github.com/YZTA-134/134/blob/main/docs/1Sprint3.png)
-  ![Screenshot 4](https://github.com/YZTA-134/134/blob/main/docs/1Sprint4.png)
-
-  - **MVP Video Link**:
-  ![MVP](https://github.com/YZTA-134/134/blob/main/docs/screen-capture.webm)
-
-- **Sprint Review**: Sprint review notları
-[Sprint 1 Review](docs/sprint-1-review.md) dosyasında yer alacaktır. Sprint 1'de
-gerçek AI entegrasyonu, OR-Tools entegrasyonu ve canlı fiyat verisi kullanılmamış; MVP akışı
-mock veriyle doğrulanmıştır.
-
-- **Sprint Retrospective**: Sprint retrospective notları
-[Sprint 1 Retrospective](docs/sprint-1-retrospective.md) dosyasında yer alacaktır.
-
-- **Sprint Panosu Güncellemesi**: Sprint panosu ekran görüntüleri:
-  ![Screenshot 5](https://github.com/YZTA-134/134/blob/main/docs/1SprintJira.png)
-  ![Screenshot 6](https://github.com/YZTA-134/134/blob/main/docs/1Sprint2Jira.png)
-  ![Screenshot 7](https://github.com/YZTA-134/134/blob/main/docs/1Sprint3Jira.png)
-
-## Sprint 1 Çıktıları
-
-* [Sprint Planı](docs/sprint-1-plani.md)
-* [Product Requirements](docs/product-requirements.md)
-* [Daily Scrum Notları](docs/daily-scrum-notlari.md)
-* [Sprint Review](docs/sprint-1-review.md)
-* [Sprint Retrospective](docs/sprint-1-retrospective.md)
-* [Demo Senaryosu](docs/demo-senaryosu.md)
-* [Planlama Algoritması](docs/planlama-algoritmasi.md)
-* [Örnek Veri Seti](docs/ornek-veri-seti.md)
-* [Sprint 1 Mock Demo](docs/sprint-1-mock-demo.md)
----
-
-# Sprint 2
-
-- **Sprint board update:** Sprint 2 boyunca görev takibi Jira Board üzerinden sürdürüldü ve sprint başlangıcında oluşturulan backlog güncellendi. Geliştirme sürecinde tamamlanan görevler düzenli olarak Yapılacaklar / Devam Ediyor / Tamamlandı sütunları arasında taşındı. Frontend, Backend, AI, Data Science ve dokümantasyon görevleri ayrı iş kalemleri olarak takip edildi. Sprint 2 sonunda güncel Jira Board ve GitHub repo ekran görüntüleri dokümantasyona eklendi.
-
-- **Backlog düzeni ve Story seçimleri:** Sprint 2 backlog'u, Sprint 1'de geliştirilen statik prototipi daha işlevsel bir MVP'ye dönüştürme hedefi doğrultusunda oluşturuldu. Öncelik; kullanıcı onboarding süreci, profil oluşturma ve yönetimi, hane bilgileri ve bütçe tercihleri ekranları, "Ne Yesem?" ekranı ile tarif öneri arayüzü ve tarif detay ekranlarının geliştirilmesine verildi. Recipe Match Agent ve Recipe Chat Agent geliştirme çalışmaları sprint kapsamında başlatıldı ve temel altyapıları oluşturuldu. Story'ler geliştirici sorumluluklarına göre task'lere ayrıldı ve Jira üzerinde sprint etiketiyle takip edildi.
-  
-- **Daily Scrum:** Sprint 2 boyunca Daily Scrum toplantıları takım üyelerinin uygunluk durumuna göre Google Meet üzerinden gerçekleştirildi; gün içerisindeki ilerleme takibi ve engeller ise WhatsApp grubu üzerinden paylaşıldı. Daily Scrum notları Sprint 2 Daily Scrum Notları dokümanında kayıt altına alındı.
-
-- **Ürün Durumu:** Sprint 2 sonunda uygulama, Sprint 1'de geliştirilen statik prototipe göre önemli ölçüde geliştirilmiştir. Kullanıcılar onboarding sürecini tamamlayarak hesap oluşturabilmekte; profil bilgilerini, hane bilgilerini ve bütçe tercihlerini kaydedebilmektedir. "Ne Yesem?" ekranı üzerinden malzeme ve alışveriş tercihleri girilebilmekte, tarif önerileri listelenebilmekte ve tarif detay ekranı görüntülenebilmektedir. Ayrıca kullanıcı profil ekranı geliştirilmiş ve uygulamanın temel kullanıcı akışı büyük ölçüde tamamlanmıştır.
-
-Sprint 2 sonunda mock veriyle NestJS API omurgası oluşturulmuş ve agent prototiplerine başlanmıştır. Supabase production entegrasyonu tamamlanmış değildir. Güncel production backend Neon PostgreSQL kullanır; sosyal akış ve başarı endpointleri V1 kapsamında değildir.
-
-  -**Ekran Görüntüleri**:
-  - ![Screenshot 8](https://github.com/bootcamp-134/bereket-ai/blob/mobile/docs/screenshots/01-welcome.png)
-  - ![Screenshot 9](https://github.com/bootcamp-134/bereket-ai/blob/mobile/docs/screenshots/09-recipe-detail.png)
-
-
-
-- **Sprint Review**: Sprint review notları
-[Sprint 2 Review](docs/sprint-2-review.md) dosyasında yer almaktadır. Sprint 2 kapsamında kullanıcı onboarding süreci, profil yönetimi, tarif öneri ekranları, backend API'leri ve Supabase veritabanı tamamlanarak uygulamanın temel işlevlerini içeren çalışan bir MVP oluşturulmuştur. Ayrıca Recipe Match Agent ve Recipe Chat Agent geliştirme çalışmaları başlatılmış, frontend–backend entegrasyonu için gerekli altyapı hazırlanmıştır.
-
-- **Sprint Retrospective**: Sprint retrospective notları
-[Sprint 2 Retrospective](docs/sprint-2-retrospective.md) dosyasında yer almaktadır.
-
-- **Sprint Panosu Güncellemesi**: Sprint panosu ekran görüntüleri:
-  ![Screenshot 10](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/2SprintJira.png)
- ![Screenshot 11](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/2SprintJira2.png)
-
-  ## Sprint 2 Çıktıları
-
-* [Sprint Planı](docs/sprint-2-plani.md)
-* [Product Requirements](docs/product-requirements.md)
-* [Daily Scrum Notları](docs/daily-scrum-notlari.md)
-* [Sprint Review](docs/sprint-2-review.md)
-* [Sprint Retrospective](docs/sprint-2-retrospective.md)
-* [Demo Senaryosu](docs/demo-senaryosu.md)
-* [Planlama Algoritması](docs/planlama-algoritmasi.md)
-* [mobile Branch](https://github.com/bootcamp-134/bereket-ai/tree/mobile)
-* [backend Branch](https://github.com/bootcamp-134/bereket-ai/tree/backend)
-* [agent Branch](https://github.com/bootcamp-134/bereket-ai/tree/agent)
-
-
----
-
-# Sprint 3
-
-**Sprint board update:** Sprint 3 boyunca görev takibi Jira Board üzerinden devam ettirilmiş, sprint başlangıcında oluşturulan backlog güncellenmiştir. Geliştirme sürecinde tamamlanan görevler düzenli olarak **Yapılacaklar / Devam Ediyor / Tamamlandı** sütunları arasında taşınmıştır. Mobil uygulama, Backend, AI, Data Science ve dokümantasyon görevleri ayrı iş kalemleri olarak takip edilmiştir. Sprint sonunda güncel Jira Board ve GitHub repo ekran görüntüleri dokümantasyona eklenmiştir.
-
-**Backlog düzeni ve Story seçimleri:** Sprint 3 backlog'u, Sprint 2 sonunda geliştirilen çalışan MVP'nin tamamlanarak son kullanıcıya hazır hale getirilmesi amacıyla oluşturulmuştur. Öncelik; Flutter mobil uygulaması ile backend servislerinin tam entegrasyonu, Recipe Match Agent'ın tamamlanması, Pantry Parser Agent ve Safety Filter Agent'ın geliştirilmesi, Recipe Chat Agent entegrasyonu, gerçek tarif veri seti kullanımı, performans optimizasyonları, hata düzeltmeleri ve kullanıcı deneyiminin iyileştirilmesine verilmiştir. Sprint kapsamında agent mimarisi tamamlanmış, uçtan uca tarif öneri akışı oluşturulmuş ve tüm story'ler geliştirici sorumluluklarına göre task'lere ayrılarak Jira üzerinde sprint etiketiyle takip edilmiştir.
-
-**Daily Scrum:** Sprint 3 boyunca Daily Scrum toplantıları takım üyelerinin uygunluk durumuna göre Zoom üzerinden gerçekleştirildi; gün içerisindeki ilerleme takibi ve karşılaşılan problemler Slack grubu üzerinden paylaşıldı. Daily Scrum notları Sprint 3 Daily Scrum Notları dokümanında kayıt altına alındı.
-
-**Ürün Durumu:** Sprint 3 sonunda production backend, gerçek tarif dataset'i ve OpenAI tabanlı tarif öneri/chat agent'ı tamamlanmıştır. Dataset backend branch'indeki `data/recipes.json` dosyasından checksum kontrollü olarak Neon'a aktarılır. Flutter branch'inde ekran ve mock akış çalışmaları vardır; gerçek HTTP client, secure token storage, refresh mutex ve staging Maestro entegrasyonu kalan mobil teslimidir. Bu nedenle tam mobil-backend uçtan uca entegrasyonu henüz tamamlanmış kabul edilmez.
-
-**Ekran Görüntüleri:**
-
-Screenshot 12
-
-Screenshot 13
-
-Screenshot 14
-
-Screenshot 15
-
-**Sprint Review:** Sprint review notları Sprint 3 Review dosyasında yer almaktadır. NestJS backend, Neon dataset importu ve OpenAI agent production ortamında doğrulanmıştır. Mobil uygulamanın gerçek API entegrasyonu ayrı teslim olarak devam etmektedir; final uçtan uca MVP bu entegrasyon ve staging Maestro testleri tamamlandığında kabul edilecektir.
-
-**Sprint Retrospective:** Sprint retrospective notları Sprint-3-Retrospective.md dosyasında yer almaktadır.
-
-**Sprint Panosu Güncellemesi:** Sprint panosu ekran görüntüleri:
-
- ![Screenshot 16](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/3SprintJira.png)
-
- ![Screenshot 16](https://github.com/bootcamp-134/bereket-ai/blob/sprint-1-sprint-2-sprint-3/docs/3SprintJira2.png)
-
-## Sprint 3 Çıktıları
-
-* [Sprint Planı](docs/sprint-3-plani.md)
-* [Product Requirements](docs/product-requirements.md)
-* [Daily Scrum Notları](docs/daily-scrum-notlari.md)
-* [Sprint Review](docs/sprint-3-review.md)
-* [Sprint Retrospective](docs/sprint-3-retrospective.md)
-* [Demo Senaryosu](docs/demo-senaryosu.md)
-* [Planlama Algoritması](docs/planlama-algoritmasi.md)
-* [mobile Branch](https://github.com/bootcamp-134/bereket-ai/tree/mobile)
-* [backend Branch](https://github.com/bootcamp-134/bereket-ai/tree/backend)
-* [agent Branch](https://github.com/bootcamp-134/bereket-ai/tree/agent)
-
----
-
-
-
+## Canlı sistem
+
+| Yüzey | Adres | Durum |
+| --- | --- | --- |
+| Jüri ve ürün merkezi | [bereket.app](https://bereket.app) | Sprint 3 RC |
+| Production API | [api.bereket.app/api/v1](https://api.bereket.app/api/v1/health) | Canlı |
+| Swagger | [api.bereket.app/api/docs](https://api.bereket.app/api/docs) | Canlı |
+| Sprint 1 mock demo | [bereket.app/sprint-1-demo](https://bereket.app/sprint-1-demo) | Tarihsel demo |
+
+Neon Auth kapalıdır. Kimlik doğrulama NestJS içinde Argon2id, kısa ömürlü JWT access token ve opaque refresh-token rotation ile yönetilir. Production agent OpenAI Responses API ve structured output kullanır; `agent` branch’i Gemini/RecipeNLG tabanlı tarihsel prototiptir.
+
+## Üç sprintlik ürün hikâyesi
+
+- `sprint-1`: ChatGPT benzeri Next.js/shadcn web prototipi, hazır sorular ve statik plan verisi.
+- `sprint-2`: Sprint 1’in üzerine Flutter ürün akışı ve mock NestJS backend omurgası.
+- `sprint-3`: Sprint 2’nin üzerine gerçek Neon verisi, production auth, güvenli OpenAI agent, tarif sohbeti ve jüri merkezi.
+
+Bu üç branch kümülatiftir: `sprint-1` → `sprint-2` → `sprint-3`. Varsayılan branch `sprint-3` olmalıdır. Mobil kod yalnız `mobile`, production backend yalnız `backend` branch’inde geliştirilir.
+
+## Production mimarisi
+
+```text
+Flutter mobile
+    │ HTTPS + JWT
+    ▼
+NestJS API · Vercel fra1
+    ├── Neon PostgreSQL · Frankfurt
+    ├── Resend · parola sıfırlama
+    └── Deterministic safety filters
+            │ en fazla 15 güvenli aday
+            ▼
+        OpenAI Responses API
+            │ structured rerank
+            ▼
+        Recipe ID tekrar doğrulama
+```
+
+OpenAI’ye parola, token, e-posta veya kullanıcı entity’si gönderilmez. Alerjen ve bütçe hard-filter’ları model çağrısından önce çalışır. Model hatası, timeout, rate limit, geçersiz çıktı veya aylık bütçe sınırında deterministic fallback devreye girer.
+
+## Doğrulanmış veri seti
+
+| Ölçüm | Değer |
+| --- | ---: |
+| SHA-256 | `63c0fdf21fe854477d31aa803de9be61e901a6b6ed37609217db9b71b3278c9b` |
+| Benzersiz tarif | 3.005 |
+| Malzeme satırı | 27.382 |
+| Fiyatlandırılmış satır | 21.331 |
+| Tam maliyetli tarif | 513 |
+| Kısmi maliyetli tarif | 2.492 |
+
+Eksik fiyatlar `0` yapılmaz; nullable kalır. Maliyetler tahminî, alerjen verisi muhafazakâr biçimde çıkarılmış ve `inferred` olarak işaretlenmiştir.
+
+## Branch haritası
+
+| Branch | Sorumluluk | Production |
+| --- | --- | --- |
+| `sprint-1` | İlk web mock prototipi | Hayır |
+| `sprint-2` | Kümülatif Sprint 2 proje kaydı | Hayır |
+| `sprint-3` | Jüri merkezi ve güncel proje dokümantasyonu | `bereket.app` |
+| `backend` | NestJS, Prisma, Neon, OpenAI, Resend | `api.bereket.app` |
+| `mobile` | Flutter istemci | Mobil release |
+| `agent` | Tarihsel Gemini/Python prototipi | Hayır |
+| `test/maestro-e2e` | Mobil staging E2E çalışması | Hayır |
+
+`codex/*`, `backend-django` ve eski birleşik sprint branch’i kalıcı proje branch’i değildir.
+
+## Takım 134
+
+- Sıla KARATAŞ — Product Owner
+- Burak BAŞODA — Scrum Master, veri
+- Ceren KARABAĞ — Agent kalite ve değerlendirme
+- Anıl DİNÇ — Flutter
+- Samet DÖNMEZ — Backend ve platform
+
+## Release gerçeği
+
+Backend, veri importu ve production agent hazırdır. Flutter ekranları ve mock akış çalışmaları mevcuttur; gerçek HTTP client, secure token storage, refresh mutex ve staging Maestro senaryosu mobil ekip teslimidir. Bu işler tamamlanana kadar release `v1.0.0-rc.1` olarak tanımlanır.
+
+## Yerel jüri web’i
+
+Node.js 24 ve pnpm 10.34.5 gerekir.
+
+```bash
+pnpm install
+pnpm dev
+pnpm lint
+pnpm build
+pnpm audit --prod
+```
+
+`API_BASE_URL` varsayılan olarak `https://api.bereket.app/api/v1` kullanır. Secret değeri değildir.
+
+## Dokümantasyon
+
+- [Doğrulanmış production durumu](docs/production-status.md)
+- [Production mimarisi](docs/architecture.md)
+- [Release candidate kontrol listesi](docs/release-checklist.md)
+- [Sprint 1 mock demo kapsamı](docs/sprint-1-mock-demo.md)
+- [Sprint 1 plan/review/retrospective](docs/sprint-1-plani.md)
+- [Sprint 2 plan/review/retrospective](docs/sprint-2-plani.md)
+- [Sprint 3 plan/review/retrospective](docs/sprint-3-plani.md)
+- [Ürün gereksinimleri](docs/product-requirements.md)
+- [Demo senaryosu](docs/demo-senaryosu.md)
+- [Planlama algoritması](docs/planlama-algoritmasi.md)
+
+Provider secret’ları, kullanıcı verileri ve gerçek tokenlar repository dokümantasyonuna yazılmaz.

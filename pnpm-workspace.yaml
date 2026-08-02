@@ -3,3 +3,10 @@ allowBuilds:
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+
+overrides:
+  brace-expansion: 5.0.8
+  fast-uri: 3.1.4
+  js-yaml: 5.2.2
+  postcss: 8.5.18
+  sharp: 0.35.3

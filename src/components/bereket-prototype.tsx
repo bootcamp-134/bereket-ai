@@ -543,7 +543,10 @@ export function BereketPrototype() {
         </header>
 
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-          <main className="mx-auto flex min-h-0 w-full max-w-3xl flex-1 flex-col overflow-hidden px-4 sm:px-6">
+          <main
+            id="main-content"
+            className="mx-auto flex min-h-0 w-full max-w-3xl flex-1 flex-col overflow-hidden px-4 sm:px-6"
+          >
             <MessageScroller className="min-h-0 flex-1">
               <MessageScrollerViewport>
                 <MessageScrollerContent

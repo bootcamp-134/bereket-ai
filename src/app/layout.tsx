@@ -8,17 +8,35 @@ import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bereket.app"),
   title: {
     template: "%s | Bereket AI",
-    default: "Bereket AI: Prototype",
+    default: "Bereket AI | Akıllı Mutfak Planlama",
   },
   description:
-    "Evdeki malzemeler ve bütçe için sabit mock veriyle yemek planı üreten ChatGPT benzeri Sprint 1 chat prototipi.",
+    "Evdeki malzemeleri, bütçeyi ve alerjen sınırlarını değerlendirerek güvenli ve ekonomik tarifler öneren yapay zeka destekli mutfak asistanı.",
+  applicationName: "Bereket AI",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://bereket.app",
+    siteName: "Bereket AI",
+    title: "Bereket AI | Akıllı Mutfak Planlama",
+    description:
+      "Mock fikirden production backend ve güvenli tarif agent’ına uzanan Takım 134 projesi.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bereket AI | Akıllı Mutfak Planlama",
+    description:
+      "Bütçe ve eldeki malzemeler için güvenli, açıklanabilir tarif önerileri.",
+  },
 };
 
 export const viewport: Viewport = {
   colorScheme: "dark",
-  themeColor: "#171717",
+  themeColor: "#07130f",
 };
 
 export default function RootLayout({
@@ -48,7 +66,7 @@ export default function RootLayout({
             >
               İçeriğe geç
             </a>
-            <main id="main-content">{children}</main>
+            {children}
           </TooltipProvider>
         </ThemeProvider>
       </body>
